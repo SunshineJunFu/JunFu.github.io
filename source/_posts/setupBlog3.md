@@ -1,7 +1,7 @@
 ---
 title: setupBlog3
 date: 2019-01-09 12:31:06
-tags:
+tags: [hexo]
 ---
 # 如何方便的迁移hexo博客
 
@@ -23,19 +23,19 @@ tags:
 ### 从远端复原
 
 1. `git clone -b hexo https://github.com/SunshineJunFu/JunFu.github.io.git`
-2. cd xx.io
-3. npm install hexo --save
-4. npm install 
-5. npm install hexo-deployer-git 
-6. hexo s， 检查复原效果
+2. `cd xx.io`
+3. `npm install hexo --save`
+4. `npm install`
+5. `npm install hexo-deployer-git`
+6. `hexo s`， 检查复原效果
 
 ## 书写博客
 
-1. hexo new name
-2. 编辑 xx.md 文件
-3. git add .
-4. git commit -m something
-5. git push origin, 更新远端hexo文件， hexo branch
-6. hexo g -d， 更新远端静态网页文件，master branch
+1. `hexo new name`
+2. `编辑 xx.md 文件`
+3. `git add .`
+4. `git commit -m something`
+5. `git push origin`, 更新远端hexo文件，对应hexo branch
+6. `hexo g -d`， 更新远端静态网页文件，对应master branch
 
 

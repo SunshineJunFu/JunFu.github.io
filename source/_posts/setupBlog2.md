@@ -1,15 +1,14 @@
 ---
-title: setupBlog2
+title: hexo 配置 indigo主题 
 date: 2019-01-09 12:30:44
 tags: [hexo]
 ---
 ## 配置文件
-1. 站点文件_config.yml，可以参考[indigo configuration](https://github.com/yscoder/hexo-theme-indigo/wiki/%E9%85%8D%E7%BD%AE)
+1. 站点文件_config.yml，修改`Extension`字段，配置`theme`，设置为indigo
 2. 设置头像，在根目录/source/ 创建images/， 存放头像图片 
-3. 配置主题文件_config.yml，修改`Extension`字段，配置`theme`，设置为indigo
+3. 配置主题文件_config.yml, 可以参考[indigo configuration](https://github.com/yscoder/hexo-theme-indigo/wiki/%E9%85%8D%E7%BD%AE)
 4. `hexo g -d` 查看远程效果
 5. `hexo g`, `hexo s` 查看本地效果
-6. 待解决显示访问次数问题
 
 主题配置文件_config.yml 样例：
 

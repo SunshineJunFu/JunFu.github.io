@@ -1,5 +1,5 @@
 ---
-title: setupBlog1
+title: hexo搭建个人博客
 date: 2019-01-09 12:29:58
 tags: [hexo]
 ---

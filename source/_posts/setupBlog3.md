@@ -1,5 +1,5 @@
 ---
-title: setupBlog3
+title: hexo迁移和复用
 date: 2019-01-09 12:31:06
 tags: [hexo]
 ---

@@ -22,88 +22,121 @@ $ L_{MSE} = \frac{1}{N}\sum_i^{N-1}(pred_i - label_i)^{2}$
 
 $$ loss(x,class)= -log(\frac{exp(x[class])}{\sum_{j}exp(x[j])}) = -x[class]+log(\sum_{j}exp(x[j])) $$
 
-### one-hot 
 
-+ 每个类别等距，更加合理，无需考虑排序问题。
+# 推导CrossEntropy Loss
 
-### CrossEntropy
+## one-hot 
+
+定义：用N个二进制位来表示N个状态，对于任意一状态，其N个二进制位，只有1位非零。例如， 0，1,2 分别会表示为001,010,100。
+
+为什么用one-hot？
+
+![Iris 数据集](1.jpeg)
+
+以Iris数据集为例，数据集中共有3种花：Versicolor,Setosa,Virginica。如果直接按顺序给这3种花编号，并将编号作为每种花的label，会存在以下问题：
++ 欧式距离问题：如果将Versicolor,Setosa,Virginica的label采用编号的方式则是：1,2,3。则$L_{Ver,Setosa}=1$,$L_{Ver,Vir}=2$,$L_{vir,Setosa}=1$,可以发现这三者两两的距离不一致。如果将label编号为001,010,100，则两两之间的距离为$L_{Ver,Setosa}=2$。因而，这样做显得更加合理。
+
+## 交叉熵(CrossEntropy)
 
 自信息量(Self-information)
 
-定义： 变量x发生概率的对数取反
+定义： 变量x发生概率的对数取反，表明该变量x携带的信息量的多少。
 
 $$ I(x) = - log(p(x))$$
 
-注：$ p(x) = Pr(X=x) $ represents the probability that message x is choosen from all possible choices in message space X.
-
-作用： 表明该变量x携带的信息量的多少
-
+其中，$ p(x) = Pr(X=x) $ 代表了在信息空间X中x出现的的概率。
+ 
 
 熵
 
-定义： 表明X的不确定程度
+定义： 表明X的不确定程度，熵越大，不确定程度越大，越多的信息量。
 
 $$H(X) = E[I(X)]$$
 
 对于离散的X信息空间:
 
-$$H(X) = \sum(-p(x)log[p(x)]) $$
+$$H(X) = \sum_{i} (-p(x_i)logp(x_i)) $$
 
 对于连续的X信息空间:
 
-$$H(x) = integral(-p(x)log[p(x)]dx)$$ 
-
-注: the bigger entropy means more uncertainty, more self-information. 
+\begin{align} 
+H(x) &= \int_{-\infty}^{+\infty} (p(x)I(x)dx) \\\\
+ &= \int_{-\infty}^{+\infty}(-p(x)logp(x)dx)
+\end{align}  
 
 KL 散度 又叫相对熵：
 
-作用：D(P||Q)表示当用概率分布Q来拟合真实分布P时，产生的信息损耗，其中P表示真实分布，Q表示P的拟合分布。
+定义：D(P||Q)表示当用概率分布Q来拟合真实分布P时，产生的信息损耗，其中P表示真实分布，Q表示P的拟合分布。散度越小，意味着Q越接近于P。           
 
-注：有人将KL散度称为KL距离，但事实上，KL散度并不满足距离的概念，应为:1）KL散度不是对称的；2）KL散度不满足三角不等式。
+Noted that：有人将KL散度称为KL距离，但事实上，KL散度并不满足距离的概念
++ KL散度不是对称的
++ KL散度不满足三角不等式。
 
-$$ Dkl(p||q) =  Ep[log{p(x)/q(x)}]$$
+$$ D(p||q) =  E_{~p}[log{p(x)/q(x)}]$$
 
 对于离散的X信息空间:
 
-$$DKL(P|Q)=∑iP(i)logP(i)/Q(i)$$
+$$D(P||Q)=\sum_{i} p(i)logp(i)/q(i)$$
 
 对于连续的X信息空间:
 
-$$DKL(P|Q)=∫∞−∞p(x)logp(x)/q(x)dx$$
+$$D(P||Q)=\int_{-\infty}^{+\infty} p(x)logp(x)/q(x)dx$$
 
-Note: the smaller KL means that the fake distribution is more closer to 'true' probability distribution.
+交叉熵: 
 
-交叉熵:
+定义：$ CEH(p,q) = Ep[-logq]$
 
-定义：
+性质： 交叉熵 = 熵 + KL散度
 
-$$ CEH(p,q) = Ep[-logq] = Ep[-logq/p * p] 
-= Ep[-logp-logq/p] 
-= Ep[-logp] + Ep[-logq/p]
-= Ep[-logp] + Ep[logp/q] 
-= H(p) + Dkl(p||q)$$
+证明： 
 
-if distribution is regarded as "true" distribution, H(p) will be a constant. Hence, if we plan to minimize Cross entropy, it can be regarded as minimize KL divergence.
+\begin{align} 
+CEH(p,q) &=  E_{~p}[-logq] \\\\
+&= E_{~p}[-logq/p * p] \\\\
+&= E_{~p}[-logp-logq/p] \\\\
+&= E_{~p}[-logp] + E_{~p}[-logq/p] \\\\
+&= E_{~p}[-logp] + E_{~p}[logp/q] \\\\
+&= H(p) + D(p||q)
+\end{align}
 
-$$CEH(p,q) Loss= Dkl(p||q) $$
+由此可以发现，当p为真实分布时，其熵$H(p)$是固定不变的。因此，最小化交叉熵，可以被认为是最小化KL散度。            
 
-$$DKL(P|Q)=\sum_{i}P(i)log(\frac{P(i)}{Q(i)})$$
 
-for binary discrete message space X:
+## 交叉熵的损失公式推导
 
-CEH(p,q) Loss= -p(x)log[q(x)] - [1-p(x)]log[1-q(x)]
+\begin{align} 
+L_{CEH(p,q)} &= Dkl(p||q) \\\\
+&= \sum_{i}p(i)log(\frac{p(i)}{q(i)}) 
+\end{align}
 
-在one-hot的基础上：
+对于二分类问题：
 
-$$DKL(P|Q) =\sum_{i}P(i)log(\frac{P(i)}{Q(i)}) 
+\begin{align} 
+L_{CEH(p,q)} &= Dkl(p||q) \\\\
+&= -p(0)logq(0) - p(1)log(q(1)) \\\\
+&= -p(0)logq(0) - [1-p(0)]log[1-q(0)]
+\end{align}      
 
-		   =  1 * log(\frac{1}{Q(i)})
+对于n分类：
 
-		   = - log(Q(i))
+神经网络的输出层是n维的向量，x[i]为类别i的取值，那么类别为i的概率为：
 
-		   = - log(\frac{exp(x[class])}{\sum_{j}exp(x[j]))
+$$q(i)= \frac{exp(x[i])}{\sum_{j}exp(x[j])} $$
 
-		   = - x[class]+log(\sum_{j}exp(x[j]))
-$$
+这一过程叫做归一化，学名Softmax。
 
-## 推广至多label？
+根据前面所述的one-hot可知，对于单个样本，真实分布p是只在类别正确处有值且为1，所以
+
+
+
+\begin{align} 
+L_{CEH(p,q)} &= Dkl(p||q) \\\\
+&= \sum_{i}p(i)log(\frac{p(i)}{q(i)}) \\\\
+&= 0 +  1 * log(\frac{1}{q(i)}) \\\\
+&= - log(q(i)) \\\\
+&= - log(\frac{exp(x[class])}{\sum_{j}exp(x[j]))} \\\\
+&= - x[class]+log(\sum_{j}exp(x[j])) 
+\end{align} 
+ 
+## 推广至多label
+ 

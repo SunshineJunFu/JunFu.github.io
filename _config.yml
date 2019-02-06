@@ -81,3 +81,23 @@ deploy:
   type: git 
   repository: https://github.com/SunshineJunFu/JunFu.github.io
   branch: master
+
+
+# Live2D
+## https://github.com/EYHN/hexo-helper-live2d
+live2d:
+  enable: true
+  scriptFrom: local
+  pluginRootPath: live2dw/
+  pluginJsPath: lib/
+  pluginModelPath: assets/
+  tagMode: false
+  debug: false
+  model:
+    use: live2d-widget-model-koharu
+  display:
+    position: right
+    width: 150
+    height: 300
+  mobile:
+    show: true

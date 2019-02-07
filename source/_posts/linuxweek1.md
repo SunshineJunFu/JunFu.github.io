@@ -1,8 +1,7 @@
 ---
 title: linuxweek1
 date: 2019-01-12 00:25:58
-tags: week1
-categories: linux
+tags: linux
 ---
 
 # Linux 

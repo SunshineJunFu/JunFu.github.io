@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    
+    <title>tensorflow_tutorial_9 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content>
+    <meta name="description" content="batch Normalization定义将均值为$\mu$, 标准差$\sigma$的数据集合$x$，转化为均值为$\beta$, 标准差$\gamma$的数据集合$x^{’}$： $$x^{’}=\gamma\frac{(x-\mu)}{\sigma}+\beta$$ 作用解决梯度弥散的问题 padding的方式 实现步骤 计算数据集合$x$的均值为$\mu$, 标准差$\sigma$ 套用变">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tensorflow_tutorial_9">
+<meta property="og:url" content="https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-9/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="batch Normalization定义将均值为$\mu$, 标准差$\sigma$的数据集合$x$，转化为均值为$\beta$, 标准差$\gamma$的数据集合$x^{’}$： $$x^{’}=\gamma\frac{(x-\mu)}{\sigma}+\beta$$ 作用解决梯度弥散的问题 padding的方式 实现步骤 计算数据集合$x$的均值为$\mu$, 标准差$\sigma$ 套用变">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-02-17T07:18:54.707Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tensorflow_tutorial_9">
+<meta name="twitter:description" content="batch Normalization定义将均值为$\mu$, 标准差$\sigma$的数据集合$x$，转化为均值为$\beta$, 标准差$\gamma$的数据集合$x^{’}$： $$x^{’}=\gamma\frac{(x-\mu)}{\sigma}+\beta$$ 作用解决梯度弥散的问题 padding的方式 实现步骤 计算数据集合$x$的均值为$\mu$, 标准差$\sigma$ 套用变">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/JunFu.github.io/atom.xml">
+    
+    <link rel="shortcut icon" href="/JunFu.github.io/favicon.ico">
+    <link rel="stylesheet" href="/JunFu.github.io/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/JunFu.github.io/img/brand.jpg)">
+      <div class="brand">
+        <a href="/JunFu.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/JunFu.github.io/images/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Jun Fu</h5>
+          <a href="mailto:fujun@mail.ustc.edu.cn" title="fujun@mail.ustc.edu.cn" class="mail">fujun@mail.ustc.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/">
+                <i class="icon icon-lg icon-home"></i>
+                Homepage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/SunshineJunFu" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">tensorflow_tutorial_9</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">tensorflow_tutorial_9</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-02-02T17:02:40.000Z" itemprop="datePublished" class="page-time">
+  2019-02-03
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#batch-Normalization"><span class="post-toc-number">1.</span> <span class="post-toc-text">batch Normalization</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">定义</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#作用"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">作用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现步骤"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">实现步骤</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题："><span class="post-toc-number">1.4.</span> <span class="post-toc-text">问题：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tensorflow-实现"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">Tensorflow 实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Preliminary"><span class="post-toc-number">1.5.1.</span> <span class="post-toc-text">Preliminary</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#计算均值和方差"><span class="post-toc-number">1.5.1.1.</span> <span class="post-toc-text">计算均值和方差</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#BN在神经网络进行training和testing"><span class="post-toc-number">1.5.1.2.</span> <span class="post-toc-text">BN在神经网络进行training和testing</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Example"><span class="post-toc-number">1.5.1.3.</span> <span class="post-toc-text">Example</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Reference"><span class="post-toc-number">2.</span> <span class="post-toc-text">Reference</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-tensorflow-tutorial-9" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">tensorflow_tutorial_9</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-02-03 01:02:40" datetime="2019-02-02T17:02:40.000Z" itemprop="datePublished">2019-02-03</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="batch-Normalization"><a href="#batch-Normalization" class="headerlink" title="batch Normalization"></a>batch Normalization</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>将均值为$\mu$, 标准差$\sigma$的数据集合$x$，转化为均值为$\beta$, 标准差$\gamma$的数据集合$x^{’}$：</p>
+<p>$$x^{’}=\gamma\frac{(x-\mu)}{\sigma}+\beta$$</p>
+<h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>解决梯度弥散的问题</p>
+<p><a href="https://blog.csdn.net/alxe_made/article/details/80834305" target="_blank" rel="noopener">padding的方式</a></p>
+<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><ul>
+<li>计算数据集合$x$的均值为$\mu$, 标准差$\sigma$</li>
+<li>套用变化公式</li>
+</ul>
+<h2 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h2><ul>
+<li>为什么采用滑动平均的方式来求解均值和方差？</li>
+</ul>
+<p>先说结论：并不是测试时的mean,var的计算方式与训练时不同，而是测试时的mean,var在训练完成整个网络中就全部固定了。由于在优化网络的时候，我们一般采用的是batch梯度下降。所以在训练过程中，只能计算当前batch样本上的mean和var。但是我们做的normalization是对于整个输入样本空间，因此需要对每个batch的mean, var做指数加权平均来将batch上的mean和var近似成整个样本空间上的mean和var.而在测试Inference过程中，一般不必要也不合适去计算测试时的batch的mean和var，比如测试仅对单样本输入进行测试时，这时去计算单样本输入的mean和var是完全没有意义的。因此会直接拿训练过程中对整个样本空间估算的mean和var直接来用。此时对于inference来说，BN就是一个线性变换。</p>
+<ul>
+<li>起始值为什么是 0 1？</li>
+</ul>
+<p>说白了就是，怎么去估计数据的真实分布？</p>
+<p><a href="https://www.cnblogs.com/34fj/p/8805979.html" target="_blank" rel="noopener">https://www.cnblogs.com/34fj/p/8805979.html</a></p>
+<h2 id="Tensorflow-实现"><a href="#Tensorflow-实现" class="headerlink" title="Tensorflow 实现"></a>Tensorflow 实现</h2><p>Note: when training, the moving_mean and moving_variance need to be updated. By default the update ops are placed in tf.GraphKeys.UPDATE_OPS, so they need to be added as a dependency to the train_op. Also, be sure to add any batch_normalization ops before getting the update_ops collection. Otherwise, update_ops will be empty, and training/inference will not work properly. For example:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">x_norm = tf.layers.batch_normalization(x, training=training)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)</span><br><span class="line"><span class="keyword">with</span> tf.control_dependencies(update_ops):</span><br><span class="line">  train_op = optimizer.minimize(loss)</span><br></pre></td></tr></table></figure>
+<h3 id="Preliminary"><a href="#Preliminary" class="headerlink" title="Preliminary"></a>Preliminary</h3><h4 id="计算均值和方差"><a href="#计算均值和方差" class="headerlink" title="计算均值和方差"></a>计算均值和方差</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tf.nn.moments(</span><br><span class="line">    x,</span><br><span class="line">    axes,</span><br><span class="line">    shift=<span class="keyword">None</span>,</span><br><span class="line">    name=<span class="keyword">None</span>,</span><br><span class="line">    keep_dims=<span class="keyword">False</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>Args:</p>
+<ul>
+<li>x: 张量</li>
+<li>axes： 列表。求均值和方差的方向</li>
+<li>name： 操作的名字</li>
+<li>keep_dims： true，均值和方差的shape与输入一致</li>
+</ul>
+<p>Returns：</p>
+<ul>
+<li>mean，variance</li>
+</ul>
+<p>When using these moments for batch normalization (see tf.nn.batch_normalization):</p>
+<ul>
+<li><p>for so-called “global normalization”, used with convolutional filters with shape [batch, height, width, depth], pass axes=[0, 1, 2].即，对同一个channel的数据进行计算均值和方差。</p>
+</li>
+<li><p>for simple batch normalization pass axes=[0] (batch only).</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">tf.nn.batch_normalization(</span><br><span class="line">    x,</span><br><span class="line">    mean,</span><br><span class="line">    variance,</span><br><span class="line">    offset,</span><br><span class="line">    scale,</span><br><span class="line">    variance_epsilon,</span><br><span class="line">    name=<span class="keyword">None</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>Args:</p>
+<ul>
+<li>x : 张量</li>
+<li>mean： 均值</li>
+<li>variance： 方差</li>
+<li>offset: \beta, default None</li>
+<li>scale: \gamma, default None </li>
+<li>variance_epsilon: A small float number to avoid dividing by 0</li>
+<li>name: 操作的名字</li>
+</ul>
+<p>性质： </p>
+<p>如果不提供scale，offset，则新的张量的均值和方差分别为0,1。</p>
+<p>mean, variance, offset and scale are all expected to be of one of two shapes:</p>
+<ul>
+<li>In all generality, they can have the same number of dimensions as the input x, with identical sizes as x for the dimensions that are not normalized over (the ‘depth’ dimension(s)), and dimension 1 for the others which are being normalized over. mean and variance in this case would typically be the outputs of tf.nn.moments(…, keep_dims=True) during training, or running averages thereof during inference.</li>
+<li>In the common case where the ‘depth’ dimension is the last dimension in the input tensor x, they may be one dimensional tensors of the same size as the ‘depth’ dimension. This is the case for example for the common [batch, depth] layout of fully-connected layers, and [batch, height, width, depth] for convolutions. mean and variance in this case would typically be the outputs of tf.nn.moments(…, keep_dims=False) during training, or running averages thereof during inference.<br>Args:</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">tf.assign(</span><br><span class="line">    ref,</span><br><span class="line">    value,</span><br><span class="line">    validate_shape=<span class="keyword">None</span>,</span><br><span class="line">    use_locking=<span class="keyword">None</span>,</span><br><span class="line">    name=<span class="keyword">None</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>Args:</p>
+<ul>
+<li>ref: A mutable Tensor. Should be from a Variable node. May be uninitialized.</li>
+<li>value: A Tensor. Must have the same type as ref. The value to be assigned to the variable.</li>
+<li>validate_shape: An optional bool. Defaults to True. If true, the operation will validate that the shape of ‘value’ matches the shape of the Tensor being assigned to. If false, ‘ref’ will take on the shape of ‘value’.<br>use_locking: An optional bool. Defaults to True. If True, the assignment will be protected by a lock; otherwise the behavior is undefined, but may exhibit less contention.</li>
+<li>name: A name for the operation (optional).<br>Returns:</li>
+<li>A Tensor that will hold the new value of ‘ref’ after the assignment has completed.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">tf.cond(</span><br><span class="line">    pred,</span><br><span class="line">    true_fn=<span class="keyword">None</span>,</span><br><span class="line">    false_fn=<span class="keyword">None</span>,</span><br><span class="line">    strict=<span class="keyword">False</span>,</span><br><span class="line">    name=<span class="keyword">None</span>,</span><br><span class="line">    fn1=<span class="keyword">None</span>,</span><br><span class="line">    fn2=<span class="keyword">None</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>Args:</p>
+<ul>
+<li>pred: A scalar determining whether to return the result of true_fn or false_fn.</li>
+<li>true_fn: The callable to be performed if pred is true.</li>
+<li>false_fn: The callable to be performed if pred is false.</li>
+<li>strict: A boolean that enables/disables ‘strict’ mode; see above.</li>
+<li>name: Optional name prefix for the returned tensors.<br>Returns:</li>
+<li>Tensors returned by the call to either true_fn or false_fn. If the callables return a singleton list, the element is extracted from the list.</li>
+</ul>
+<h4 id="BN在神经网络进行training和testing"><a href="#BN在神经网络进行training和testing" class="headerlink" title="BN在神经网络进行training和testing"></a>BN在神经网络进行training和testing</h4><h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">大多数情况下，您将能够使用高级功能，但有时您可能想要在较低的级别工作。例如，如果您想要实现一个新特性—一些新的内容，那么TensorFlow还没有包括它的高级实现，</span></span><br><span class="line"><span class="string">比如LSTM中的批处理规范化——那么您可能需要知道一些事情。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">这个版本的网络的几乎所有函数都使用tf.nn包进行编写，并且使用tf.nn.batch_normalization函数进行标准化操作</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">'fully_connected'函数的实现比使用tf.layers包进行编写的要复杂得多。然而，如果你浏览了Batch_Normalization_Lesson笔记本，事情看起来应该很熟悉。</span></span><br><span class="line"><span class="string">为了增加批量标准化，我们做了如下工作:</span></span><br><span class="line"><span class="string">Added the is_training parameter to the function signature so we can pass that information to the batch normalization layer.</span></span><br><span class="line"><span class="string">1.在函数声明中添加'is_training'参数，以确保可以向Batch Normalization层中传递信息</span></span><br><span class="line"><span class="string">2.去除函数中bias偏置属性和激活函数</span></span><br><span class="line"><span class="string">3.添加gamma, beta, pop_mean, and pop_variance等变量</span></span><br><span class="line"><span class="string">4.使用tf.cond函数来解决训练和预测时的使用方法的差异</span></span><br><span class="line"><span class="string">5.训练时，我们使用tf.nn.moments函数来计算批数据的均值和方差，然后在迭代过程中更新均值和方差的分布，并且使用tf.nn.batch_normalization做标准化</span></span><br><span class="line"><span class="string">  注意：一定要使用with tf.control_dependencies...语句结构块来强迫Tensorflow先更新均值和方差的分布，再使用执行批标准化操作</span></span><br><span class="line"><span class="string">6.在前向传播推导时(特指只进行预测，而不对训练参数进行更新时)，我们使用tf.nn.batch_normalization批标准化时其中的均值和方差分布来自于训练时我们</span></span><br><span class="line"><span class="string">  使用滑动平均算法估计的值。</span></span><br><span class="line"><span class="string">7.将标准化后的值通过RelU激活函数求得输出</span></span><br><span class="line"><span class="string">8.不懂请参见https://github.com/udacity/deep-learning/blob/master/batch-norm/Batch_Normalization_Lesson.ipynb</span></span><br><span class="line"><span class="string">  中关于使用tf.nn.batch_normalization实现'fully_connected'函数的操作</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line"></span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"MNIST_data/"</span>, one_hot=<span class="keyword">True</span>, reshape=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fully_connected</span><span class="params">(prev_layer, num_units, is_training)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    num_units参数传递该层神经元的数量，根据prev_layer参数传入值作为该层输入创建全连接神经网络。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">   :param prev_layer: Tensor</span></span><br><span class="line"><span class="string">        该层神经元输入</span></span><br><span class="line"><span class="string">    :param num_units: int</span></span><br><span class="line"><span class="string">        该层神经元结点个数</span></span><br><span class="line"><span class="string">    :param is_training: bool or Tensor</span></span><br><span class="line"><span class="string">        表示该网络当前是否正在训练，告知Batch Normalization层是否应该更新或者使用均值或方差的分布信息</span></span><br><span class="line"><span class="string">    :returns Tensor</span></span><br><span class="line"><span class="string">        一个新的全连接神经网络层</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    layer = tf.layers.dense(prev_layer, num_units, use_bias=<span class="keyword">False</span>, activation=<span class="keyword">None</span>)</span><br><span class="line"></span><br><span class="line">    gamma = tf.Variable(tf.ones([num_units]))</span><br><span class="line">    beta = tf.Variable(tf.zeros([num_units]))</span><br><span class="line"></span><br><span class="line">    pop_mean = tf.Variable(tf.zeros([num_units]), trainable=<span class="keyword">False</span>)</span><br><span class="line">    pop_variance = tf.Variable(tf.ones([num_units]), trainable=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">    epsilon = <span class="number">1e-3</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">batch_norm_training</span><span class="params">()</span>:</span></span><br><span class="line">        batch_mean, batch_variance = tf.nn.moments(layer, [<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">        decay = <span class="number">0.99</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 为什么其实是0均值, 1方差#</span></span><br><span class="line">        train_mean = tf.assign(pop_mean, pop_mean*decay + batch_mean*(<span class="number">1</span> - decay))</span><br><span class="line">        train_variance = tf.assign(pop_variance, pop_variance*decay + batch_variance*(<span class="number">1</span> - decay))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> tf.control_dependencies([train_mean, train_variance]):</span><br><span class="line">            <span class="keyword">return</span> tf.nn.batch_normalization(layer, batch_mean, batch_variance, beta, gamma, epsilon)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">batch_norm_inference</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="keyword">return</span> tf.nn.batch_normalization(layer, pop_mean, pop_variance, beta, gamma, epsilon)</span><br><span class="line"></span><br><span class="line">    batch_normalized_output = tf.cond(is_training, batch_norm_training, batch_norm_inference)</span><br><span class="line">    <span class="keyword">return</span> tf.nn.relu(batch_normalized_output)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">我们对conv_layer卷积层的改变和我们对fully_connected全连接层的改变几乎差不多。</span></span><br><span class="line"><span class="string">然而也有很大的区别，卷积层有多个特征图并且每个特征图在输入图层上共享权重</span></span><br><span class="line"><span class="string">所以我们需要确保应该针对每个特征图而不是卷积层上的每个节点进行Batch Normalization操作</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">为了实现这一点，我们做了与fully_connected相同的事情，有两个例外:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">1.将gamma、beta、pop_mean和pop_方差的大小设置为feature map(输出通道)的数量，而不是输出节点的数量。</span></span><br><span class="line"><span class="string">2.我们改变传递给tf.nn的参数。时刻确保它计算正确维度的均值和方差。</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv_layer</span><span class="params">(prev_layer, layer_depth, is_training)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">       使用给定的参数作为输入创建卷积层</span></span><br><span class="line"><span class="string">        :param prev_layer: Tensor</span></span><br><span class="line"><span class="string">            传入该层神经元作为输入</span></span><br><span class="line"><span class="string">        :param layer_depth: int</span></span><br><span class="line"><span class="string">            我们将根据网络中图层的深度设置特征图的步长和数量。</span></span><br><span class="line"><span class="string">            这不是实践CNN的好方法，但它可以帮助我们用很少的代码创建这个示例。</span></span><br><span class="line"><span class="string">        :param is_training: bool or Tensor</span></span><br><span class="line"><span class="string">            表示该网络当前是否正在训练，告知Batch Normalization层是否应该更新或者使用均值或方差的分布信息</span></span><br><span class="line"><span class="string">        :returns Tensor</span></span><br><span class="line"><span class="string">            一个新的卷积层</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">    strides = <span class="number">2</span> <span class="keyword">if</span> layer_depth%<span class="number">3</span> == <span class="number">0</span> <span class="keyword">else</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    in_channels = prev_layer.get_shape().as_list()[<span class="number">3</span>]</span><br><span class="line">    out_channels = layer_depth*<span class="number">4</span></span><br><span class="line"></span><br><span class="line">    weights = tf.Variable(</span><br><span class="line">        tf.truncated_normal([<span class="number">3</span>, <span class="number">3</span>, in_channels, out_channels], stddev=<span class="number">0.05</span>))</span><br><span class="line"></span><br><span class="line">    layer = tf.nn.conv2d(prev_layer, weights, strides=[<span class="number">1</span>, strides, strides, <span class="number">1</span>], padding=<span class="string">'SAME'</span>)</span><br><span class="line"></span><br><span class="line">    gamma = tf.Variable(tf.ones([out_channels]))</span><br><span class="line">    beta = tf.Variable(tf.zeros([out_channels]))</span><br><span class="line"></span><br><span class="line">    pop_mean = tf.Variable(tf.zeros([out_channels]), trainable=<span class="keyword">False</span>)</span><br><span class="line">    pop_variance = tf.Variable(tf.ones([out_channels]), trainable=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">    epsilon = <span class="number">1e-3</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">batch_norm_training</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="comment"># 一定要使用正确的维度确保计算的是每个特征图上的平均值和方差而不是整个网络节点上的统计分布值</span></span><br><span class="line">        batch_mean, batch_variance = tf.nn.moments(layer, [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>], keep_dims=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">        decay = <span class="number">0.99</span></span><br><span class="line">        train_mean = tf.assign(pop_mean, pop_mean*decay + batch_mean*(<span class="number">1</span> - decay))</span><br><span class="line">        train_variance = tf.assign(pop_variance, pop_variance*decay + batch_variance*(<span class="number">1</span> - decay))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> tf.control_dependencies([train_mean, train_variance]):</span><br><span class="line">            <span class="keyword">return</span> tf.nn.batch_normalization(layer, batch_mean, batch_variance, beta, gamma, epsilon)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">batch_norm_inference</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="keyword">return</span> tf.nn.batch_normalization(layer, pop_mean, pop_variance, beta, gamma, epsilon)</span><br><span class="line"></span><br><span class="line">    batch_normalized_output = tf.cond(is_training, batch_norm_training, batch_norm_inference)</span><br><span class="line">    <span class="keyword">return</span> tf.nn.relu(batch_normalized_output)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">为了修改训练函数，我们需要做以下工作:</span></span><br><span class="line"><span class="string">1.Added is_training, a placeholder to store a boolean value indicating whether or not the network is training.</span></span><br><span class="line"><span class="string">添加is_training，一个用于存储布尔值的占位符，该值指示网络是否正在训练</span></span><br><span class="line"><span class="string">2.Each time we call run on the session, we added to feed_dict the appropriate value for is_training.</span></span><br><span class="line"><span class="string">每次调用sess.run函数时，我们都添加到feed_dict中is_training的适当值用以表示当前是正在训练还是预测</span></span><br><span class="line"><span class="string">3.We did not need to add the with tf.control_dependencies... statement that we added in the network that used tf.layers.batch_normalization</span></span><br><span class="line"><span class="string">because we handled updating the population statistics ourselves in conv_layer and fully_connected.</span></span><br><span class="line"><span class="string">我们不需要将train_opt训练函数放进with tf.control_dependencies... 的函数结构体中,这是只有在使用tf.layers.batch_normalization才做的更新均值和方差的操作</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(num_batches, batch_size, learning_rate)</span>:</span></span><br><span class="line">    <span class="comment"># Build placeholders for the input samples and labels</span></span><br><span class="line">    <span class="comment"># 创建输入样本和标签的占位符</span></span><br><span class="line">    inputs = tf.placeholder(tf.float32, [<span class="keyword">None</span>, <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>])</span><br><span class="line">    labels = tf.placeholder(tf.float32, [<span class="keyword">None</span>, <span class="number">10</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Add placeholder to indicate whether or not we're training the model</span></span><br><span class="line">    <span class="comment"># 创建占位符表明当前是否正在训练模型</span></span><br><span class="line">    is_training = tf.placeholder(tf.bool)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Feed the inputs into a series of 20 convolutional layers</span></span><br><span class="line">    <span class="comment"># 把输入数据填充到一系列20个卷积层的神经网络中</span></span><br><span class="line">    layer = inputs</span><br><span class="line">    <span class="keyword">for</span> layer_i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">20</span>):</span><br><span class="line">        layer = conv_layer(layer, layer_i, is_training)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Flatten the output from the convolutional layers</span></span><br><span class="line">    <span class="comment"># 将卷积层输出扁平化处理</span></span><br><span class="line">    orig_shape = layer.get_shape().as_list()</span><br><span class="line">    layer = tf.reshape(layer, shape=[<span class="number">-1</span>, orig_shape[<span class="number">1</span>]*orig_shape[<span class="number">2</span>]*orig_shape[<span class="number">3</span>]])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Add one fully connected layer</span></span><br><span class="line">    <span class="comment"># 添加一个具有100个神经元的全连接层</span></span><br><span class="line">    layer = fully_connected(layer, <span class="number">100</span>, is_training)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Create the output layer with 1 node for each</span></span><br><span class="line">    <span class="comment"># 为每一个类别添加一个输出节点</span></span><br><span class="line">    logits = tf.layers.dense(layer, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Define loss and training operations</span></span><br><span class="line">    <span class="comment"># 定义loss 函数和训练操作</span></span><br><span class="line">    model_loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=logits, labels=labels))</span><br><span class="line">    train_opt = tf.train.AdamOptimizer(learning_rate).minimize(model_loss)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Create operations to test accuracy</span></span><br><span class="line">    <span class="comment"># 创建计算准确度的操作</span></span><br><span class="line">    correct_prediction = tf.equal(tf.argmax(logits, <span class="number">1</span>), tf.argmax(labels, <span class="number">1</span>))</span><br><span class="line">    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Train and test the network</span></span><br><span class="line">    <span class="comment"># 训练并测试网络模型</span></span><br><span class="line">    <span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">        sess.run(tf.global_variables_initializer())</span><br><span class="line">        <span class="keyword">for</span> batch_i <span class="keyword">in</span> range(num_batches):</span><br><span class="line">            batch_xs, batch_ys = mnist.train.next_batch(batch_size)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># train this batch</span></span><br><span class="line">            <span class="comment"># 训练样本批次</span></span><br><span class="line">            sess.run(train_opt, &#123;inputs: batch_xs, labels: batch_ys, is_training: <span class="keyword">True</span>&#125;)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Periodically check the validation or training loss and accuracy</span></span><br><span class="line">            <span class="comment"># 定期检查训练或验证集上的loss和精确度</span></span><br><span class="line">            <span class="keyword">if</span> batch_i%<span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">                loss, acc = sess.run([model_loss, accuracy], &#123;inputs: mnist.validation.images,</span><br><span class="line">                                                              labels: mnist.validation.labels,</span><br><span class="line">                                                              is_training: <span class="keyword">False</span>&#125;)</span><br><span class="line">                print(</span><br><span class="line">                    <span class="string">'Batch: &#123;:&gt;2&#125;: Validation loss: &#123;:&gt;3.5f&#125;, Validation accuracy: &#123;:&gt;3.5f&#125;'</span>.format(batch_i, loss, acc))</span><br><span class="line">            <span class="keyword">elif</span> batch_i%<span class="number">25</span> == <span class="number">0</span>:</span><br><span class="line">                loss, acc = sess.run([model_loss, accuracy], &#123;inputs: batch_xs, labels: batch_ys, is_training: <span class="keyword">False</span>&#125;)</span><br><span class="line">                print(<span class="string">'Batch: &#123;:&gt;2&#125;: Training loss: &#123;:&gt;3.5f&#125;, Training accuracy: &#123;:&gt;3.5f&#125;'</span>.format(batch_i, loss, acc))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># At the end, score the final accuracy for both the validation and test sets</span></span><br><span class="line">        <span class="comment"># 最后在验证集和测试集上对模型准确率进行评分</span></span><br><span class="line">        acc = sess.run(accuracy, &#123;inputs: mnist.validation.images,</span><br><span class="line">                                  labels: mnist.validation.labels,</span><br><span class="line">                                  is_training: <span class="keyword">False</span>&#125;)</span><br><span class="line">        print(<span class="string">'Final validation accuracy: &#123;:&gt;3.5f&#125;'</span>.format(acc))</span><br><span class="line">        acc = sess.run(accuracy, &#123;inputs: mnist.test.images,</span><br><span class="line">                                  labels: mnist.test.labels,</span><br><span class="line">                                  is_training: <span class="keyword">False</span>&#125;)</span><br><span class="line">        print(<span class="string">'Final test accuracy: &#123;:&gt;3.5f&#125;'</span>.format(acc))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Score the first 100 test images individually, just to make sure batch normalization really worked</span></span><br><span class="line">        <span class="comment"># 对100个独立的测试图片进行评分,对比验证Batch Normalization的效果</span></span><br><span class="line">        correct = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">            correct += sess.run(accuracy, feed_dict=&#123;inputs: [mnist.test.images[i]],</span><br><span class="line">                                                     labels: [mnist.test.labels[i]],</span><br><span class="line">                                                     is_training: <span class="keyword">False</span>&#125;)</span><br><span class="line"></span><br><span class="line">        print(<span class="string">"Accuracy on 100 samples:"</span>, correct/<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">num_batches = <span class="number">800</span>  <span class="comment"># 迭代次数</span></span><br><span class="line">batch_size = <span class="number">64</span>  <span class="comment"># 批处理数量</span></span><br><span class="line">learning_rate = <span class="number">0.002</span>  <span class="comment"># 学习率</span></span><br><span class="line"></span><br><span class="line">tf.reset_default_graph()</span><br><span class="line"><span class="keyword">with</span> tf.Graph().as_default():</span><br><span class="line">    train(num_batches, batch_size, learning_rate)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">再一次，批量标准化的模型很快达到了很高的精度。</span></span><br><span class="line"><span class="string">但是在我们的运行中，注意到它似乎并没有学习到前250个批次的任何东西，然后精度开始上升。</span></span><br><span class="line"><span class="string">这只是显示——即使是批处理标准化，给您的网络一些时间来学习是很重要的。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">PS:再100个单个数据的预测上达到了较高的精度，而这才是BN算法真正关注的！！</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="comment"># Extracting MNIST_data/train-images-idx3-ubyte.gz</span></span><br><span class="line"><span class="comment"># Extracting MNIST_data/train-labels-idx1-ubyte.gz</span></span><br><span class="line"><span class="comment"># Extracting MNIST_data/t10k-images-idx3-ubyte.gz</span></span><br><span class="line"><span class="comment"># Extracting MNIST_data/t10k-labels-idx1-ubyte.gz</span></span><br><span class="line"><span class="comment"># 2018-03-18 19:35:28.568404: I D:\Build\tensorflow\tensorflow-r1.4\tensorflow\core\platform\cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX</span></span><br><span class="line"><span class="comment"># Batch:  0: Validation loss: 0.69113, Validation accuracy: 0.10020</span></span><br><span class="line"><span class="comment"># Batch: 25: Training loss: 0.57341, Training accuracy: 0.07812</span></span><br><span class="line"><span class="comment"># Batch: 50: Training loss: 0.45526, Training accuracy: 0.04688</span></span><br><span class="line"><span class="comment"># Batch: 75: Training loss: 0.37936, Training accuracy: 0.12500</span></span><br><span class="line"><span class="comment"># Batch: 100: Validation loss: 0.34601, Validation accuracy: 0.10700</span></span><br><span class="line"><span class="comment"># Batch: 125: Training loss: 0.34113, Training accuracy: 0.12500</span></span><br><span class="line"><span class="comment"># Batch: 150: Training loss: 0.33075, Training accuracy: 0.12500</span></span><br><span class="line"><span class="comment"># Batch: 175: Training loss: 0.34333, Training accuracy: 0.15625</span></span><br><span class="line"><span class="comment"># Batch: 200: Validation loss: 0.37085, Validation accuracy: 0.09860</span></span><br><span class="line"><span class="comment"># Batch: 225: Training loss: 0.40175, Training accuracy: 0.09375</span></span><br><span class="line"><span class="comment"># Batch: 250: Training loss: 0.48562, Training accuracy: 0.06250</span></span><br><span class="line"><span class="comment"># Batch: 275: Training loss: 0.67897, Training accuracy: 0.09375</span></span><br><span class="line"><span class="comment"># Batch: 300: Validation loss: 0.48383, Validation accuracy: 0.09880</span></span><br><span class="line"><span class="comment"># Batch: 325: Training loss: 0.43822, Training accuracy: 0.14062</span></span><br><span class="line"><span class="comment"># Batch: 350: Training loss: 0.43227, Training accuracy: 0.18750</span></span><br><span class="line"><span class="comment"># Batch: 375: Training loss: 0.39464, Training accuracy: 0.37500</span></span><br><span class="line"><span class="comment"># Batch: 400: Validation loss: 0.50557, Validation accuracy: 0.25940</span></span><br><span class="line"><span class="comment"># Batch: 425: Training loss: 0.32337, Training accuracy: 0.59375</span></span><br><span class="line"><span class="comment"># Batch: 450: Training loss: 0.14016, Training accuracy: 0.75000</span></span><br><span class="line"><span class="comment"># Batch: 475: Training loss: 0.11652, Training accuracy: 0.78125</span></span><br><span class="line"><span class="comment"># Batch: 500: Validation loss: 0.06241, Validation accuracy: 0.91280</span></span><br><span class="line"><span class="comment"># Batch: 525: Training loss: 0.01880, Training accuracy: 0.96875</span></span><br><span class="line"><span class="comment"># Batch: 550: Training loss: 0.03640, Training accuracy: 0.93750</span></span><br><span class="line"><span class="comment"># Batch: 575: Training loss: 0.07202, Training accuracy: 0.90625</span></span><br><span class="line"><span class="comment"># Batch: 600: Validation loss: 0.03984, Validation accuracy: 0.93960</span></span><br><span class="line"><span class="comment"># Batch: 625: Training loss: 0.00692, Training accuracy: 0.98438</span></span><br><span class="line"><span class="comment"># Batch: 650: Training loss: 0.01251, Training accuracy: 0.96875</span></span><br><span class="line"><span class="comment"># Batch: 675: Training loss: 0.01823, Training accuracy: 0.96875</span></span><br><span class="line"><span class="comment"># Batch: 700: Validation loss: 0.03951, Validation accuracy: 0.94080</span></span><br><span class="line"><span class="comment"># Batch: 725: Training loss: 0.02886, Training accuracy: 0.95312</span></span><br><span class="line"><span class="comment"># Batch: 750: Training loss: 0.06396, Training accuracy: 0.87500</span></span><br><span class="line"><span class="comment"># Batch: 775: Training loss: 0.02013, Training accuracy: 0.98438</span></span><br><span class="line"><span class="comment"># Final validation accuracy: 0.95820</span></span><br><span class="line"><span class="comment"># Final test accuracy: 0.95780</span></span><br><span class="line"><span class="comment"># Accuracy on 100 samples: 0.98</span></span><br></pre></td></tr></table></figure>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://github.com/SunshineJunFu/deep-learning/blob/master/batch-norm/Batch_Normalization_Solutions.ipynb">https://github.com/SunshineJunFu/deep-learning/blob/master/batch-norm/Batch_Normalization_Solutions.ipynb</a></p>
+<p><a href="https://www.cnblogs.com/zhengmingli/p/8031690.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhengmingli/p/8031690.html</a></p>
+<p><a href="https://www.tensorflow.org/api_docs/python/tf/nn/batch_normalization?hl=zh-cn" target="_blank" rel="noopener">https://www.tensorflow.org/api_docs/python/tf/nn/batch_normalization?hl=zh-cn</a></p>
+<p><a href="https://www.jianshu.com/p/615113382fac" target="_blank" rel="noopener">https://www.jianshu.com/p/615113382fac</a></p>
+<p><a href="http://lamda.nju.edu.cn/weixs/project/CNNTricks/CNNTricks.html" target="_blank" rel="noopener">http://lamda.nju.edu.cn/weixs/project/CNNTricks/CNNTricks.html</a></p>
+<p><a href="https://www.zhihu.com/question/38102762" target="_blank" rel="noopener">https://www.zhihu.com/question/38102762</a></p>
+<p><a href="http://www.cnblogs.com/cloud-ken/p/9314769.html" target="_blank" rel="noopener">http://www.cnblogs.com/cloud-ken/p/9314769.html</a></p>
+<p><a href="https://www.cnblogs.com/wuliytTaotao/p/9479958.html" target="_blank" rel="noopener">https://www.cnblogs.com/wuliytTaotao/p/9479958.html</a></p>
+<p><a href="https://www.zhihu.com/question/66873757/answer/405455697" target="_blank" rel="noopener">https://www.zhihu.com/question/66873757/answer/405455697</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-02-17T07:18:54.707Z" itemprop="dateUpdated">2019-02-17 15:18:54</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/SunshineJunFu/JunFu.github.io">
+            <img src="/JunFu.github.io/images/avatar.jpg" alt="Jun Fu">
+            Jun Fu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-9/&title=《tensorflow_tutorial_9》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-9/&title=《tensorflow_tutorial_9》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-9/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tensorflow_tutorial_9》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-9/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-9/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JunFu.github.io/2019/02/03/tensorflow-tutorial-10/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">tensorflow_tutorial_10</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JunFu.github.io/2019/02/03/tensorflow-tutorial-8/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">tensorflow_tutorial_8</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "jeA0VlYdrPRbE0nMW3DV5gow-gzGzoHsz",
+            appKey: "QvgEiq6wSQKvTmKUUM5pcMJh",
+            avatar: "mm",
+            placeholder: "share your ideas",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        UV：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        PV：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/JunFu.github.io/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Jun Fu &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-9/&title=《tensorflow_tutorial_9》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-9/&title=《tensorflow_tutorial_9》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-9/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tensorflow_tutorial_9》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-9/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-9/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACt0lEQVR42u3aQW4CMQwFUO5/6XZbqZ3h246BSm9WiEKSl0qxsfN4xM/Xj+fnO1ef+f35fMyrd+5HGz14eHh4g6VfDXc/zRX7fguu3rka5349l1uAh4eHt8a7OlGTyfKFJjPmm3K/Zjw8PLxP41UP6CTwTBJ6PDw8vP/CiyYYlB6qa8DDw8N7Ja839H2BdXKgv6HWgoeHhxfz8i7S57xe6e/h4eHhjbvq89Q2ObJ7QShaLR4eHt4CLz9wq8XZSRusmo4/WSceHh7eUd7k0kC1LNsLCfn1rz9e4+Hh4S3w8gDQa2gdWFAxUB37Gh4eHl7c5i/8yI8ByXeTsJTPhYeHh7fHmxQdetcIelcKqoUMPDw8vG1erzhbLUlMNitfw4Hoh4eHh1fLjcsF1kmKPCn4JvPi4eHhvZ43uuoUNMyqsx+rWOPh4eENePcLSsq1vVR7fskgCgl4eHh4a7xq6bb6mWoROb+g8KTIi4eHh7fAqzbsq0WH/BrBRmqOh4eHt82blw/ycm11nF6LDg8PD2+Dl19+qoaT3u7mmxKVLfDw8PCWeXlzq3fRatJsS5LvP17j4eHhvYSXJLLzTlOego/aYHh4eHhv4lUb9vMgUS3URsUIPDw8vAXexvTVJll1tCdj4uHh4S3wqi3/HqYXQqolEjw8PLzX86qTVRPoJHGvpu/RPwAPDw9vjTc5js9eApgEmELcw8PDwzvESybopbbzBlizYIGHh4d3lNe7dJXnq9XGWC+tv/wrHh4e3gKveuD2yrLVQJIEjFOBBA8PD6/HSxbRS7vzFtqklPxkFjw8PLw1Xl6KzYsLCal3AStvj+Hh4eF9Gq+XwU7CQzOlxsPDw3srb54uzy8QFDYODw8Pb42Xp8h5IaC6lF6T7FitBQ8PDy/mVX/wVw/xvJFWvaDwOPXg4eHhpbxvx8fkKRUCsQIAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/JunFu.github.io/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/JunFu.github.io/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/JunFu.github.io/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'Where are you!';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Hi! Welcome Back!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+<script src="/JunFu.github.io/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/JunFu.github.io/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

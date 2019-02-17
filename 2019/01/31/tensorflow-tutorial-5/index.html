@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    
+    <title>tensorflow_tutorial_5 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tensorflow">
+    <meta name="description" content="Summaryclass tf.Summary.FileWriterinit创建一个writer 123456789__init__(    logdir,    graph=None,    max_queue=10,    flush_secs=120,    graph_def=None,    filename_suffix=None,    session=None) add_summa">
+<meta name="keywords" content="tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tensorflow_tutorial_5">
+<meta property="og:url" content="https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-5/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Summaryclass tf.Summary.FileWriterinit创建一个writer 123456789__init__(    logdir,    graph=None,    max_queue=10,    flush_secs=120,    graph_def=None,    filename_suffix=None,    session=None) add_summa">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-02-17T07:18:54.702Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tensorflow_tutorial_5">
+<meta name="twitter:description" content="Summaryclass tf.Summary.FileWriterinit创建一个writer 123456789__init__(    logdir,    graph=None,    max_queue=10,    flush_secs=120,    graph_def=None,    filename_suffix=None,    session=None) add_summa">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/JunFu.github.io/atom.xml">
+    
+    <link rel="shortcut icon" href="/JunFu.github.io/favicon.ico">
+    <link rel="stylesheet" href="/JunFu.github.io/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/JunFu.github.io/img/brand.jpg)">
+      <div class="brand">
+        <a href="/JunFu.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/JunFu.github.io/images/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Jun Fu</h5>
+          <a href="mailto:fujun@mail.ustc.edu.cn" title="fujun@mail.ustc.edu.cn" class="mail">fujun@mail.ustc.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/">
+                <i class="icon icon-lg icon-home"></i>
+                Homepage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/SunshineJunFu" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">tensorflow_tutorial_5</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">tensorflow_tutorial_5</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-01-31T08:25:52.000Z" itemprop="datePublished" class="page-time">
+  2019-01-31
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Summary"><span class="post-toc-number">1.</span> <span class="post-toc-text">Summary</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#class-tf-Summary-FileWriter"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">class tf.Summary.FileWriter</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#init"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">init</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#add-summary"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">add_summary</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#flush"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">flush</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#close"><span class="post-toc-number">1.1.4.</span> <span class="post-toc-text">close</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#visulization-Function"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">visulization Function</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#scalar"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">scalar</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#image"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">image</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#histogram"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">histogram</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#text"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">text</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#audio"><span class="post-toc-number">1.2.5.</span> <span class="post-toc-text">audio</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#合并可视化操作"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">合并可视化操作</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#tf-summary-merge"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">tf.summary.merge</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#tf-summary-merge-all"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">tf.summary.merge_all</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Conclusion</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-tensorflow-tutorial-5" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">tensorflow_tutorial_5</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-01-31 16:25:52" datetime="2019-01-31T08:25:52.000Z" itemprop="datePublished">2019-01-31</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a><a href="https://www.tensorflow.org/api_docs/python/tf/summary?hl=en" target="_blank" rel="noopener">Summary</a></h1><h2 id="class-tf-Summary-FileWriter"><a href="#class-tf-Summary-FileWriter" class="headerlink" title="class tf.Summary.FileWriter"></a>class tf.Summary.FileWriter</h2><h3 id="init"><a href="#init" class="headerlink" title="init"></a><strong>init</strong></h3><p>创建一个writer</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">__init__(</span><br><span class="line">    logdir,</span><br><span class="line">    graph=<span class="keyword">None</span>,</span><br><span class="line">    max_queue=<span class="number">10</span>,</span><br><span class="line">    flush_secs=<span class="number">120</span>,</span><br><span class="line">    graph_def=<span class="keyword">None</span>,</span><br><span class="line">    filename_suffix=<span class="keyword">None</span>,</span><br><span class="line">    session=<span class="keyword">None</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="add-summary"><a href="#add-summary" class="headerlink" title="add_summary"></a>add_summary</h3><p>将summary string添加至事件文件中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">add_summary(</span><br><span class="line">    summary,</span><br><span class="line">    global_step=<span class="keyword">None</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="flush"><a href="#flush" class="headerlink" title="flush"></a>flush</h3><p>将事件文件写到磁盘<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flush()</span><br></pre></td></tr></table></figure></p>
+<h3 id="close"><a href="#close" class="headerlink" title="close"></a>close</h3><p>将事件文件写到磁盘并关闭FileWriter。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">close()</span><br></pre></td></tr></table></figure>
+<h2 id="visulization-Function"><a href="#visulization-Function" class="headerlink" title="visulization Function"></a>visulization Function</h2><h3 id="scalar"><a href="#scalar" class="headerlink" title="scalar"></a>scalar</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tf.summary.scalar(</span><br><span class="line">    name,</span><br><span class="line">    tensor,</span><br><span class="line">    collections=<span class="keyword">None</span>,</span><br><span class="line">    family=<span class="keyword">None</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>Args:</p>
+<ul>
+<li><p>name: 显示的名字</p>
+</li>
+<li><p>family： 同一族</p>
+</li>
+<li><p>Return： 一个<code>operation</code></p>
+</li>
+</ul>
+<h3 id="image"><a href="#image" class="headerlink" title="image"></a>image</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tf.summary.image(</span><br><span class="line">    name,</span><br><span class="line">    tensor,</span><br><span class="line">    max_outputs=<span class="number">3</span>,</span><br><span class="line">    collections=<span class="keyword">None</span>,</span><br><span class="line">    family=<span class="keyword">None</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>Args:</p>
+<ul>
+<li><p>name: 显示的名字</p>
+</li>
+<li><p>tensor： shape [batch_size, height, width, channels]， channels可以是1,3,4，分别对应于Grayscale，RGB，RGBA。</p>
+</li>
+</ul>
+<h3 id="histogram"><a href="#histogram" class="headerlink" title="histogram"></a>histogram</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">tf.summary.histogram(</span><br><span class="line">    name,</span><br><span class="line">    values,</span><br><span class="line">    collections=<span class="keyword">None</span>,</span><br><span class="line">    family=<span class="keyword">None</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>name: 显示的名称</p>
+</li>
+<li><p>values： 处理的数据，可以是任意形状</p>
+</li>
+</ul>
+<h3 id="text"><a href="#text" class="headerlink" title="text"></a>text</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">tf.summary.text(</span><br><span class="line">    name,</span><br><span class="line">    tensor,</span><br><span class="line">    collections=<span class="keyword">None</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>tensor: a string-type Tensor to summarize.</li>
+</ul>
+<h3 id="audio"><a href="#audio" class="headerlink" title="audio"></a><a href="https://www.tensorflow.org/api_docs/python/tf/summary/audio?hl=en" target="_blank" rel="noopener">audio</a></h3><h2 id="合并可视化操作"><a href="#合并可视化操作" class="headerlink" title="合并可视化操作"></a>合并可视化操作</h2><p>目的: 使得1次forward propagation，获取多个summary</p>
+<h3 id="tf-summary-merge"><a href="#tf-summary-merge" class="headerlink" title="tf.summary.merge"></a>tf.summary.merge</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">tf.summary.merge(</span><br><span class="line">    inputs,</span><br><span class="line">    collections=<span class="keyword">None</span>,</span><br><span class="line">    name=<span class="keyword">None</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>inputs:  A list of string Tensor objects containing serialized Summary protocol buffers.</li>
+</ul>
+<h3 id="tf-summary-merge-all"><a href="#tf-summary-merge-all" class="headerlink" title="tf.summary.merge_all"></a>tf.summary.merge_all</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tf.summary.merge_all(</span><br><span class="line">    key=tf.GraphKeys.SUMMARIES,</span><br><span class="line">    scope=<span class="keyword">None</span>,</span><br><span class="line">    name=<span class="keyword">None</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>Merges all summaries collected in the default graph.</p>
+<p>Args:</p>
+<ul>
+<li>key: GraphKey used to collect the summaries. Defaults to GraphKeys.SUMMARIES.</li>
+<li>scope: Optional scope used to filter the summary ops, using re.match</li>
+</ul>
+<p>Return: 返回一个ops</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>可视化主要流程：</p>
+<ul>
+<li><p>预定义Summary objects</p>
+</li>
+<li><p>合并Summary objects</p>
+</li>
+<li><p>启动Session</p>
+</li>
+<li><p>定义tf.summary.FileWriter</p>
+</li>
+<li><p>获取summary string ： sess.run(summary_ops， feed_dict={})</p>
+</li>
+<li><p>添加至事件文件</p>
+</li>
+<li><p>写入磁盘</p>
+</li>
+</ul>
+<p>For example</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">var = tf.Variable(tf.zeros([], name=<span class="string">'var'</span>))</span><br><span class="line"></span><br><span class="line">scalar_op = tf.Summary.scalar(<span class="string">'var'</span>, var)</span><br><span class="line"></span><br><span class="line">merge_op = tf.Summary.merge_all()</span><br><span class="line"></span><br><span class="line">init_op = tf.global_variables_initializer()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line"></span><br><span class="line">	writer = tf.Summary.FileWriter(<span class="string">'./logs'</span>)</span><br><span class="line"></span><br><span class="line">	sess.run(init_op)</span><br><span class="line"></span><br><span class="line">	summary_string = sess.run(merge_op)</span><br><span class="line"></span><br><span class="line">	writer.add_summary(summary_string, global_step=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">	writer.flush()</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-02-17T07:18:54.702Z" itemprop="dateUpdated">2019-02-17 15:18:54</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/SunshineJunFu/JunFu.github.io">
+            <img src="/JunFu.github.io/images/avatar.jpg" alt="Jun Fu">
+            Jun Fu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/JunFu.github.io/tags/tensorflow/">tensorflow</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-5/&title=《tensorflow_tutorial_5》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-5/&title=《tensorflow_tutorial_5》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-5/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tensorflow_tutorial_5》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-5/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-5/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JunFu.github.io/2019/02/02/tensorflow-tutorial-6/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">tensorflow_tutorial_6</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JunFu.github.io/2019/01/31/tensorflow-tutorial-4/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">tensorflow_tutorial_4</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "jeA0VlYdrPRbE0nMW3DV5gow-gzGzoHsz",
+            appKey: "QvgEiq6wSQKvTmKUUM5pcMJh",
+            avatar: "mm",
+            placeholder: "share your ideas",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        UV：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        PV：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/JunFu.github.io/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Jun Fu &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-5/&title=《tensorflow_tutorial_5》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-5/&title=《tensorflow_tutorial_5》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-5/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tensorflow_tutorial_5》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-5/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-5/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACr0lEQVR42u3aQW4jMQwEwPz/07vXBF57u0nJcICaU+DYmikdxEGTX1/x9efb9fqTx1/t13z8/PCFh4eHt3j0Z8slnz+SnoFfr5BsVvLMeHh4eLd5z07U10snx3deMNptff3MeHh4eJ/Ge11a8jfbzcs3Hh4e3u/lvX453kQPs2fAw8PDew9vtnQeYbRbOdsIPDw8vPfw8i7S5/x9pb+Hh4eHt+6qz4pEUjDyoCEvBv+4Fx4eHt4FXn7gbrbg7EhWOxyGh4eHd5Y3KwN5ELAvCbNhAjw8PLx7vCR6aMew8sGCTdBwLLTFw8PDK3nJo8wGqtphrGQT83vh4eHh3eMlP2sfdDMckK95oBmGh4eHN+LlmDbA3Rzu7ShY1N/Dw8PDO8TbDF3lh3U7FjCLHoa5Cx4eHt6Il7fwZ42o9sguIoY8hsDDw8M7xJs1pdoX3Pa/m5gDDw8P7z282Qvx5uif9frzO/7IWvDw8PCO8trbtEVlP5jVfme1i3h4eHgjXjt0lUcSbfCRb27BxsPDw1vz7r0Qz3Y335QotsDDw8O7wJu1uDa3n23KphTh4eHh3ea1AUTbvqof7kaXDw8PD2/NazF5kDErEqfui4eHh3eDt2lEtYFC0iRr23L/WRMPDw/vAm9zfibxQTuEmgfBxcs9Hh4e3lt4szCijRLy9ths4AAPDw/vNq+92rZW3io7FRPj4eHhvYeXv2Tn329XODX4hYeHh3eDNysGeXyw2cTN+j9Sajw8PLyjvPbAbYODWfyab+W+kODh4eHNeLNi0A4QtI20feHBw8PDu81ro9jhzQ4NYOXtMTw8PLxP4M3wedssjy3w8PDwfguvzTnyQpIPEBQbh4eHh3eNl4QR+eez1tSsSXYsa8HDw8Ob5ANR8chDhLbB3zbVvk5deHh4eCnvL4KHnHFBQubKAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/JunFu.github.io/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/JunFu.github.io/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/JunFu.github.io/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'Where are you!';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Hi! Welcome Back!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+<script src="/JunFu.github.io/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/JunFu.github.io/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

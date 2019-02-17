@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    
+    <title>linuxweek4 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="linux">
+    <meta name="description" content="文件管理列出当前文件ls [optional] [file/dir]    命令 描述     ls 列出当前目录下所有文件和目录   ls file 列出文件项   ls dir 列出目录下的所有文件项       选项 描述     -F 列出的如果是目录则在名字后以斜线/表示，可执行文件*，符号连接文件@，普通文件无标记   -l 以长格式显示信息   -a 列出文件名首字符为圆点的文件，默">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linuxweek4">
+<meta property="og:url" content="https://github.com/SunshineJunFu/JunFu.github.io/2019/02/07/linuxweek4/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="文件管理列出当前文件ls [optional] [file/dir]    命令 描述     ls 列出当前目录下所有文件和目录   ls file 列出文件项   ls dir 列出目录下的所有文件项       选项 描述     -F 列出的如果是目录则在名字后以斜线/表示，可执行文件*，符号连接文件@，普通文件无标记   -l 以长格式显示信息   -a 列出文件名首字符为圆点的文件，默">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-02-17T07:18:54.653Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linuxweek4">
+<meta name="twitter:description" content="文件管理列出当前文件ls [optional] [file/dir]    命令 描述     ls 列出当前目录下所有文件和目录   ls file 列出文件项   ls dir 列出目录下的所有文件项       选项 描述     -F 列出的如果是目录则在名字后以斜线/表示，可执行文件*，符号连接文件@，普通文件无标记   -l 以长格式显示信息   -a 列出文件名首字符为圆点的文件，默">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/JunFu.github.io/atom.xml">
+    
+    <link rel="shortcut icon" href="/JunFu.github.io/favicon.ico">
+    <link rel="stylesheet" href="/JunFu.github.io/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/JunFu.github.io/img/brand.jpg)">
+      <div class="brand">
+        <a href="/JunFu.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/JunFu.github.io/images/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Jun Fu</h5>
+          <a href="mailto:fujun@mail.ustc.edu.cn" title="fujun@mail.ustc.edu.cn" class="mail">fujun@mail.ustc.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/">
+                <i class="icon icon-lg icon-home"></i>
+                Homepage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/SunshineJunFu" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">linuxweek4</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">linuxweek4</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-02-07T06:52:24.000Z" itemprop="datePublished" class="page-time">
+  2019-02-07
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#文件管理"><span class="post-toc-number">1.</span> <span class="post-toc-text">文件管理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#列出当前文件"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">列出当前文件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#长格式列表"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">长格式列表</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#文件的复制与删除"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">文件的复制与删除</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#拷贝文件"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">拷贝文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#移动文件"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">移动文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#删除文件"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">删除文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#文件打包命令"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">文件打包命令</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#目录操作"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">目录操作</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#打印-改变当前目录"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">打印/改变当前目录</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#创建-删除目录"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">创建/删除目录</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#复制目录"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">复制目录</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#touch"><span class="post-toc-number">1.3.4.</span> <span class="post-toc-text">touch</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#目录遍历-find"><span class="post-toc-number">1.3.5.</span> <span class="post-toc-text">目录遍历 find</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-linuxweek4" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">linuxweek4</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-02-07 14:52:24" datetime="2019-02-07T06:52:24.000Z" itemprop="datePublished">2019-02-07</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h1><h2 id="列出当前文件"><a href="#列出当前文件" class="headerlink" title="列出当前文件"></a>列出当前文件</h2><p><code>ls [optional] [file/dir]</code></p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ls</td>
+<td>列出当前目录下所有文件和目录</td>
+</tr>
+<tr>
+<td>ls file</td>
+<td>列出文件项</td>
+</tr>
+<tr>
+<td>ls dir</td>
+<td>列出目录下的所有文件项</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-F</td>
+<td>列出的如果是目录则在名字后以斜线/表示，可执行文件*，符号连接文件@，普通文件无标记</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>以长格式显示信息</td>
+</tr>
+<tr>
+<td>-a</td>
+<td>列出文件名首字符为圆点的文件，默认情况下不列出</td>
+</tr>
+<tr>
+<td>-A</td>
+<td>与-a类似，不列出.和..</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>列出文件占用的磁盘空间</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>列出文件的i节点号</td>
+</tr>
+<tr>
+<td>-h</td>
+<td>以便于人阅读的方式打印数值</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>当ls参数是目录时，列出目录自身信息</td>
+</tr>
+</tbody>
+</table>
+<h3 id="长格式列表"><a href="#长格式列表" class="headerlink" title="长格式列表"></a>长格式列表</h3><p><code>input</code>: ls -l arg<br><code>output</code>: -rwxr-x–x 1 liang stud 519 Jul 5 15:02 arg</p>
+<ul>
+<li>第一列：文件属性: 文件类型+文件的访问权限(rwx)（用户，与用户同组的用户，与该用户不同组的用户）</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>文件类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-</td>
+<td>普通文件</td>
+</tr>
+<tr>
+<td>d</td>
+<td>目录</td>
+</tr>
+<tr>
+<td>l</td>
+<td>符号连接文件</td>
+</tr>
+<tr>
+<td>b</td>
+<td>块设备文件</td>
+</tr>
+<tr>
+<td>c</td>
+<td>字符设备文件</td>
+</tr>
+<tr>
+<td>p</td>
+<td>命名管道文件</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>第二列: 文件link数，涉及到此文件的目录项数</p>
+</li>
+<li><p>第3,4列： 用户名，该用户所在的组</p>
+</li>
+<li><p>第5列 </p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>文件类别</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>普通文件</td>
+<td>列出文件大小</td>
+</tr>
+<tr>
+<td>目录</td>
+<td>列出目录表大小</td>
+</tr>
+<tr>
+<td>符号连接文件</td>
+<td>列出符号连接文件自身的长度</td>
+</tr>
+<tr>
+<td>字符设备和块设备</td>
+<td>列出主次设备号</td>
+</tr>
+<tr>
+<td>管道文件</td>
+<td>列出管道的数据长度</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>第6列： 文件最后一次被修改的日期和时间</p>
+</li>
+<li><p>第7列： 文件名，对于符号连接文件，附带列出符号连接文件的内容</p>
+</li>
+</ul>
+<h2 id="文件的复制与删除"><a href="#文件的复制与删除" class="headerlink" title="文件的复制与删除"></a>文件的复制与删除</h2><h3 id="拷贝文件"><a href="#拷贝文件" class="headerlink" title="拷贝文件"></a>拷贝文件</h3><p>cp file1 file2 或者 cp file1 file2… filen dir</p>
+<ul>
+<li>第二种格式，dir必须存在并且是目录</li>
+<li>第一种格式，file2不存在，则创建；file2存在且是文件，则覆盖，若是目录则按格式2处理。</li>
+</ul>
+<h3 id="移动文件"><a href="#移动文件" class="headerlink" title="移动文件"></a>移动文件</h3><p>mv file1 file2 or mv file1 file2…filen dir or mv dir1 dir2</p>
+<ul>
+<li>使用mv命令可以将文件和目录改名</li>
+<li>可以将文件和从子目录从一个目录移动到另一个目录</li>
+</ul>
+<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><p>rm file1 file2…filen</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-r</td>
+<td>recursive 递归地删除实参表中的目录</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>inform 没删除一个文件需要操作员确认</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>force 强迫删除，只读文件也被删除并且无提示</td>
+</tr>
+</tbody>
+</table>
+<h3 id="文件打包命令"><a href="#文件打包命令" class="headerlink" title="文件打包命令"></a>文件打包命令</h3><p>tar ctxv [f device] file-list</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-c</td>
+<td>create 创建新磁带，以前创建的会被覆盖</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>table 磁带的文件名列表。当不指定文件名时，将列出所有文件</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>eXtract 从磁带中抽取指定的文件，当不指定文件名时，抽取所有文件</td>
+<td>-v</td>
+<td>verbose 每处理一个文件，就打印出文件的文件名，并在该文件名前冠以功能字母</td>
+</tr>
+<tr>
+<td>f</td>
+<td>File指定设备文件名</td>
+</tr>
+<tr>
+<td>z</td>
+<td>gzip 采用gzip压缩格式</td>
+</tr>
+<tr>
+<td>j</td>
+<td>采用bzip2算法</td>
+</tr>
+</tbody>
+</table>
+<p>e.g. tar cvf my.tar *.[ch] makefile</p>
+<p>e.g. tar czvf my.tar.gz *[ch] makefile</p>
+<p>e.g. tar cjvf my.tar.bz2 *[ch] makefile</p>
+<p>其他压缩/解压命令：</p>
+<ul>
+<li>gzip/gunzip 执行速度快</li>
+<li>bzip2/bunzip2 占用较多的cpu时间</li>
+</ul>
+<h2 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h2><h3 id="打印-改变当前目录"><a href="#打印-改变当前目录" class="headerlink" title="打印/改变当前目录"></a>打印/改变当前目录</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pwd</td>
+<td>print work directory 打印当前工作目录</td>
+</tr>
+<tr>
+<td>cd dir</td>
+<td>切换至dir</td>
+</tr>
+<tr>
+<td>cd</td>
+<td>windows 打印当前目录，linux回到用户主目录</td>
+</tr>
+<tr>
+<td>cd ..</td>
+<td>回到上层目录</td>
+</tr>
+</tbody>
+</table>
+<h3 id="创建-删除目录"><a href="#创建-删除目录" class="headerlink" title="创建/删除目录"></a>创建/删除目录</h3><p>mkdir sun/work.d</p>
+<ul>
+<li>-p 自动创建路径不存在的目录 mkdir -p database/2019/09/04/log</li>
+</ul>
+<p>rmdir sum/work.d</p>
+<ul>
+<li>要求被删除的目录除.与..外无其他文件或目录</li>
+<li>-r 递归的删除目录及其子目录？</li>
+</ul>
+<h3 id="复制目录"><a href="#复制目录" class="headerlink" title="复制目录"></a>复制目录</h3><p>cp -r dir1 dir2</p>
+<ul>
+<li>dir2 不存在，新建目录dir2，把dir1下内容拷贝至dir2下</li>
+<li>dir2已存在，在dir2目录下新建dir1，把dir1内容拷贝纸dir2/dir1下</li>
+<li>-v 实时显示正在复制的文件的名字</li>
+<li>-u 增量拷贝，便于备份目录， 根据文件的时间戳，不拷贝相同的或者过时的版本文件，以提高拷贝速度。</li>
+</ul>
+<h3 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h3><p>将文件最后一次修改时间设置为当前时间，但不改变文件。 touch *.[ch]</p>
+<h3 id="目录遍历-find"><a href="#目录遍历-find" class="headerlink" title="目录遍历 find"></a>目录遍历 find</h3><ul>
+<li>功能： 从指定的查找范围开始，递归地查找子目录，凡满足条件的文件或者目录，执行规定的动作。</li>
+<li>动作</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>动作</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-print</td>
+<td>打印查找的文件的路径名</td>
+</tr>
+<tr>
+<td>-exec</td>
+<td>对查找的目标执行某一命令 在-exec及随后的分号之间的内容作为一条命令，{}代表遍历道德目标文件的路径名</td>
+</tr>
+<tr>
+<td>-ok</td>
+<td>只是对查找到符合条件的目标执行前需要管理人员确认</td>
+</tr>
+<tr>
+<td>xxx</td>
+<td>自定义命令</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>条件</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-name wildcard</td>
+<td>文件名与wildcare匹配，必须引号，文件名指的是路径名的<code>最后一部分</code>，对通配符的解释由find完成</td>
+</tr>
+<tr>
+<td>-regex pattern</td>
+<td><code>整个路径名</code>与正则表达式pattern匹配</td>
+</tr>
+<tr>
+<td>-type f/d/l/c/b/p</td>
+<td>文件类型</td>
+</tr>
+<tr>
+<td>-size +， ， - N</td>
+<td>文件大小，+ 大于，- 小于， 单位b,k,M</td>
+</tr>
+<tr>
+<td>-mtime +, ,- ndays</td>
+<td>文件最近修改时间</td>
+</tr>
+<tr>
+<td>-newer file</td>
+<td>文件修改时间比file的修改时间还晚</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>() -o ! 表示多条件的“与”，“或”，”非”</p>
+</li>
+<li><p>示例： find verl.d ver2.d -name ‘*.c’ -print</p>
+<ul>
+<li>范围： 当前目录的子目录ver1.d和ver2.d</li>
+<li>条件： 与名字<em>.c匹配。注：</em>.c应当用引号括起来</li>
+<li>动作： 把查找的文件的路径打印出来</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-02-17T07:18:54.653Z" itemprop="dateUpdated">2019-02-17 15:18:54</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/SunshineJunFu/JunFu.github.io">
+            <img src="/JunFu.github.io/images/avatar.jpg" alt="Jun Fu">
+            Jun Fu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/JunFu.github.io/tags/linux/">linux</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/07/linuxweek4/&title=《linuxweek4》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/07/linuxweek4/&title=《linuxweek4》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/07/linuxweek4/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《linuxweek4》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/07/linuxweek4/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/07/linuxweek4/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JunFu.github.io/2019/02/11/tensorflow-tutorial-11/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">tensorflow-tutorial-11</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JunFu.github.io/2019/02/06/linuxweek3/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">linux之vi编辑器</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "jeA0VlYdrPRbE0nMW3DV5gow-gzGzoHsz",
+            appKey: "QvgEiq6wSQKvTmKUUM5pcMJh",
+            avatar: "mm",
+            placeholder: "share your ideas",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        UV：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        PV：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/JunFu.github.io/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Jun Fu &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/07/linuxweek4/&title=《linuxweek4》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/07/linuxweek4/&title=《linuxweek4》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/07/linuxweek4/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《linuxweek4》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/07/linuxweek4/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/07/linuxweek4/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACu0lEQVR42u3awW7rMAwEwPz/T6fAOz2gsbMkxTSH0SlwbVnjg6Qu9XjE7fmvXV15/teurvSeev5qj42Gh4eH1xr6Vbsf1j0jvycfWz5mPDw8vG3e/WKQs6vP3iOT/t9Y8PDw8P6Ul2+O8491P4bq/Xh4eHjfxss3tfd95tv3/HPj4eHhfZ6XvHKyhOSBRW+bfiBrwcPDw6vN2IUC2Df8Xqzv4eHh4Q2q6qeKYUm4kAS75dHi4eHhLfCSiLZaEtu4M79SPi+Gh4eHV+RVO8rD2eqEPj9w8OI3Hh4e3gIvXxiSQUwi3fy4QP5R8PDw8DZ49685dQhggky2+Hh4eHif51UPCvTC3HwznQe+5QIYHh4e3pg36ag6rVcB1Xe9uQcPDw/vEC8v/FdfP9k094LdF73h4eHhfYRXDWqrRxCqU3y+bEQLAx4eHt6Yd2pSTpaWKrh8RCCp7+Hh4eGNeXnwmk/ceagxL4+9Wa7w8PDwFnjVIn0vhM0n9ORDVGMOPDw8vLO83sGp3qRfPYzVO5oQpdR4eHh4R3m9xSOf6CfIfNmIOsLDw8Mb8OZBwyQmOLt4vFgY8PDw8BZ4vUk834JXt+bVctrlU3h4eHhrvN52OQl8q4X/ajDxJlbGw8PDW+CdqhP1FoNkqagW5/Dw8PC2ecnmdQLOI+AqLPooeHh4eGu83jQ9eaoa5jY/Bx4eHt4Crxou3M+3p+LgXvxx+VHw8PDwjvJ6ccBn7p8cU8DDw8P7DC9p1WigOrgkyCiEIHh4eHgLvF5YkBS9ks138td8m/6YNDw8PLwir9d1wksCiGQjPinF4eHh4e3xJpX36qGrjTUNDw8P7zt5vWigGmQcjj/w8PDwvoBXjX0nAW5+oOFyicLDw8Nb4+Ux6yQayCOJBBP1iYeHh7fAG/2rPz4E0Nv9Hqjp4eHh4XV4P8EwDQF2ZAQBAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/JunFu.github.io/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/JunFu.github.io/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/JunFu.github.io/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'Where are you!';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Hi! Welcome Back!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+<script src="/JunFu.github.io/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/JunFu.github.io/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

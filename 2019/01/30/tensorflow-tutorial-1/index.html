@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    
+    <title>tensorflow_tutorial_1 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tensorflow">
+    <meta name="description" content="Basic conceptsPreface机器学习中的大部分任务是去学习一个将输入$X$映射到标签$Y$的映射函数$f(X)$: $X \rightarrow Y$，由于在实际中，我们很难通过解析式求得$f(X)$的具体表达形式。因而，我们希望通过数值迭代的方式去求得一个近似函数$g(X;\theta)$并且使得$g(X)$尽可能地逼近$f(X)$: $g(X;\theta) \rightarro">
+<meta name="keywords" content="tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tensorflow_tutorial_1">
+<meta property="og:url" content="https://github.com/SunshineJunFu/JunFu.github.io/2019/01/30/tensorflow-tutorial-1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Basic conceptsPreface机器学习中的大部分任务是去学习一个将输入$X$映射到标签$Y$的映射函数$f(X)$: $X \rightarrow Y$，由于在实际中，我们很难通过解析式求得$f(X)$的具体表达形式。因而，我们希望通过数值迭代的方式去求得一个近似函数$g(X;\theta)$并且使得$g(X)$尽可能地逼近$f(X)$: $g(X;\theta) \rightarro">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://github.com/SunshineJunFu/JunFu.github.io/2019/01/30/tensorflow-tutorial-1/tensors_flowing.gif">
+<meta property="og:updated_time" content="2019-02-17T07:18:54.659Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tensorflow_tutorial_1">
+<meta name="twitter:description" content="Basic conceptsPreface机器学习中的大部分任务是去学习一个将输入$X$映射到标签$Y$的映射函数$f(X)$: $X \rightarrow Y$，由于在实际中，我们很难通过解析式求得$f(X)$的具体表达形式。因而，我们希望通过数值迭代的方式去求得一个近似函数$g(X;\theta)$并且使得$g(X)$尽可能地逼近$f(X)$: $g(X;\theta) \rightarro">
+<meta name="twitter:image" content="https://github.com/SunshineJunFu/JunFu.github.io/2019/01/30/tensorflow-tutorial-1/tensors_flowing.gif">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/JunFu.github.io/atom.xml">
+    
+    <link rel="shortcut icon" href="/JunFu.github.io/favicon.ico">
+    <link rel="stylesheet" href="/JunFu.github.io/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/JunFu.github.io/img/brand.jpg)">
+      <div class="brand">
+        <a href="/JunFu.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/JunFu.github.io/images/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Jun Fu</h5>
+          <a href="mailto:fujun@mail.ustc.edu.cn" title="fujun@mail.ustc.edu.cn" class="mail">fujun@mail.ustc.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/">
+                <i class="icon icon-lg icon-home"></i>
+                Homepage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/SunshineJunFu" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">tensorflow_tutorial_1</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">tensorflow_tutorial_1</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-01-30T07:50:15.000Z" itemprop="datePublished" class="page-time">
+  2019-01-30
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Basic-concepts"><span class="post-toc-number">1.</span> <span class="post-toc-text">Basic concepts</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Preface"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Preface</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Graph"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Graph</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tensors"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Tensors</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Session"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Session</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-tensorflow-tutorial-1" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">tensorflow_tutorial_1</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-01-30 15:50:15" datetime="2019-01-30T07:50:15.000Z" itemprop="datePublished">2019-01-30</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Basic-concepts"><a href="#Basic-concepts" class="headerlink" title="Basic concepts"></a>Basic concepts</h1><h2 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h2><p>机器学习中的大部分任务是去学习一个将输入$X$映射到标签$Y$的映射函数$f(X)$: $X \rightarrow Y$，由于在实际中，我们很难通过解析式求得$f(X)$的具体表达形式。因而，我们希望通过数值迭代的方式去求得一个近似函数$g(X;\theta)$并且使得$g(X)$尽可能地逼近$f(X)$: $g(X;\theta) \rightarrow f(X)$。</p>
+<h2 id="Graph"><a href="#Graph" class="headerlink" title="Graph"></a>Graph</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="tensors_flowing.gif" alt="图1 graph的框架" title>
+                </div>
+                <div class="image-caption">图1 graph的框架</div>
+            </figure>
+<p><code>Tensorflow</code>将这一过程表征为<code>graph</code>的形式。graph的组成可以分成以下3部分：</p>
+<ul>
+<li>参数化层： <code>Input</code> $\rightarrow$ <code>Reshape</code> $\rightarrow$ <code>ReLu Layer</code> $\rightarrow$<code>ReLu Layer</code> $\rightarrow$ <code>softmax</code></li>
+<li>逼近量化层： <code>Input</code> $\rightarrow$ <code>Class Labels</code>$\rightarrow$ <code>Cross Entropy</code></li>
+<li>参数更新层： <code>Gradients</code> $\rightarrow$ <code>Logit Layer</code> $\rightarrow$ <code>ReLu Layer</code></li>
+</ul>
+<p>graph由<code>节点</code>和<code>边</code>组成，节点和边分别对应<code>操作(operations)</code>和<code>张量(Tensors)</code>。 操作(operations)包含:</p>
+<ul>
+<li>定义Tensor</li>
+<li>基于Tensor的运算($e.g.$ +-*/)。</li>
+</ul>
+<p>从动态图可知，graph中的Tensors flow(流动)分为两步:</p>
+<ul>
+<li><p>forward propagation: <code>Input</code> $\rightarrow$ <code>Reshape</code> $\rightarrow$ <code>ReLu Layer</code> $\rightarrow$ <code>Logit Layer</code> $\rightarrow$ <code>softmax</code></p>
+</li>
+<li><p>backpropagation: <code>Gradients</code> $\rightarrow$ <code>Logit Layer</code> $\rightarrow$ <code>ReLu Layer</code></p>
+</li>
+</ul>
+<p><code>forward propagation</code> 用于预测输入数据对应的label; <code>backpropagation</code> 用于更新网络参数$\theta$，使得$g(X)$尽可能地逼近$f(X)$。此外，从图中可以看出，为了方便区分operations，定义了作用域(scope), $e.g.$ <code>ReLu Layer</code>, <code>Logit Layer</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示定义图：（默认是定义了一张图）</span></span><br><span class="line">g = tf.Graph()</span><br><span class="line"><span class="comment"># 往图里添加operations</span></span><br><span class="line"><span class="keyword">with</span> g.as_default():</span><br><span class="line">	c = tf.constant(<span class="number">30.0</span>)</span><br><span class="line">	<span class="keyword">assert</span> c.graph == g</span><br><span class="line"><span class="comment"># 返回当前图</span></span><br><span class="line">g = tf.get_default_graph()</span><br><span class="line"><span class="comment"># 查看当前图的operations</span></span><br><span class="line">operations = g.get_operations() <span class="comment">#list</span></span><br></pre></td></tr></table></figure>
+<h2 id="Tensors"><a href="#Tensors" class="headerlink" title="Tensors"></a>Tensors</h2><p>张量是对矢量和矩阵向潜在的更高维度的泛化，TensorFlow 在内部将张量表示为基本数据类型的 n 维数。</p>
+<p>Tensor的属性：</p>
+<ul>
+<li>数据类型(dtype): $e.g.$ <code>tf.float32</code>, <code>tf.int32</code>, <code>tf.string</code></li>
+<li>形状(shape)</li>
+<li>名称(name)</li>
+</ul>
+<p>Tensor的阶的定义</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">rank</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">标量</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">一维数组</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">二维数组</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">三维数组</td>
+</tr>
+<tr>
+<td style="text-align:center">n</td>
+<td style="text-align:center">n维数组</td>
+</tr>
+</tbody>
+</table>
+<p>注:<code>rank = len(tensor.shape)=tf.rank(tensor)</code></p>
+<p>Tensor的分类</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">kind</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">tf.Variable</td>
+<td style="text-align:center">用于存储graph的状态</td>
+</tr>
+<tr>
+<td style="text-align:center">tf.placeholder</td>
+<td style="text-align:center">用于graph的输入</td>
+</tr>
+<tr>
+<td style="text-align:center">tf.constant</td>
+<td style="text-align:center">用于存常量</td>
+</tr>
+<tr>
+<td style="text-align:center">tf.SparseTensor</td>
+<td style="text-align:center">用于稀疏张量</td>
+</tr>
+</tbody>
+</table>
+<p>Tensor Auxiliary:</p>
+<ul>
+<li>改变形状，使用<code>tf.reshape(tensor, new_shape)</code></li>
+<li>改变数据类型，使用<code>tf.cast(tensor，new_dtype)</code></li>
+<li>获取Tensor的值，在某个Session下使用<code>tensor.eval()</code></li>
+</ul>
+<h2 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h2><p>会话(Session)和图(graph)相互绑定的，graph只是定义了符号运算，但并未获得实际的物理运行环境，会话(Session)则为graph提供了可实际运行的上下文。因而，在一个会话下，才能进行数值运算。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create Session</span></span><br><span class="line"></span><br><span class="line">tf.Session(target=<span class="string">''</span>,graph=<span class="keyword">None</span>,config=<span class="keyword">None</span>) <span class="comment">#graph默认指定为当前默认图</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># usage1：</span></span><br><span class="line"></span><br><span class="line">define some operations</span><br><span class="line"></span><br><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line">sess.run(ops, feed_dict=&#123;a: xxx&#125;)</span><br><span class="line"></span><br><span class="line">sess.close()</span><br><span class="line"></span><br><span class="line"><span class="comment"># usage2:</span></span><br><span class="line"></span><br><span class="line">define some operations</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line"></span><br><span class="line">	sess.run(ops, feed_dict=&#123;a: xxx&#125;) <span class="comment">#feed_dict&#123;xxx&#125; 对应于该ops所需要的输入值</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-02-17T07:18:54.659Z" itemprop="dateUpdated">2019-02-17 15:18:54</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/SunshineJunFu/JunFu.github.io">
+            <img src="/JunFu.github.io/images/avatar.jpg" alt="Jun Fu">
+            Jun Fu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/JunFu.github.io/tags/tensorflow/">tensorflow</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/30/tensorflow-tutorial-1/&title=《tensorflow_tutorial_1》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/30/tensorflow-tutorial-1/&title=《tensorflow_tutorial_1》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/30/tensorflow-tutorial-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tensorflow_tutorial_1》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/30/tensorflow-tutorial-1/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/30/tensorflow-tutorial-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JunFu.github.io/2019/01/31/tensorflow-tutorial-2/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">tensorflow_tutorial_2</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JunFu.github.io/2019/01/12/linuxweek1/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">linuxweek1</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "jeA0VlYdrPRbE0nMW3DV5gow-gzGzoHsz",
+            appKey: "QvgEiq6wSQKvTmKUUM5pcMJh",
+            avatar: "mm",
+            placeholder: "share your ideas",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        UV：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        PV：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/JunFu.github.io/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Jun Fu &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/30/tensorflow-tutorial-1/&title=《tensorflow_tutorial_1》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/30/tensorflow-tutorial-1/&title=《tensorflow_tutorial_1》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/30/tensorflow-tutorial-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tensorflow_tutorial_1》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/30/tensorflow-tutorial-1/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/30/tensorflow-tutorial-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsklEQVR42u3aMW7DMBAEQP//00mbxtLukRQUYFQZNixzVPDOe/x84uvnz5W/s/ee+Z3rCw8PD29h6d9ul/9M8mnyUK7fSdaMh4eHd5p3vdB8Qe1Cc/y39dzcGQ8PD+81vOvSkne2K+UEDw8P7//ykjBiFj3M1oCHh4f3DG926+uSMNvQVx4EHh4e3jO8fIr0ntdH5nt4eHh4y1P1dhiWN8cr0W2xWjw8PLwDvHzDnZFmY7C2Hb8JRPDw8PC28pJRVvIz7WGCBLBelvDw8PBO8JLoId+mE+SuoGFbaIuHh4dX8mab8mxwlQ/7Zwe8bv4r4OHh4W3iJV+bhRGzwwF5AdgwDMPDw8Mb8fKwYDaOmm3ubSwSzffw8PDwNvHy0VRSAPKSMCsqycCsSFbw8PDwDvCSg1Ptp/n4v4Xh4eHhPcObbbVts9s26LNUoakVeHh4eKu8HJkPw2ZXfmQhKUh4eHh4J3jtwCmPEtpjBPkhgw2nyfDw8PC28mZhxOz1ykGBfIV4eHh4e3m5fjbcap/uevv+9WQEHh4e3iO8NqKdBROzoCFp8fHw8PBO8NoF1bFpOTArNv1ymIeHh4e3i7ermc4D3zYEWfoWHh4e3mFevvnmjyOJfWfNd3RPPDw8vAO8vP3NW+e2CZ4FwfkRBzw8PLwTvNlwa7Z9t6HtyoEDPDw8vNO8fAvOA9/ZIYCVAlMcvcLDw8Nb5rWbe9varg/AhoEFHh4e3lbeT3nlEWoOXoknbiJmPDw8vAO8dsNtI4NZIUkKxq5CgoeHhzfjtQHELIzIo9j1woCHh4f3DC+PYvOWOh+VDVvhvDDg4eHhvYbX9rGzxv06aMbDw8N7P2+9XV4/QFA8ODw8PLxjvCSMaEOKWZPdDsm2ZS14eHh4Ma/9w58XhnbA30Yen10XHh4eXsr7BUWUXpP9E5rEAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/JunFu.github.io/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/JunFu.github.io/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/JunFu.github.io/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'Where are you!';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Hi! Welcome Back!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+<script src="/JunFu.github.io/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/JunFu.github.io/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

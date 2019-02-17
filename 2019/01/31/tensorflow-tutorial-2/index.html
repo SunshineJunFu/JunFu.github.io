@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    
+    <title>tensorflow_tutorial_2 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tensorflow">
+    <meta name="description" content="Tensors注： 必须初始化，才能使用 eval() run() Variable作用：用于记录graph的状态，即，记录拟合函数$g(X)$的权重。 创建Variable操作具有以下作用：  将该Variable作为graph的一个节点并必须指定初始化器或者初值 将该Variable放到键值为tf.GraphKeys.GLOBAL_VARIABLES的collections集合中 若train">
+<meta name="keywords" content="tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tensorflow_tutorial_2">
+<meta property="og:url" content="https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Tensors注： 必须初始化，才能使用 eval() run() Variable作用：用于记录graph的状态，即，记录拟合函数$g(X)$的权重。 创建Variable操作具有以下作用：  将该Variable作为graph的一个节点并必须指定初始化器或者初值 将该Variable放到键值为tf.GraphKeys.GLOBAL_VARIABLES的collections集合中 若train">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-2/collections.png">
+<meta property="og:updated_time" content="2019-02-17T07:18:54.697Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tensorflow_tutorial_2">
+<meta name="twitter:description" content="Tensors注： 必须初始化，才能使用 eval() run() Variable作用：用于记录graph的状态，即，记录拟合函数$g(X)$的权重。 创建Variable操作具有以下作用：  将该Variable作为graph的一个节点并必须指定初始化器或者初值 将该Variable放到键值为tf.GraphKeys.GLOBAL_VARIABLES的collections集合中 若train">
+<meta name="twitter:image" content="https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-2/collections.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/JunFu.github.io/atom.xml">
+    
+    <link rel="shortcut icon" href="/JunFu.github.io/favicon.ico">
+    <link rel="stylesheet" href="/JunFu.github.io/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/JunFu.github.io/img/brand.jpg)">
+      <div class="brand">
+        <a href="/JunFu.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/JunFu.github.io/images/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Jun Fu</h5>
+          <a href="mailto:fujun@mail.ustc.edu.cn" title="fujun@mail.ustc.edu.cn" class="mail">fujun@mail.ustc.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/">
+                <i class="icon icon-lg icon-home"></i>
+                Homepage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/SunshineJunFu" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">tensorflow_tutorial_2</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">tensorflow_tutorial_2</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-01-31T03:31:24.000Z" itemprop="datePublished" class="page-time">
+  2019-01-31
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Tensors"><span class="post-toc-number">1.</span> <span class="post-toc-text">Tensors</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Variable"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Variable</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Constant"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Constant</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#placeholder"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">placeholder</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#manager-Tensors"><span class="post-toc-number">2.</span> <span class="post-toc-text">manager Tensors</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#variable-scope"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">variable scope</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#collection"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">collection</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-tensorflow-tutorial-2" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">tensorflow_tutorial_2</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-01-31 11:31:24" datetime="2019-01-31T03:31:24.000Z" itemprop="datePublished">2019-01-31</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Tensors"><a href="#Tensors" class="headerlink" title="Tensors"></a>Tensors</h1><p>注： 必须初始化，才能使用</p>
+<p>eval()</p>
+<p>run()</p>
+<h2 id="Variable"><a href="#Variable" class="headerlink" title="Variable"></a>Variable</h2><p>作用：用于记录graph的状态，即，记录拟合函数$g(X)$的权重。</p>
+<p>创建Variable操作具有以下作用：</p>
+<ul>
+<li>将该Variable作为graph的一个节点并<code>必须</code>指定<code>初始化器</code>或者<code>初值</code></li>
+<li>将该Variable放到键值为tf.GraphKeys.GLOBAL_VARIABLES的collections集合中</li>
+<li>若trainable为true，则将该Variable放到键值为tf.GraphKeys.TRAINABLE_VARIABLES的collections集合</li>
+</ul>
+<p>注：trainable为true表明该变量会进行更新，collections可以认为是一个空间，用于存放变量。</p>
+<p>变量创建方式1：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var = tf.Variable(&lt;initial-value&gt;, name=&lt;optional-name&gt;, dtype=tf.float32, trainable=true)</span><br></pre></td></tr></table></figure>
+<p>以此种方式创建变量var， var与initial-value的数据和形状一致，若定义出现两个名字一致的变量，会在后面定义的变量名称加上后缀<code></code>_1,_2,_3,…”。</p>
+<p>tensorflow定义了如下函数可以用来指定初值：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Function</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">tf.zeros(shape, dtype=tf.float32,name=None)</td>
+<td style="text-align:center">产生全0的tensor</td>
+</tr>
+<tr>
+<td style="text-align:center">tf.ones(shape, dtype=tf.float32,name=None)</td>
+<td style="text-align:center">产生全1的tensor</td>
+</tr>
+<tr>
+<td style="text-align:center">tf.random.normal(shape, mean=0.0, stddev=1.0)</td>
+<td style="text-align:center">产生服从正态分布的tensor</td>
+</tr>
+<tr>
+<td style="text-align:center">tf.random.uniform(shape, minval=0.0, maxval=NOne)</td>
+<td style="text-align:center">产生服从均匀分布的tensor</td>
+</tr>
+<tr>
+<td style="text-align:center">tf.random.truncated_normal(shape, mean=0.0, stddev=1.0)</td>
+<td style="text-align:center">产生服从截断正态分布的tensor</td>
+</tr>
+</tbody>
+</table>
+<p>注：shape参数用来指定产生随机数的维度</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">List</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">[]</td>
+<td style="text-align:center">0维，标量</td>
+</tr>
+<tr>
+<td style="text-align:center">[d1]</td>
+<td style="text-align:center">1维</td>
+</tr>
+<tr>
+<td style="text-align:center">[d1,d2]</td>
+<td style="text-align:center">2维</td>
+</tr>
+<tr>
+<td style="text-align:center">[None,d2]</td>
+<td style="text-align:center">2维,第一维度数目可以是任意值</td>
+</tr>
+<tr>
+<td style="text-align:center">[d1,d2,d3]</td>
+<td style="text-align:center">3维</td>
+</tr>
+<tr>
+<td style="text-align:center">[d1,d2,d3,…]</td>
+<td style="text-align:center">n维</td>
+</tr>
+</tbody>
+</table>
+<p>变量创建方式2：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var = tf.get_variable(name, shape=<span class="keyword">None</span>, dtype=<span class="keyword">None</span>, initializer=<span class="keyword">None</span>, trainable=true)</span><br></pre></td></tr></table></figure>
+<p>创建名为name的变量，初始化器由initializer指定，形状由shape指定。 在不复用变量的情况下，若定义两个名字一样的变量，则会报错。</p>
+<p>Tensorflow内的<a href="https://www.tensorflow.org/api_docs/python/tf/initializers?hl=zh-cn" target="_blank" rel="noopener">initializer</a>有：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">class</th>
+<th style="text-align:center">constructor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">tf.contrib.layers.xavier_initializer</td>
+<td style="text-align:center">~(uniform=True)，uniform=False采用正态分布</td>
+</tr>
+<tr>
+<td style="text-align:center">tf.random_normal_initializer</td>
+<td style="text-align:center">~(mean=0.0, stddev=1.0)</td>
+</tr>
+<tr>
+<td style="text-align:center">tf.random_uniform_initializer</td>
+<td style="text-align:center">~(minval=0, maxval=None)</td>
+</tr>
+<tr>
+<td style="text-align:center">tf.truncated_normal_initializer</td>
+<td style="text-align:center">~(mean=0.0, stddev=1.0)</td>
+</tr>
+<tr>
+<td style="text-align:center">tf.ones_initializer</td>
+<td style="text-align:center">~()</td>
+</tr>
+<tr>
+<td style="text-align:center">tf.zeros_initializer</td>
+<td style="text-align:center">~()</td>
+</tr>
+</tbody>
+</table>
+<p>For Examples:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var = tf.Variable(tf.random.normal([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]),name=<span class="string">"var"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 等价于 #</span></span><br><span class="line"></span><br><span class="line">var = tf.getVariable(<span class="string">"var"</span>,shape=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],initializer=tf.random_normal_initializer())</span><br></pre></td></tr></table></figure>
+<h2 id="Constant"><a href="#Constant" class="headerlink" title="Constant"></a>Constant</h2><p><a href="https://tensorflow.google.cn/api_docs/python/tf/constant" target="_blank" rel="noopener">常量</a>,在图中值不改变，不能进行reshape操作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tf.constant(</span><br><span class="line">    value,</span><br><span class="line">    dtype=<span class="keyword">None</span>,</span><br><span class="line">    shape=<span class="keyword">None</span>,</span><br><span class="line">    name=<span class="string">'Const'</span>,</span><br><span class="line">    verify_shape=<span class="keyword">False</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>For Examples:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Constant 1-D Tensor populated with value list.</span><br><span class="line">tensor = tf.constant([1, 2, 3, 4, 5, 6, 7]) =&gt; [1 2 3 4 5 6 7]</span><br><span class="line"></span><br><span class="line"># Constant 2-D tensor populated with scalar value -1.</span><br><span class="line">tensor = tf.constant(-1.0, shape=[2, 3]) =&gt; [[-1. -1. -1.]</span><br><span class="line">                                             [-1. -1. -1.]]</span><br></pre></td></tr></table></figure>
+<h2 id="placeholder"><a href="#placeholder" class="headerlink" title="placeholder"></a>placeholder</h2><p><a href="https://tensorflow.google.cn/api_docs/python/tf/placeholder" target="_blank" rel="noopener">placeholder</a>用于graph的输入,一般指定shape和dtype，name。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tf.placeholder(</span><br><span class="line">    dtype,</span><br><span class="line">    shape=<span class="keyword">None</span>,</span><br><span class="line">    name=<span class="keyword">None</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h1 id="manager-Tensors"><a href="#manager-Tensors" class="headerlink" title="manager Tensors"></a>manager Tensors</h1><p><img src="collections.png" width="500" hegiht="313" align="center"></p>
+<p>如图所示，在Tensorflow中，采用层次的结构来管理operations：<code>collection</code> $\leftarrow$ <code>variable scope</code> $\leftarrow$ <code>operations</code>。 从该图还可以得到如下信息：</p>
+<ul>
+<li>tensorflow图自定义了多个集合，例如集合1,2。集合1,2分别存放所有的，只用于训练的操作和张量。</li>
+<li>集合通过键值进行区分，例如集合1,2的键值分别为tf.GraphKeys.GLOBAL_VARIABLES，tf.GraphKeys.TRAINABLE_VARIABLES。</li>
+<li>为了避免出现操作和张量同名，定义了次级空间variable scope。在同一scope下的操作和张量具有相同的前缀名。该scope类似于c++里的namespace。</li>
+<li>同一scope可以同时在多个集合中，图中v1，v2都属于集合1,2。</li>
+<li>也可以存放一些没有在variable scope内的张量和操作。</li>
+</ul>
+<h2 id="variable-scope"><a href="#variable-scope" class="headerlink" title="variable scope"></a>variable scope</h2><p>作用：定义一个子空间，存放操作和张量。<br>定义: <a href="https://tensorflow.google.cn/api_docs/python/tf/variable_scope" target="_blank" rel="noopener">tf.variable_scope</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(name, reuse=false):</span><br><span class="line">	</span><br><span class="line">	<span class="comment"># define your tensors</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># define your operations</span></span><br></pre></td></tr></table></figure>
+<p>注：当reuse=false时，利用tf.get_variable定义tensor时不能出现两个同名张量。如若为True，后定义的张量与前面定义的张量一致。此外，对Variable定义tensor无影响。</p>
+<p>For example<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">"hello"</span>):</span><br><span class="line"></span><br><span class="line">	var = tf.get_variable(<span class="string">"var"</span>, shape =[<span class="number">1</span>,<span class="number">2</span>], intializer=tf.zeros_initializer())</span><br><span class="line"></span><br><span class="line">	var1 = tf.get_variable("var", shape =[1,2], intializer=tf.zeros_initializer()) ==&gt; error</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">"hello"</span>, reuse=<span class="keyword">True</span>):</span><br><span class="line"></span><br><span class="line">	var = tf.get_variable(<span class="string">"var"</span>, shape =[<span class="number">1</span>,<span class="number">2</span>], intializer=tf.zeros_initializer())</span><br><span class="line"></span><br><span class="line">	var1 = tf.get_variable(<span class="string">"var"</span>, shape =[<span class="number">1</span>,<span class="number">2</span>], intializer=tf.zeros_initializer()) </span><br><span class="line"></span><br><span class="line">	assert var == var1 ==&gt; True</span><br></pre></td></tr></table></figure>
+<h2 id="collection"><a href="#collection" class="headerlink" title="collection"></a>collection</h2><p>作用：存放操作和张量。</p>
+<p>操作：</p>
+<ul>
+<li>从某个collection<a href="https://www.tensorflow.org/api_docs/python/tf/get_collection?hl=zh-cn" target="_blank" rel="noopener">获取</a>某个scope的variable集合：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">tf.get_collection(</span><br><span class="line">    key,</span><br><span class="line">    scope=<span class="keyword">None</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>从某个collection获取所有的variable：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">tf.get_collection(key)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将variable <a href="https://tensorflow.google.cn/api_docs/python/tf/add_to_collection" target="_blank" rel="noopener">添加</a>至自定义集合name</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">tf.add_to_collection(</span><br><span class="line">    name,</span><br><span class="line">    value</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-02-17T07:18:54.697Z" itemprop="dateUpdated">2019-02-17 15:18:54</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/SunshineJunFu/JunFu.github.io">
+            <img src="/JunFu.github.io/images/avatar.jpg" alt="Jun Fu">
+            Jun Fu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/JunFu.github.io/tags/tensorflow/">tensorflow</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-2/&title=《tensorflow_tutorial_2》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-2/&title=《tensorflow_tutorial_2》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-2/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tensorflow_tutorial_2》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-2/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-2/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JunFu.github.io/2019/01/31/tensorflow-tutorial-4/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">tensorflow_tutorial_4</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JunFu.github.io/2019/01/30/tensorflow-tutorial-1/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">tensorflow_tutorial_1</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "jeA0VlYdrPRbE0nMW3DV5gow-gzGzoHsz",
+            appKey: "QvgEiq6wSQKvTmKUUM5pcMJh",
+            avatar: "mm",
+            placeholder: "share your ideas",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        UV：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        PV：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/JunFu.github.io/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Jun Fu &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-2/&title=《tensorflow_tutorial_2》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-2/&title=《tensorflow_tutorial_2》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-2/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tensorflow_tutorial_2》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-2/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-2/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtUlEQVR42u3aQW7jMBAEQP//09nrLgLL3TOUNgGKp0CIaRYPIt0zr1c8vv4a10/umPP788MDDw8Pb7H0d9NdP/8+24aUzJysGQ8PD+9u3rulXE99vU3tFmy29e1zPDw8vB/DS2DJ8bM5TvDw8PB+L+/6wNhED7M14OHh4T3Dm724k0W0y9psBB4eHt4zvLyK9HP+vqW+h4eHh7euqucRQxs9tEfLcLV4eHh4N/DyF+6+QepUk0G7Tjw8PLyzvFmLVdsisA8y2mYCPDw8vPt4SdyQhK3JkTAraBXn2yxNwcPDwyt5yVLai2x+yU6u2u1mffitgIeHh7fmJR/bXJHb5oB8zgPFMDw8PLwFLz8eZiWozSU7mbkugOHh4eHdzEte622Ekc+ZRw8fLtN4eHh4h3jPBA2zaKOF4eHh4T3Da0v++REyazvYxxx4eHh4d/Pywn9emnotxmz73q4EDw8P7wZenVssAotZY1b7P8NdxMPDw1vw8rJWS002bnaVL9h4eHh4a94sZm3j13z+/fX9n2/Bw8PDe5w3CynaYGIWNERHER4eHt4NvLZgP5s6OSSSa/exKh8eHh7ebQ0Em7JWHkDsg9roU3h4eHiHeJtr9Ox524rafsvbMAIPDw/vEG8Tp15fi/NLcDJ/Hgrj4eHhPcPLX7h5+T/H5K0JbcMBHh4e3pO8pCR2amvaFqskjPhwMODh4eEd4s2KWPmC9gWwYWCBh4eHd5T3VY48Qs3Bm3jiw2GGh4eHdwOvfeG2ocAsfs1D5P1BgoeHhzfjnWon3ZTz8++tK3t4eHh4t/HaKDbZjrxUNrwK5wcDHh4e3n/l5S0CbUDQxsR4eHh4v4XXNmDlYUTeQFBsHB4eHt5tvPyKPHu+CYKT0OFA1oKHh4cX89of/O31Oi/wtw0Kr1MDDw8PL+X9AaSDFtv2sc1HAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/JunFu.github.io/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/JunFu.github.io/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/JunFu.github.io/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'Where are you!';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Hi! Welcome Back!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+<script src="/JunFu.github.io/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/JunFu.github.io/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

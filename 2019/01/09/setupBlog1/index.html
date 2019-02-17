@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    
+    <title>hexo搭建个人博客 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="hexo">
+    <meta name="description" content="配置环境安装node.js 登陆 node.js 官网，根据对应的操作系统，选择相应的版本 安装node.js 在命令行里, 运行node -v, 若有版本信息，则安装成功， 反之亦然。  安装hexo 运行 npm install -g hexo-cli， 安装hexo 运行 hexo -v, 若有版本信息，则安装成功， 反之亦然。 运行 npm install hexo-deployer-gi">
+<meta name="keywords" content="hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo搭建个人博客">
+<meta property="og:url" content="https://github.com/SunshineJunFu/JunFu.github.io/2019/01/09/setupBlog1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="配置环境安装node.js 登陆 node.js 官网，根据对应的操作系统，选择相应的版本 安装node.js 在命令行里, 运行node -v, 若有版本信息，则安装成功， 反之亦然。  安装hexo 运行 npm install -g hexo-cli， 安装hexo 运行 hexo -v, 若有版本信息，则安装成功， 反之亦然。 运行 npm install hexo-deployer-gi">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-02-17T07:18:54.657Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hexo搭建个人博客">
+<meta name="twitter:description" content="配置环境安装node.js 登陆 node.js 官网，根据对应的操作系统，选择相应的版本 安装node.js 在命令行里, 运行node -v, 若有版本信息，则安装成功， 反之亦然。  安装hexo 运行 npm install -g hexo-cli， 安装hexo 运行 hexo -v, 若有版本信息，则安装成功， 反之亦然。 运行 npm install hexo-deployer-gi">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/JunFu.github.io/atom.xml">
+    
+    <link rel="shortcut icon" href="/JunFu.github.io/favicon.ico">
+    <link rel="stylesheet" href="/JunFu.github.io/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/JunFu.github.io/img/brand.jpg)">
+      <div class="brand">
+        <a href="/JunFu.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/JunFu.github.io/images/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Jun Fu</h5>
+          <a href="mailto:fujun@mail.ustc.edu.cn" title="fujun@mail.ustc.edu.cn" class="mail">fujun@mail.ustc.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/">
+                <i class="icon icon-lg icon-home"></i>
+                Homepage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/SunshineJunFu" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">hexo搭建个人博客</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">hexo搭建个人博客</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-01-09T04:29:58.000Z" itemprop="datePublished" class="page-time">
+  2019-01-09
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#配置环境"><span class="post-toc-number">1.</span> <span class="post-toc-text">配置环境</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装node-js"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">安装node.js</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装hexo"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">安装hexo</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装git"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">安装git</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#github"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">github</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#初次搭建博客"><span class="post-toc-number">2.</span> <span class="post-toc-text">初次搭建博客</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#创建本地文件"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">创建本地文件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置-config-yml"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">配置_config.yml</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#上传至github"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">上传至github</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#hexo-命令"><span class="post-toc-number">3.</span> <span class="post-toc-text">hexo 命令</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-setupBlog1" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">hexo搭建个人博客</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-01-09 12:29:58" datetime="2019-01-09T04:29:58.000Z" itemprop="datePublished">2019-01-09</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h1><h2 id="安装node-js"><a href="#安装node-js" class="headerlink" title="安装node.js"></a>安装node.js</h2><ol>
+<li>登陆 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">node.js 官网</a>，根据对应的操作系统，选择相应的版本</li>
+<li>安装node.js</li>
+<li>在命令行里, 运行<code>node -v</code>, 若有版本信息，则安装成功， 反之亦然。</li>
+</ol>
+<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><ol>
+<li>运行 <code>npm install -g hexo-cli</code>， 安装hexo</li>
+<li>运行 <code>hexo -v</code>, 若有版本信息，则安装成功， 反之亦然。</li>
+<li>运行 <code>npm install hexo-deployer-git --save</code>, 安装github上传包</li>
+</ol>
+<h2 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h2><ol>
+<li>登陆<a href="https://git-scm.com/downloads" target="_blank" rel="noopener">git下载网址</a>, 根据对应的操作系统，选择相应的版本</li>
+<li>安装git</li>
+<li>在命令行里, 运行<code>git --version</code>, 若有版本信息，则安装成功， 反之亦然。</li>
+</ol>
+<h2 id="github"><a href="#github" class="headerlink" title="github"></a>github</h2><ol>
+<li>注册账号</li>
+<li>建立一个Repositories，用于存放博客静态文件，名称格式最好为：<code>用户名.github.io</code></li>
+<li>设置远程，<code>git remote add remoteName url</code>, url 为 Repositories 选项<code>setting</code>中<code>Github Pages</code>提示的<code>url</code></li>
+<li>查看远程设置，<code>git remote -v</code></li>
+<li>重新配置，<code>git remote set-url remoteName url</code></li>
+</ol>
+<h1 id="初次搭建博客"><a href="#初次搭建博客" class="headerlink" title="初次搭建博客"></a>初次搭建博客</h1><h2 id="创建本地文件"><a href="#创建本地文件" class="headerlink" title="创建本地文件"></a>创建本地文件</h2><ol>
+<li>hexo init [blogsName]</li>
+<li>cd yourpath/blogsName</li>
+<li>启动本地服务器，hexo s or hexo server</li>
+<li>在浏览器中输入，localhost:4000， 查看有无界面， 有则成功</li>
+</ol>
+<h2 id="配置-config-yml"><a href="#配置-config-yml" class="headerlink" title="配置_config.yml"></a>配置_config.yml</h2><ol>
+<li>修改<code>site</code>字段，配置<code>language</code>，<code>author</code>，<code>title</code>，<code>description</code>, 支持的语言在<a href="https://github.com/iissnan/hexo-theme-next/wiki/%E8%AE%BE%E7%BD%AE%E8%AF%AD%E8%A8%80">language option</a></li>
+<li>修改<code>url</code>字段，配置 <code>url</code> 和 根目录 <code>root</code></li>
+<li>修改<code>Extension</code>字段，配置<code>theme</code>，默认是landscape</li>
+<li>修改<code>deploy</code>字段，配置<code>type</code>, <code>repository</code>, <code>branch</code></li>
+</ol>
+<p>示例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"># Site</span><br><span class="line">title: Hexo</span><br><span class="line">subtitle:</span><br><span class="line">description: keep hungry and practice more</span><br><span class="line">keywords:</span><br><span class="line">author: Jun Fu</span><br><span class="line">language: en</span><br><span class="line">timezone:</span><br><span class="line"></span><br><span class="line"># URL</span><br><span class="line">## If your site is put in a subdirectory, set url as &apos;http://yoursite.com/child&apos; and root as &apos;/child/&apos;</span><br><span class="line">url: https://github.com/SunshineJunFu/JunFu.github.io</span><br><span class="line">root: /JunFu.github.io/</span><br><span class="line">permalink: :year/:month/:day/:title/</span><br><span class="line">permalink_defaults:</span><br><span class="line"></span><br><span class="line"># Extensions</span><br><span class="line">## Plugins: https://hexo.io/plugins/</span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line">theme: landscape</span><br><span class="line"></span><br><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/deployment.html</span><br><span class="line">deploy:</span><br><span class="line">  type: git </span><br><span class="line">  repository: https://github.com/SunshineJunFu/JunFu.github.io</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
+<h2 id="上传至github"><a href="#上传至github" class="headerlink" title="上传至github"></a>上传至github</h2><ol>
+<li>运行<code>hexo g -d</code></li>
+<li>点击对应Repositories 选项<code>setting</code>中<code>Github Pages</code>提示的<code>url</code>，查看效果</li>
+</ol>
+<h1 id="hexo-命令"><a href="#hexo-命令" class="headerlink" title="hexo 命令"></a>hexo 命令</h1><ol>
+<li><code>hexo init blogsName</code>, 创建文件夹</li>
+<li><code>hexo generate</code>，可简写为<code>hexo g</code>, 生成网页静态文件 </li>
+<li><code>hexo server</code>，可简写为<code>hexo s</code>, 创建本地服务器</li>
+<li><code>hexo deploy</code>，可简写为<code>hexo d</code>, 上传至github</li>
+<li><code>hexo clean</code>, 清理缓存</li>
+<li><code>hexo new post Name</code>， 创建博客</li>
+<li><code>hexo new page Name</code>，  创建网页</li>
+</ol>
+<p>更多信息，可以参考<a href="https://hexo.io/zh-cn/docs/writing.html" target="_blank" rel="noopener">hexo writing</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-02-17T07:18:54.657Z" itemprop="dateUpdated">2019-02-17 15:18:54</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/SunshineJunFu/JunFu.github.io">
+            <img src="/JunFu.github.io/images/avatar.jpg" alt="Jun Fu">
+            Jun Fu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/JunFu.github.io/tags/hexo/">hexo</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/09/setupBlog1/&title=《hexo搭建个人博客》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/09/setupBlog1/&title=《hexo搭建个人博客》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/09/setupBlog1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《hexo搭建个人博客》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/09/setupBlog1/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/09/setupBlog1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JunFu.github.io/2019/01/09/setupBlog2/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">hexo 配置主题</h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "jeA0VlYdrPRbE0nMW3DV5gow-gzGzoHsz",
+            appKey: "QvgEiq6wSQKvTmKUUM5pcMJh",
+            avatar: "mm",
+            placeholder: "share your ideas",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        UV：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        PV：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/JunFu.github.io/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Jun Fu &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/09/setupBlog1/&title=《hexo搭建个人博客》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/09/setupBlog1/&title=《hexo搭建个人博客》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/09/setupBlog1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《hexo搭建个人博客》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/09/setupBlog1/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/09/setupBlog1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtUlEQVR42u3awW7cMAwE0Pz/T7dATwWa9c6QUrsFnk+LxFnr+SAxQ359xdePX1dyz/Odv//2z/uff5KsYXjh4eHhjZb+6sqX1bKT73lez/Oa8fDw8G7z8k28XWi+xGQN+Zrx8PDwPoHXFsf5/W2xjoeHh/e/8NrtPl9oHnbg4eHhfQ4vCSPaorkFb554IGvBw8PDi3ltA+wTPl/s7+Hh4eEtuur5dt8+ePad9Wrx8PDwLvCSyLWNYttG1yzgKMYX8PDw8I7y2g06H5BqN/T9wME3n/Hw8PAu8J4fnwQTbXzQjljNYHh4eHj3eG3Zum+bJT+PBgKSNePh4eFd483+1d/HvklS0r6IA1MJeHh4eIs++yx0ONXuajFv7sHDw8M7xGsL6Nkh0Y4RzILdb1aLh4eHd42Xhw5tZDArhfOX/uYePDw8vMu8U+2otvDdHANvyn08PDy8f8RrH9AeEvnB0xb6eHh4eDd4M+qsERXFB3EcvGqA4eHh4S14+dBAMf166K9mowkvY1w8PDy8C7y8ed/GtbO4IT+KXt6Ph4eHd4E3i27PxgTPsFmE8fKJeHh4eGteOxaQbOJtkd0eOXkJjoeHh3eDlyefZ2eZku/JX0q+Njw8PLyzvDbMbY+Nfck+e6F4eHh4Z3nPxWjepM+L2vaY2Ywa4OHh4d3jtRtx/uB25CtvtkUrx8PDw7vAuxEu5OMCs6ZXHaDg4eHhHeWdaoC1Iey+NK/DCDw8PLwLvORKytx2SKsd5CqmyfDw8PAu8DZhQRsK5JHxpmQfXnh4eHglb38Y5Bv6LFzYDCjg4eHh3eNtDoNNaHvqTMPDw8P7TF6+iecxbnJgtC80Sjvw8PDw/iJv1v5PAtx8hKt43Xh4eHjXeHnMOsOfioOL0QE8PDy8a7zVv/qLbb0NdlcAPDw8vDO8nyn2pkvoOgR2AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/JunFu.github.io/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/JunFu.github.io/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/JunFu.github.io/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'Where are you!';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Hi! Welcome Back!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+<script src="/JunFu.github.io/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/JunFu.github.io/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

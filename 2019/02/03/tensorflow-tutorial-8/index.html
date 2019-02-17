@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    
+    <title>tensorflow_tutorial_8 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content>
+    <meta name="description" content="如何使用高低阶的API搭建网络全连接结构：flatten$\rightarrow$ xw+b$\rightarrow$ norm layer(optional)$\rightarrow$activation function $\rightarrow$dropout(optional) 12345678910111213141516def add_fc_layer(inputs, in_dim,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tensorflow_tutorial_8">
+<meta property="og:url" content="https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="如何使用高低阶的API搭建网络全连接结构：flatten$\rightarrow$ xw+b$\rightarrow$ norm layer(optional)$\rightarrow$activation function $\rightarrow$dropout(optional) 12345678910111213141516def add_fc_layer(inputs, in_dim,">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-02-17T07:18:54.706Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tensorflow_tutorial_8">
+<meta name="twitter:description" content="如何使用高低阶的API搭建网络全连接结构：flatten$\rightarrow$ xw+b$\rightarrow$ norm layer(optional)$\rightarrow$activation function $\rightarrow$dropout(optional) 12345678910111213141516def add_fc_layer(inputs, in_dim,">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/JunFu.github.io/atom.xml">
+    
+    <link rel="shortcut icon" href="/JunFu.github.io/favicon.ico">
+    <link rel="stylesheet" href="/JunFu.github.io/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/JunFu.github.io/img/brand.jpg)">
+      <div class="brand">
+        <a href="/JunFu.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/JunFu.github.io/images/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Jun Fu</h5>
+          <a href="mailto:fujun@mail.ustc.edu.cn" title="fujun@mail.ustc.edu.cn" class="mail">fujun@mail.ustc.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/">
+                <i class="icon icon-lg icon-home"></i>
+                Homepage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/SunshineJunFu" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">tensorflow_tutorial_8</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">tensorflow_tutorial_8</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-02-02T17:00:57.000Z" itemprop="datePublished" class="page-time">
+  2019-02-03
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#如何使用高低阶的API搭建网络"><span class="post-toc-number">1.</span> <span class="post-toc-text">如何使用高低阶的API搭建网络</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#全连接"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">全连接</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#卷积"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">卷积</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#反卷积"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">反卷积</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-tensorflow-tutorial-8" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">tensorflow_tutorial_8</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-02-03 01:00:57" datetime="2019-02-02T17:00:57.000Z" itemprop="datePublished">2019-02-03</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="如何使用高低阶的API搭建网络"><a href="#如何使用高低阶的API搭建网络" class="headerlink" title="如何使用高低阶的API搭建网络"></a>如何使用高低阶的API搭建网络</h1><h2 id="全连接"><a href="#全连接" class="headerlink" title="全连接"></a>全连接</h2><p>结构：<code>flatten</code>$\rightarrow$ <code>xw+b</code>$\rightarrow$ <code>norm layer</code>(optional)$\rightarrow$<code>activation function</code> $\rightarrow$<code>dropout</code>(optional)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_fc_layer</span><span class="params">(inputs, in_dim, out_dim, scope_name, activation_function=None)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> tf.variable_scope(scope_name):</span><br><span class="line"></span><br><span class="line">        w = tf.get_variable(shape=[in_dim, out_dim], initializer=tf.contrib.layers.xavier_initializer(), name=<span class="string">'weights'</span>)</span><br><span class="line"></span><br><span class="line">        b = tf.get_variable(shape=[<span class="number">1</span>, out_dim], initializer=tf.contrib.layers.xavier_initializer(), name=<span class="string">'biases'</span>)</span><br><span class="line"></span><br><span class="line">        wx_plus_b = tf.matmul(inputs, w) + b  <span class="comment"># broadcast</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> activation_function:</span><br><span class="line"></span><br><span class="line">        	wx_plus_b = activation_function(wx_plus_b)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wx_plus_b</span><br></pre></td></tr></table></figure>
+<h2 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h2><p>结构： <code>convolution</code> $\rightarrow$ <code>norm layer</code>(optional) $\rightarrow$<code>activation function</code> $\rightarrow$<code>pooling</code>(optional)   </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_conv2d_layer</span><span class="params">(inputs, in_channel, out_channel, scope_name, activation_function, filter_h, filter_w,stride)</span>:</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">with</span> tf.variable_scope(scope_name):</span><br><span class="line"></span><br><span class="line">		fliter_mask = tf.get_variable(shape=[filter_h, filter_w, in_channel, out_channel], dtype=inputs.dtype, initializer=tf.contrib.layers.xavier_initializer(),name=<span class="string">'filter'</span>)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 'same' 输入输出的宽高一致， 'valid', out_width = xxxx #</span></span><br><span class="line">		conv_inputs  = tf.nn.conv2d(inputs, fliter_mask, [<span class="number">1</span>,stride,stride,<span class="number">1</span>], <span class="string">'SAME'</span>)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># batch normalization #</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> activation_function:</span><br><span class="line"></span><br><span class="line">			conv_inputs = activation_function(conv_inputs)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># pooling #</span></span><br><span class="line"></span><br><span class="line">		conv_inputs = tf.nn.max_pool(conv_inputs,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>],[<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>],<span class="string">'SAME'</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> conv_inputs</span><br></pre></td></tr></table></figure>
+<h2 id="反卷积"><a href="#反卷积" class="headerlink" title="反卷积"></a>反卷积</h2><p>结构： <code>inverse-convolution</code> $\rightarrow$ <code>norm layer</code>(optional) $\rightarrow$<code>activation function</code>     </p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-02-17T07:18:54.706Z" itemprop="dateUpdated">2019-02-17 15:18:54</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/SunshineJunFu/JunFu.github.io">
+            <img src="/JunFu.github.io/images/avatar.jpg" alt="Jun Fu">
+            Jun Fu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-8/&title=《tensorflow_tutorial_8》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-8/&title=《tensorflow_tutorial_8》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-8/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tensorflow_tutorial_8》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-8/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-8/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JunFu.github.io/2019/02/03/tensorflow-tutorial-9/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">tensorflow_tutorial_9</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JunFu.github.io/2019/02/03/tensorflow-tutorial-7/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">tensorflow_tutorial_7</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "jeA0VlYdrPRbE0nMW3DV5gow-gzGzoHsz",
+            appKey: "QvgEiq6wSQKvTmKUUM5pcMJh",
+            avatar: "mm",
+            placeholder: "share your ideas",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        UV：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        PV：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/JunFu.github.io/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Jun Fu &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-8/&title=《tensorflow_tutorial_8》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-8/&title=《tensorflow_tutorial_8》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-8/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tensorflow_tutorial_8》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-8/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-8/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACq0lEQVR42u3awYoiQRAEUP//p3dhTgOiG5FZNePC65No29ZrwUoj8/GIjz9fR/Lq85nPr34/np9//8zjxoGHh4c3Wvqr4/2l8+W2782v/+ocPDw8vNu8/Oc+/+mfvTrbfl4+j4eHh/ervHzR7TnJ83h4eHj/I6/dMJLyNy/l8fDw8D6Nl3zMrFBut4r2E49lLXh4eHgxr22AfcLji/09PDw8vEVXfVPyzq7/vjiur4aHh4d3gZe3+WeNqKTszhnDYSw8PDy8o7zk1CQyyIeo6hB2sWY8PDy8G7zk//ts0CpPBpLtZ9UAw8PDwzvK2xS474vdPFw4FWo88l0LDw8Pb8HLN4OcsYkVrmxOeHh4eEd5szGmTXE8+wZmq8LDw8O7zctzi7ZVljTJkptV9PSSk/Dw8PAWvFm4kC9xNm6VN8Pw8PDwfpLXXjQPanP2LNjNxwjw8PDwzvL2I1OzOGMTahTbGB4eHt4FXhKetvFE3ujabAbD/h4eHh7eUV4eHLThbx43tNToLwEeHh7eUd7sg9vmWbsx5DFuPTqAh4eHt+blIemNsnizYeRxCR4eHt5ZXr4N5OMC+17c5lYOA1w8PDy8kjdrgLWBwuw2bYpsPDw8vBu8HLYpu5PSeVY0R18JHh4e3gVe+7a2HZUvPQkp2qgCDw8P7zZv/zH51rJpfbWDBXh4eHhnebPSNn/cMtpY5B9fDB4eHt413qzwTQBtZLAKbfPOGx4eHt4a1i4rb+3nhfjhDQMPDw/vbi1aDxnMBgXuZQUHxgvw8PDwYt6s/E2W215/NuyFh4eH91u82U/2LKLN2Zt2HR4eHt5n8vIRgfYGtVEvHh4e3mfyZq2ys22t9ubi4eHh3ePNwoI2vJiV1LMRBDw8PLx7vFkDbENtx7PaUTA8PDy8a7y/S8j5Pq0kFsYAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/JunFu.github.io/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/JunFu.github.io/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/JunFu.github.io/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'Where are you!';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Hi! Welcome Back!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+<script src="/JunFu.github.io/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/JunFu.github.io/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

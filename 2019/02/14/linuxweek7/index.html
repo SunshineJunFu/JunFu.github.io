@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    
+    <title>linuxweek7 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="linux">
+    <meta name="description" content="shell种类   种类 描述     B-shell /bin/sh Stephen R.Bourne 于贝尔实验室开发   C-shell /bin/csh, Bill Joy   K-shell /bin/csh, korn shell, David Korn   Bash /bin/bash, Bourne Again shell    功能 shell是命令解释器  文件名替换，命令替换">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linuxweek7">
+<meta property="og:url" content="https://github.com/SunshineJunFu/JunFu.github.io/2019/02/14/linuxweek7/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="shell种类   种类 描述     B-shell /bin/sh Stephen R.Bourne 于贝尔实验室开发   C-shell /bin/csh, Bill Joy   K-shell /bin/csh, korn shell, David Korn   Bash /bin/bash, Bourne Again shell    功能 shell是命令解释器  文件名替换，命令替换">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-02-17T07:18:54.656Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linuxweek7">
+<meta name="twitter:description" content="shell种类   种类 描述     B-shell /bin/sh Stephen R.Bourne 于贝尔实验室开发   C-shell /bin/csh, Bill Joy   K-shell /bin/csh, korn shell, David Korn   Bash /bin/bash, Bourne Again shell    功能 shell是命令解释器  文件名替换，命令替换">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/JunFu.github.io/atom.xml">
+    
+    <link rel="shortcut icon" href="/JunFu.github.io/favicon.ico">
+    <link rel="stylesheet" href="/JunFu.github.io/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/JunFu.github.io/img/brand.jpg)">
+      <div class="brand">
+        <a href="/JunFu.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/JunFu.github.io/images/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Jun Fu</h5>
+          <a href="mailto:fujun@mail.ustc.edu.cn" title="fujun@mail.ustc.edu.cn" class="mail">fujun@mail.ustc.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/">
+                <i class="icon icon-lg icon-home"></i>
+                Homepage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/SunshineJunFu" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">linuxweek7</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">linuxweek7</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-02-14T06:54:38.000Z" itemprop="datePublished" class="page-time">
+  2019-02-14
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#shell"><span class="post-toc-number">1.</span> <span class="post-toc-text">shell</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#种类"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">种类</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#功能"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">功能</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#具体功能"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">具体功能</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#启动交互式shell"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">启动交互式shell</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#历史与别名"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">历史与别名</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#历史表"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">历史表</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#别名"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text">别名</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Tab键补全"><span class="post-toc-number">1.4.3.</span> <span class="post-toc-text">Tab键补全</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#重定向"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">重定向</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#输入"><span class="post-toc-number">1.5.1.</span> <span class="post-toc-text">输入</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#输出"><span class="post-toc-number">1.5.2.</span> <span class="post-toc-text">输出</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-linuxweek7" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">linuxweek7</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-02-14 14:54:38" datetime="2019-02-14T06:54:38.000Z" itemprop="datePublished">2019-02-14</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h1><h2 id="种类"><a href="#种类" class="headerlink" title="种类"></a>种类</h2><table>
+<thead>
+<tr>
+<th>种类</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B-shell</td>
+<td>/bin/sh Stephen R.Bourne 于贝尔实验室开发</td>
+</tr>
+<tr>
+<td>C-shell</td>
+<td>/bin/csh, Bill Joy</td>
+</tr>
+<tr>
+<td>K-shell</td>
+<td>/bin/csh, korn shell, David Korn</td>
+</tr>
+<tr>
+<td>Bash</td>
+<td>/bin/bash, Bourne Again shell</td>
+</tr>
+</tbody>
+</table>
+<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><ul>
+<li><p>shell是命令解释器</p>
+</li>
+<li><p>文件名替换，命令替换，变量替换</p>
+</li>
+<li><p>历史替换，别名替换</p>
+</li>
+<li><p>流程控制的内部命令(内部命令和外部命令)</p>
+</li>
+<li><p>主要用途：批处理，执行效率比算法语言低</p>
+</li>
+</ul>
+<p><code>学习bash的目的</code>: </p>
+<ul>
+<li><p>交互方式下：熟习shell的替换机制、转义机制，掌握循环等流程控制，<br>可以编写复合命令</p>
+</li>
+<li><p>非交互方式：编写shell脚本程序，把一系列的操作，编纂成一个脚本文<br>件，批量处理</p>
+</li>
+</ul>
+<h2 id="具体功能"><a href="#具体功能" class="headerlink" title="具体功能"></a>具体功能</h2><ol>
+<li>重定向与管道</li>
+<li>方便交互使用的功能：历史替换与别名替换</li>
+<li>shell变量</li>
+<li>shell的变量替换，命令替换，文件名替换</li>
+<li>元字符，如：单引号，双引号</li>
+<li>流程控制</li>
+<li>子程序</li>
+</ol>
+<h3 id="启动交互式shell"><a href="#启动交互式shell" class="headerlink" title="启动交互式shell"></a>启动交互式shell</h3><p>注册shell 和 交互式shell的区别？</p>
+<p>启动方法</p>
+<ul>
+<li><p>注册shell： 注册shell</p>
+</li>
+<li><p>键入bash 命令： 交互式shell</p>
+</li>
+<li><p>脚本解释器</p>
+</li>
+</ul>
+<p>自动执行一批命令(用户偏好)：</p>
+<ul>
+<li><p>注册shell时：自动执行用户主目录下的.bash_profile文件中的命令</p>
+</li>
+<li><p>bash作为注册shell退出时： 自动执行$HOME/.bash_logout</p>
+</li>
+<li><p>bash作为注册shell启动时： 自动执行$HOME/.bashrc</p>
+</li>
+</ul>
+<p>自动执行一批命令(系统级)：</p>
+<ul>
+<li><p>当bashbash bash作为注册shell被启动时:自动执行 /etc/profile 文件中命令</p>
+</li>
+<li><p>当bash 作为交互式shell启动时： 自动执行 /etc/bash.bashrc</p>
+</li>
+<li><p>当bash作为注册shell退出时：自动执行/etc/bash.bash.bash_logout</p>
+</li>
+</ul>
+<h2 id="历史与别名"><a href="#历史与别名" class="headerlink" title="历史与别名"></a>历史与别名</h2><h3 id="历史表"><a href="#历史表" class="headerlink" title="历史表"></a>历史表</h3><p>查看历史表</p>
+<p>history</p>
+<p>设置历史表的大小：</p>
+<p>修改变量HISTSIZE</p>
+<p>历史替换：</p>
+<ul>
+<li><p>人机交互时，直接使用上下箭头</p>
+</li>
+<li><p>！！ 引用上一条命令</p>
+</li>
+<li><p>！str 以str开头的最近用过的命令</p>
+</li>
+</ul>
+<h3 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h3><p>创建别名：alias h=”alias”， 注意等号两端无空格</p>
+<p>查看别名表： alias</p>
+<p>取消别名： unalias h</p>
+<h3 id="Tab键补全"><a href="#Tab键补全" class="headerlink" title="Tab键补全"></a>Tab键补全</h3><ul>
+<li><p>每行的首个单词： 全搜索$PATH下的命令</p>
+</li>
+<li><p>行中的其他单词： 当前目录下的文件名</p>
+</li>
+</ul>
+<h2 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h2><h3 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;filename</td>
+<td>从filename中获取stdin</td>
+</tr>
+<tr>
+<td>&lt;&lt;word</td>
+<td>从shell脚本文件中获取数据直到再次遇到定界符word ？？？？</td>
+</tr>
+<tr>
+<td>&lt;&lt;&lt;word</td>
+<td>从命令行获取信息作为标准输入</td>
+</tr>
+</tbody>
+</table>
+<h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><table>
+<thead>
+<tr>
+<th>fd</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>标准输入， stdin</td>
+</tr>
+<tr>
+<td>1</td>
+<td>标准输出，stdout</td>
+</tr>
+<tr>
+<td>2</td>
+<td>标准错误输出， stderr</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&gt;filename</td>
+<td>将stdout重定向到文件 filename,文件已存在则先清空（ 覆盖方式</td>
+</tr>
+<tr>
+<td>&gt;&gt;filename</td>
+<td>将stdout重定向 追加 到文件 filename尾</td>
+</tr>
+<tr>
+<td>2&gt; filename</td>
+<td>将文件句柄2重定向到文件 filename</td>
+</tr>
+<tr>
+<td>2&gt;&amp;1</td>
+<td>将文件句柄 2重定向到文件描述符 1</td>
+</tr>
+<tr>
+<td>cmd1</td>
+<td>cmd2</td>
+<td>将cmd1的标准输出作为cmd2的标准输入</td>
+</tr>
+</tbody>
+</table>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-02-17T07:18:54.656Z" itemprop="dateUpdated">2019-02-17 15:18:54</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/SunshineJunFu/JunFu.github.io">
+            <img src="/JunFu.github.io/images/avatar.jpg" alt="Jun Fu">
+            Jun Fu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/JunFu.github.io/tags/linux/">linux</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/14/linuxweek7/&title=《linuxweek7》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/14/linuxweek7/&title=《linuxweek7》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/14/linuxweek7/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《linuxweek7》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/14/linuxweek7/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/14/linuxweek7/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JunFu.github.io/2019/02/14/linuxweek8/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">linuxweek8</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JunFu.github.io/2019/02/11/tensorflow-tutorial-11/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">tensorflow-tutorial-11</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "jeA0VlYdrPRbE0nMW3DV5gow-gzGzoHsz",
+            appKey: "QvgEiq6wSQKvTmKUUM5pcMJh",
+            avatar: "mm",
+            placeholder: "share your ideas",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        UV：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        PV：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/JunFu.github.io/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Jun Fu &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/14/linuxweek7/&title=《linuxweek7》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/14/linuxweek7/&title=《linuxweek7》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/14/linuxweek7/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《linuxweek7》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/14/linuxweek7/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/14/linuxweek7/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAAClElEQVR42u3ay1JjMQwFQP7/p2HLJuHolbpT015REBy3F5ZK0tdXvL5/rflnXn3+/W/e7zxaeHh4eIOjv9ou/+LkEL193v/XyyvAw8PDO+Mlh0j+qxoqkgCQXyIeHh7e83l5ypuEmfya8PDw8P4tXrU0kDz6yZXh4eHhPY2Xb92rmm4FocNaCx4eHl7Myw/9nJ9P+nt4eHh446569cGdpOB5S6xwWjw8PLwD3ryVVR04yFtok6EEPDw8vDte79mtDhP09szDw8uwhIeHh3fGSx706hM/wVTrDOXOGx4eHt6AV23eT1LhHjK5uD/AeHh4eKu8pMQw6S5tjRRUrxgPDw/vmldNtZvxZ7x/tSWGh4eHd83LW029v1ZT7V6gKk+K4eHh4a3y5ulvLxWehBk8PDy8a948CZ5c1lZgKHT58PDw8JZ480LAVmDoDV1F34KHh4d3wLteObvaPHvEwsPD+894k5Q3OWivAJEPN/zBxsPDwzvgVQsT1QR6C9lrs+Hh4eHt8qrPep7I9gYReiHh5T54eHh4x7zdgmyvODuJac3JCDw8PLwBb1JQqLbK8n16dVo8PDy8O96kBZWXJybhZ+2dx8PDw1vl5WOm+WeqDbZk57whh4eHh/d5XrWE2kus88Z/ntA3ayF4eHh4A96k0JCUZXvIXiqPh4eH93lerymVX0S1AdZceHh4eKu87+LqjUNNxhFG6T4eHh7eAW/rja22u/KwkafphyEEDw8Pb3D0eUG2OjjVCwx4eHh4n+HlxYg88e0FjK1iCh4eHt5zePmXVQsQSXgop9d4eHh4j+Elh9gq4Oap/1pgwMPDw1uqc/aGn/J0Ob+Ik1oLHh4eXszrJcpJgMkvohqiDufO8PDw8N6tHw+LNcow0JA8AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/JunFu.github.io/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/JunFu.github.io/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/JunFu.github.io/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'Where are you!';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Hi! Welcome Back!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+<script src="/JunFu.github.io/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/JunFu.github.io/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

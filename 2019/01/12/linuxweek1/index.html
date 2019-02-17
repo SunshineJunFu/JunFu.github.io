@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    
+    <title>linuxweek1 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="linux">
+    <meta name="description" content="Linux基本的Linux命令 man man name or man section name or man -k regexp section: 1 -&amp;gt;命令,  2 -&amp;gt; 系统调用 3 -&amp;gt; 库函数   date 读取系统的时间和日期 定制输出格式： data ”+%Y-%m-%d %H:%M:%S Day %j” or data “+%s” ntpdate 0.pool.">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linuxweek1">
+<meta property="og:url" content="https://github.com/SunshineJunFu/JunFu.github.io/2019/01/12/linuxweek1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Linux基本的Linux命令 man man name or man section name or man -k regexp section: 1 -&amp;gt;命令,  2 -&amp;gt; 系统调用 3 -&amp;gt; 库函数   date 读取系统的时间和日期 定制输出格式： data ”+%Y-%m-%d %H:%M:%S Day %j” or data “+%s” ntpdate 0.pool.">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-02-17T07:18:54.649Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linuxweek1">
+<meta name="twitter:description" content="Linux基本的Linux命令 man man name or man section name or man -k regexp section: 1 -&amp;gt;命令,  2 -&amp;gt; 系统调用 3 -&amp;gt; 库函数   date 读取系统的时间和日期 定制输出格式： data ”+%Y-%m-%d %H:%M:%S Day %j” or data “+%s” ntpdate 0.pool.">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/JunFu.github.io/atom.xml">
+    
+    <link rel="shortcut icon" href="/JunFu.github.io/favicon.ico">
+    <link rel="stylesheet" href="/JunFu.github.io/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/JunFu.github.io/img/brand.jpg)">
+      <div class="brand">
+        <a href="/JunFu.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/JunFu.github.io/images/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Jun Fu</h5>
+          <a href="mailto:fujun@mail.ustc.edu.cn" title="fujun@mail.ustc.edu.cn" class="mail">fujun@mail.ustc.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/">
+                <i class="icon icon-lg icon-home"></i>
+                Homepage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/SunshineJunFu" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">linuxweek1</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">linuxweek1</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-01-11T16:25:58.000Z" itemprop="datePublished" class="page-time">
+  2019-01-12
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Linux"><span class="post-toc-number">1.</span> <span class="post-toc-text">Linux</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基本的Linux命令"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">基本的Linux命令</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#了解系统状态的命令"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">了解系统状态的命令</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#文本处理命令"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">文本处理命令</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-linuxweek1" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">linuxweek1</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-01-12 00:25:58" datetime="2019-01-11T16:25:58.000Z" itemprop="datePublished">2019-01-12</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><h2 id="基本的Linux命令"><a href="#基本的Linux命令" class="headerlink" title="基本的Linux命令"></a>基本的Linux命令</h2><ul>
+<li>man<ul>
+<li>man name or man section name or man -k regexp</li>
+<li>section: 1 -&gt;命令,  2 -&gt; 系统调用 3 -&gt; 库函数</li>
+</ul>
+</li>
+<li>date<ul>
+<li>读取系统的时间和日期</li>
+<li>定制输出格式： data ”+%Y-%m-%d %H:%M:%S Day %j” or data “+%s”</li>
+<li>ntpdate 0.pool.ntp.org 设置时间（only root)</li>
+<li>ntpdate -q 0.pool.ntp.org 查询时间</li>
+</ul>
+</li>
+<li>cal<ul>
+<li>cal  当前月份日历</li>
+<li>cal year </li>
+<li>cal month year</li>
+</ul>
+</li>
+<li>bc<ul>
+<li>bc 缺省精度为数点后0位</li>
+<li>bc -l 缺省精度为数点后20位</li>
+</ul>
+</li>
+<li>passwd<ul>
+<li>passwd 普通用户修改登陆密码</li>
+<li>passwd 用户名 root 可重置用户的密码</li>
+</ul>
+</li>
+</ul>
+<h2 id="了解系统状态的命令"><a href="#了解系统状态的命令" class="headerlink" title="了解系统状态的命令"></a>了解系统状态的命令</h2><ul>
+<li>who<ul>
+<li>确定谁在系统中</li>
+<li>who 列出已登录系统的用户</li>
+<li>who am i </li>
+<li>whoami</li>
+</ul>
+</li>
+<li>uptime<ul>
+<li>已开机时间， CPU负载， 登陆用户数</li>
+</ul>
+</li>
+<li>top</li>
+<li>free</li>
+<li>vmstat</li>
+<li>ps<ul>
+<li>e 所有进程</li>
+<li>f full格式</li>
+<li>l long格式</li>
+</ul>
+</li>
+</ul>
+<h2 id="文本处理命令"><a href="#文本处理命令" class="headerlink" title="文本处理命令"></a>文本处理命令</h2><ul>
+<li>more/less<ul>
+<li>more filename</li>
+<li>满屏后，空格翻页，换行，向下滚动一行， q 退出， /pattern， /</li>
+<li>不支持回退</li>
+<li>less is more， 可利用上下箭头，支持回退</li>
+</ul>
+</li>
+<li>cat/od<ul>
+<li>文本格式打印 cat filename or cat -n filename 带行号</li>
+<li>od 逐字节打印</li>
+<li>od -c/-t c(字符), -t x1(16进制), -t d1(10进制), -t u1(8进制)</li>
+</ul>
+</li>
+<li>head/tail<ul>
+<li>head -n number filename / tail -n number filename</li>
+<li>head -n -number filename 除末尾number行，均为头</li>
+<li>tail -n +number filename  除首number行，均为尾</li>
+<li>tail -f filename 实时打印文件尾部信息</li>
+</ul>
+</li>
+<li>tee<ul>
+<li>tee filename 将stdin的数据送到stdout，并存入文件filename</li>
+</ul>
+</li>
+<li>wc<ul>
+<li>列出文件一共多行，多少单词，多少字符</li>
+<li>文件大于1，会有个合计</li>
+<li>-l 只输出行</li>
+</ul>
+</li>
+<li>sort<ul>
+<li>sort -n 按数值大小排顺序，不按字符比较规则</li>
+</ul>
+</li>
+<li>tr<ul>
+<li>翻译字符</li>
+<li>tr string1 string2 翻译string1至string2</li>
+</ul>
+</li>
+<li>uniq <ul>
+<li>uniq options inputfile </li>
+<li>-u 只保留没有重复的行（只打印一次）</li>
+<li>-d 只保留重复的行（只打印一次）</li>
+<li>-c 计数同样的行出现的次数</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-02-17T07:18:54.649Z" itemprop="dateUpdated">2019-02-17 15:18:54</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/SunshineJunFu/JunFu.github.io">
+            <img src="/JunFu.github.io/images/avatar.jpg" alt="Jun Fu">
+            Jun Fu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/JunFu.github.io/tags/linux/">linux</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/12/linuxweek1/&title=《linuxweek1》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/12/linuxweek1/&title=《linuxweek1》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/12/linuxweek1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《linuxweek1》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/12/linuxweek1/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/12/linuxweek1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JunFu.github.io/2019/01/30/tensorflow-tutorial-1/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">tensorflow_tutorial_1</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JunFu.github.io/2019/01/09/setupBlog3/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">hexo迁移和复用</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "jeA0VlYdrPRbE0nMW3DV5gow-gzGzoHsz",
+            appKey: "QvgEiq6wSQKvTmKUUM5pcMJh",
+            avatar: "mm",
+            placeholder: "share your ideas",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        UV：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        PV：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/JunFu.github.io/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Jun Fu &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/12/linuxweek1/&title=《linuxweek1》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/12/linuxweek1/&title=《linuxweek1》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/12/linuxweek1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《linuxweek1》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/12/linuxweek1/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/12/linuxweek1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrklEQVR42u3a0W7bMAwF0P7/T2+vBTo395JSl2HHT4Hj2DoKINKkPj7i49en4/OZp2u+fvv1V0/3fDrzdM8DBx4eHt5i6E+3S848sXNkMn35mPHw8PBu85JBzBjtld+HnHzMeHh4eO/J2y/ryWTh4eHh/eu8NplOFv12yvDw8PDegdcu9Jt6aTKstrx7oNaCh4eHF/PyLtL7fL7S38PDw8Nbd9XzVLjdIrBpiRWjxcPDw7vAO5Uut2WLs6XbFy03PDw8vKO8WeE1b5Kdmpp2kxYeHh7ebV5701nTaxNCoviWxxY8PDy8BS9v3s/a/7MNAe1mrxdgPDw8vKO8eiZGm6VaZBIAipCAh4eHd5TXpq1tCJlNa5uUt0/Hw8PD2/BelEHXK21b+GjDw4tQgYeHh3eB1xZkZ9ut2lR4ltzj4eHh/QwvDwz58r0pDc8CwyMeDw8P7wJvX9LNG2OzoDJLxB+DBB4eHt5R3u0jT7VnU/mXDzw8vP+MN9sglQ90VoBInhIl5Xh4eHgXeMlr//cP2JQwNsWRumKNh4eHt+bNNpXOyrgzUj5lf/iMh4eHd42XMDa1jeTObTEiaoPh4eHhXea1A8rT6zalbgu1j7/Cw8PDu8CbLbubKzfhZzU2PDw8vKO8PIVt22NJs2q/yfXFn4SHh4d3mXf2wXkZoi40tD09PDw8vAu8Njy0xYgNcjVCPDw8vGu8vKnfpt1tOr5ptq1qGHh4eHij1lH72p9nsHmAadP9x2/x8PDwLvBOrbHtdqs8bORp+sUQgoeHhzca+oyxmb5NYMDDw8P7GV5ejGjbUZtBb4opeHh4eO/Dmy3lm3JD8qtHCx4eHt6b8c5uPkjOtAURPDw8vHu8tsy62UbQpuOzBhseHh7ePV77wp+ns7PtBTfKxHh4eHiHeL8BrbZek9WtgL4AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/JunFu.github.io/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/JunFu.github.io/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/JunFu.github.io/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'Where are you!';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Hi! Welcome Back!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+<script src="/JunFu.github.io/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/JunFu.github.io/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

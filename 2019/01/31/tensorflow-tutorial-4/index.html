@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    
+    <title>tensorflow_tutorial_4 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tensorflow">
+    <meta name="description" content="class saver作用：用于保存和恢复网络的参数 FunctionInit123456789101112131415161718__init__(    var_list=None,    reshape=False,    sharded=False,    max_to_keep=5,    keep_checkpoint_every_n_hours=10000.0,    name=No">
+<meta name="keywords" content="tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tensorflow_tutorial_4">
+<meta property="og:url" content="https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-4/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="class saver作用：用于保存和恢复网络的参数 FunctionInit123456789101112131415161718__init__(    var_list=None,    reshape=False,    sharded=False,    max_to_keep=5,    keep_checkpoint_every_n_hours=10000.0,    name=No">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-02-17T07:18:54.701Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tensorflow_tutorial_4">
+<meta name="twitter:description" content="class saver作用：用于保存和恢复网络的参数 FunctionInit123456789101112131415161718__init__(    var_list=None,    reshape=False,    sharded=False,    max_to_keep=5,    keep_checkpoint_every_n_hours=10000.0,    name=No">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/JunFu.github.io/atom.xml">
+    
+    <link rel="shortcut icon" href="/JunFu.github.io/favicon.ico">
+    <link rel="stylesheet" href="/JunFu.github.io/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/JunFu.github.io/img/brand.jpg)">
+      <div class="brand">
+        <a href="/JunFu.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/JunFu.github.io/images/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Jun Fu</h5>
+          <a href="mailto:fujun@mail.ustc.edu.cn" title="fujun@mail.ustc.edu.cn" class="mail">fujun@mail.ustc.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/">
+                <i class="icon icon-lg icon-home"></i>
+                Homepage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/SunshineJunFu" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">tensorflow_tutorial_4</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">tensorflow_tutorial_4</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-01-31T08:25:48.000Z" itemprop="datePublished" class="page-time">
+  2019-01-31
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#class-saver"><span class="post-toc-number">1.</span> <span class="post-toc-text">class saver</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Function"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Function</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Init"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">Init</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#save"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">save</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#restore"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">restore</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Example"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Example</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#查看保存文件里的tensor"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">查看保存文件里的tensor</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#To-do"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">To do</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-tensorflow-tutorial-4" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">tensorflow_tutorial_4</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-01-31 16:25:48" datetime="2019-01-31T08:25:48.000Z" itemprop="datePublished">2019-01-31</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="class-saver"><a href="#class-saver" class="headerlink" title="class saver"></a>class <a href="https://www.tensorflow.org/api_docs/python/tf/train/Saver" target="_blank" rel="noopener">saver</a></h1><p>作用：用于保存和恢复网络的参数</p>
+<h2 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h2><h3 id="Init"><a href="#Init" class="headerlink" title="Init"></a>Init</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">__init__(</span><br><span class="line">    var_list=<span class="keyword">None</span>,</span><br><span class="line">    reshape=<span class="keyword">False</span>,</span><br><span class="line">    sharded=<span class="keyword">False</span>,</span><br><span class="line">    max_to_keep=<span class="number">5</span>,</span><br><span class="line">    keep_checkpoint_every_n_hours=<span class="number">10000.0</span>,</span><br><span class="line">    name=<span class="keyword">None</span>,</span><br><span class="line">    restore_sequentially=<span class="keyword">False</span>,</span><br><span class="line">    saver_def=<span class="keyword">None</span>,</span><br><span class="line">    builder=<span class="keyword">None</span>,</span><br><span class="line">    defer_build=<span class="keyword">False</span>,</span><br><span class="line">    allow_empty=<span class="keyword">False</span>,</span><br><span class="line">    write_version=tf.train.SaverDef.V2,</span><br><span class="line">    pad_step_number=<span class="keyword">False</span>,</span><br><span class="line">    save_relative_paths=<span class="keyword">False</span>,</span><br><span class="line">    filename=<span class="keyword">None</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>Args:</p>
+<p>var_list: 指定保存的变量。可以使list或者dict</p>
+<p>max_to_keep: 最近可以保存ckeckpoints的最大数目</p>
+<p>keep_checkpoint_every_n_hours： 多久保存一次ckeckpoints<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">v1 = tf.Variable(..., name=<span class="string">'v1'</span>)</span><br><span class="line">v2 = tf.Variable(..., name=<span class="string">'v2'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Pass the variables as a dict:</span></span><br><span class="line">saver = tf.train.Saver(&#123;<span class="string">'v1'</span>: v1, <span class="string">'v2'</span>: v2&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Or pass them as a list.</span></span><br><span class="line">saver = tf.train.Saver([v1, v2])</span><br><span class="line"><span class="comment"># Passing a list is equivalent to passing a dict with the variable op names</span></span><br><span class="line"><span class="comment"># as keys:</span></span><br><span class="line">saver = tf.train.Saver(&#123;v.op.name: v <span class="keyword">for</span> v <span class="keyword">in</span> [v1, v2]&#125;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="save"><a href="#save" class="headerlink" title="save"></a>save</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">save(</span><br><span class="line">    sess,</span><br><span class="line">    save_path,</span><br><span class="line">    global_step=<span class="keyword">None</span>,</span><br><span class="line">    latest_filename=<span class="keyword">None</span>,</span><br><span class="line">    meta_graph_suffix=<span class="string">'meta'</span>,</span><br><span class="line">    write_meta_graph=<span class="keyword">True</span>,</span><br><span class="line">    write_state=<span class="keyword">True</span>,</span><br><span class="line">    strip_default_attrs=<span class="keyword">False</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>作用：保存网络参数</p>
+<p>Args:<br>sess: 会话句柄<br>save_path：保存路径<br>global_step：步数</p>
+<h2 id="restore"><a href="#restore" class="headerlink" title="restore"></a>restore</h2><p>作用：恢复网络参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">restore(</span><br><span class="line">    sess,</span><br><span class="line">    save_path</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>Args:<br>sess: 会话句柄<br>save_path：保存路径</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create a saver.</span></span><br><span class="line">saver = tf.train.Saver(...variables...)</span><br><span class="line"><span class="comment"># Launch the graph and train, saving the model every 1,000 steps.</span></span><br><span class="line">sess = tf.Session()</span><br><span class="line"><span class="keyword">for</span> step <span class="keyword">in</span> xrange(<span class="number">1000000</span>):</span><br><span class="line">    sess.run(..training_op..)</span><br><span class="line">    <span class="keyword">if</span> step % <span class="number">1000</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="comment"># Append the step number to the checkpoint name:</span></span><br><span class="line">        saver.save(sess, <span class="string">'my-model'</span>, global_step=step)</span><br></pre></td></tr></table></figure>
+<h2 id="查看保存文件里的tensor"><a href="#查看保存文件里的tensor" class="headerlink" title="查看保存文件里的tensor"></a><a href="https://www.jianshu.com/p/27d7955da2f6" target="_blank" rel="noopener">查看保存文件里的tensor</a></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.python <span class="keyword">import</span> pywrap_tensorflow</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从检查点文件中读取数据</span></span><br><span class="line">reader = pywrap_tensorflow.NewCheckpointReader(checkpoint_path)</span><br><span class="line">var_to_shape_map = reader.get_variable_to_shape_map()</span><br><span class="line"><span class="comment"># 显示变量名及其值</span></span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> var_to_shape_map:</span><br><span class="line">    print(<span class="string">"tensor_name: "</span>, key)</span><br><span class="line">    print(reader.get_tensor(key))</span><br></pre></td></tr></table></figure>
+<p>保存文件：</p>
+<ul>
+<li>.meta文件保存了当前图结构</li>
+<li>.index文件保存了当前参数名</li>
+<li>.data文件保存了当前参数值</li>
+</ul>
+<p>注：每调用一次save方法会产生新的文件</p>
+<h2 id="To-do"><a href="#To-do" class="headerlink" title="To do"></a>To do</h2><ul>
+<li style="list-style: none"><input type="checkbox"> transfer learning 里如何恢复部分模型参数</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-02-17T07:18:54.701Z" itemprop="dateUpdated">2019-02-17 15:18:54</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/SunshineJunFu/JunFu.github.io">
+            <img src="/JunFu.github.io/images/avatar.jpg" alt="Jun Fu">
+            Jun Fu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/JunFu.github.io/tags/tensorflow/">tensorflow</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-4/&title=《tensorflow_tutorial_4》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-4/&title=《tensorflow_tutorial_4》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-4/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tensorflow_tutorial_4》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-4/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-4/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JunFu.github.io/2019/01/31/tensorflow-tutorial-5/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">tensorflow_tutorial_5</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JunFu.github.io/2019/01/31/tensorflow-tutorial-2/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">tensorflow_tutorial_2</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "jeA0VlYdrPRbE0nMW3DV5gow-gzGzoHsz",
+            appKey: "QvgEiq6wSQKvTmKUUM5pcMJh",
+            avatar: "mm",
+            placeholder: "share your ideas",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        UV：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        PV：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/JunFu.github.io/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Jun Fu &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-4/&title=《tensorflow_tutorial_4》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-4/&title=《tensorflow_tutorial_4》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-4/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tensorflow_tutorial_4》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-4/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/01/31/tensorflow-tutorial-4/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtElEQVR42u3awW4iQQwEUP7/p7PSnjaKgCq7O2KlxwkNZNJvDtgq+/GIX19/X8+u//z03ys/3//8q/zK48YLDw8Pb3T0Z6/k1snhkv+bPJr8zHh4eHi3ea+LwZ6af7o5Ax4eHt6n8ZKf5rZU5Nfx8PDw/kdeWySS9jdv5fHw8PA+jTf7oU9KSF5s2pDicNaCh4eHF/PaAdgnvL8438PDw8O70OzOIt38nq8j3eJueHh4eBd4+Zi/Xbc6Fey2zX1xUDw8PLwRLw9Gk09nCwHJ9Xww9u0KHh4e3gVee4tN/Wkj13wBq31AeHh4eBvepsFN1rBmx92c4cC0DQ8PDy/IGWaDqLb93YQR+QN6uhmBh4eHd5Q3W2OaNcezI+YDs9VmGR4eHl7AmyUWeeDbPqDk+3WmgoeHh3eNN1u0SqKH2bpV3rLj4eHh/SZv30zPgtd9sFsM4fDw8PCO8r4WrzzqbVvqfSj8LYzAw8PDO8prI4mk/Z1FEqfev5nv4eHh4V3g5WFB+wiSuKEtLVGEgYeHh3eUl9+uDVs3hSEnFasDeHh4eEd5bQgbLTyV8eusYLwpRXh4eHgXeMUA/mgIO8Mfzlrw8PDw1ry2mZ79ZLflZ9Nk4+Hh4d3j5eFsG/i2d9svdT19rHh4eHgXeLORWMtuYW3pikoIHh4e3iFefqzN0c8uChRhCh4eHt5R3v64bXOctOD1oOv16hUeHh7eBd6psCCPYmcDsFWAi4eHh7fmbYZP+Wi/Xdg6VjDw8PDw7vai9eS9/fnOH8esoT+wPYGHh4cXn6dtf2elYhMB56EJHh4e3m/y2iFT0iLPGu62dr35Kzw8PLwP4OWAdgy2iXrx8PDwPpPXRqj5Q9mUgTdIPDw8vGu8TViQf3/WUs9WEPDw8PDu8fYDsM2SwQx5uPDg4eHhpbw/iaKIvepTptcAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/JunFu.github.io/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/JunFu.github.io/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/JunFu.github.io/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'Where are you!';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Hi! Welcome Back!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+<script src="/JunFu.github.io/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/JunFu.github.io/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

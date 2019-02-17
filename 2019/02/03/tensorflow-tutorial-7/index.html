@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    
+    <title>tensorflow_tutorial_7 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tensorflow">
+    <meta name="description" content="分类任务里的衡量指标二分类混淆矩阵    predicted 1 predicted 0     label 1 TP FN   label 0 FP TN     TP：label为正例，预测为正例 FP：label为负例，预测为正例 TN：label为正例，预测为正例 FN：label为正例，预测为负例  精度(Accuracy):\begin{align}Accuracy &amp;amp;=\fr">
+<meta name="keywords" content="tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tensorflow_tutorial_7">
+<meta property="og:url" content="https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-7/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="分类任务里的衡量指标二分类混淆矩阵    predicted 1 predicted 0     label 1 TP FN   label 0 FP TN     TP：label为正例，预测为正例 FP：label为负例，预测为正例 TN：label为正例，预测为正例 FN：label为正例，预测为负例  精度(Accuracy):\begin{align}Accuracy &amp;amp;=\fr">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-02-17T07:18:54.706Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tensorflow_tutorial_7">
+<meta name="twitter:description" content="分类任务里的衡量指标二分类混淆矩阵    predicted 1 predicted 0     label 1 TP FN   label 0 FP TN     TP：label为正例，预测为正例 FP：label为负例，预测为正例 TN：label为正例，预测为正例 FN：label为正例，预测为负例  精度(Accuracy):\begin{align}Accuracy &amp;amp;=\fr">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/JunFu.github.io/atom.xml">
+    
+    <link rel="shortcut icon" href="/JunFu.github.io/favicon.ico">
+    <link rel="stylesheet" href="/JunFu.github.io/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/JunFu.github.io/img/brand.jpg)">
+      <div class="brand">
+        <a href="/JunFu.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/JunFu.github.io/images/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Jun Fu</h5>
+          <a href="mailto:fujun@mail.ustc.edu.cn" title="fujun@mail.ustc.edu.cn" class="mail">fujun@mail.ustc.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/">
+                <i class="icon icon-lg icon-home"></i>
+                Homepage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/SunshineJunFu" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">tensorflow_tutorial_7</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">tensorflow_tutorial_7</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-02-02T16:59:00.000Z" itemprop="datePublished" class="page-time">
+  2019-02-03
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#分类任务里的衡量指标"><span class="post-toc-number">1.</span> <span class="post-toc-text">分类任务里的衡量指标</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#二分类"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">二分类</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#混淆矩阵"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">混淆矩阵</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#多label二分类"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">多label二分类</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Macro-f1-score"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">Macro-f1-score</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Micro-f1-score"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">Micro-f1-score</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ROC和AUC-Area-under-curve"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">ROC和AUC(Area under curve)</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#References"><span class="post-toc-number">2.</span> <span class="post-toc-text">References</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-tensorflow-tutorial-7" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">tensorflow_tutorial_7</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-02-03 00:59:00" datetime="2019-02-02T16:59:00.000Z" itemprop="datePublished">2019-02-03</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="分类任务里的衡量指标"><a href="#分类任务里的衡量指标" class="headerlink" title="分类任务里的衡量指标"></a>分类任务里的衡量指标</h1><h2 id="二分类"><a href="#二分类" class="headerlink" title="二分类"></a>二分类</h2><h3 id="混淆矩阵"><a href="#混淆矩阵" class="headerlink" title="混淆矩阵"></a>混淆矩阵</h3><table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:center">predicted 1</th>
+<th style="text-align:center">predicted 0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">label 1</td>
+<td style="text-align:center">TP</td>
+<td style="text-align:center">FN</td>
+</tr>
+<tr>
+<td style="text-align:left">label 0</td>
+<td style="text-align:center">FP</td>
+<td style="text-align:center">TN</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>TP：label为正例，预测为正例</li>
+<li>FP：label为负例，预测为正例</li>
+<li>TN：label为正例，预测为正例</li>
+<li>FN：label为正例，预测为负例</li>
+</ul>
+<p>精度(Accuracy):<br>\begin{align}<br>Accuracy &amp;=\frac{预测正确样本个数}{总样本数} \\<br>&amp;=\frac{TP+TN}{TP+FP+TN+FN}<br>\end{align}</p>
+<p>查全率(Recall): 预测正确的正例个数与总的正例的比值。</p>
+<p>$$Recall=\frac{TP}{TP+FN}$$</p>
+<p>查准率(Precision)：预测正确的正例个数与预测为正例个数的比值。</p>
+<p>$$Precision=\frac{TP}{TP+FP}$$</p>
+<p>性质: Recall 和 Precision 是一对矛盾的指标</p>
+<p>证明： </p>
+<p>假定<code>Recall</code> $\uparrow$, 由于$TP+FP=数据集内的正样本数=常数$ $\Rightarrow$ <code>TP</code>$\uparrow$, 由于<code>TP</code>$\uparrow$,为了提高<code>TP</code>，会同时增加<code>FP</code>且<code>FP+TP</code>的增量大于<code>TP</code>的增量(直觉上，为了提高<code>TP</code>，分类器会偏向于将分类为正类，这样也增加了<code>FP</code>)，所以<code>Precision</code>$\downarrow$。</p>
+<p>假定<code>Recall</code> $\downarrow$, 由于$TP+FP=数据集内的正样本数=常数$ $\Rightarrow$ <code>TP</code>$\downarrow$, 由于<code>TP</code>$\downarrow$,为了减小<code>TP</code>，会同时减小<code>FP</code>且<code>FP+TP</code>的减小量大于<code>TP</code>的减小量(直觉上，为了减小<code>TP</code>，分类器会偏向于将分类为负类，这样也减小了<code>FP</code>)，所以<code>Precision</code>$\uparrow$。</p>
+<p>所以：</p>
+<ul>
+<li><code>Recall</code> $\uparrow$ $\Rightarrow$ <code>TP</code>$\uparrow$，<code>FP+TP</code>$\uparrow$ $\Rightarrow$ <code>Precision</code> $\downarrow$</li>
+<li><code>Recall</code> $\downarrow$ $\Rightarrow$ <code>TP</code>$\downarrow$，<code>FP+TP</code>$\downarrow$ $\Rightarrow$ <code>Precision</code> $\uparrow$</li>
+</ul>
+<p>有的模型是将预测结果与一个阈值进行比较，如果大于该阈值则预测为正例，否则为反例。所以这个阈值非常重要，直接决定了模型的泛化能力。同时根据这个阈值我们可以将样本进行排序，“最可能”是正例的排在最前面，“最不可能”是正例的排在最后面。因此，如果我们想让precision更高，可以将阈值设置在排序靠前的位置，相反如果想让recall更高，可以将阈值设置在排序靠后的位置。</p>
+<p>F1 Measure/Score</p>
+<p>为了更准确反映模型的性能，引入了F1 score, 该指标同时考虑了<code>Recall</code>和<code>Precision</code>， 能让我们表达出对查准率/查全率的不同偏好。</p>
+<p>$$F_{\alpha}=(1+\alpha^{2})\frac{Precision*Recall}{\alpha^{2}*Precision+Recall}$$</p>
+<p>当\alpha &gt; 1 时查全率有更大影响，当\alpha &lt; 1 时查准率有更大影响。</p>
+<p>当$\alpha=1$, 即为F1-score，<code>Recall</code>和<code>Precision</code>的调和平均数。<br>$$F_{1}=(2)\frac{Precision*Recall}{Precision+Recall}$$</p>
+<h2 id="多label二分类"><a href="#多label二分类" class="headerlink" title="多label二分类"></a>多label二分类</h2><h3 id="Macro-f1-score"><a href="#Macro-f1-score" class="headerlink" title="Macro-f1-score"></a>Macro-f1-score</h3><p>(宏观角度)先在每个confusion matrix上计算precision和recall，最后计算平均值。</p>
+<p>$$ Precision_{macro} = \frac{1}{N}\sum_{i}Precision_{i} $$<br>$$ Recall_{macro} = \frac{1}{N}\sum_{i}Recall_{i} $$<br>$$ F1_{macro}=(2)\frac{Precision_{macro}*Recall_{macro}}{Precision_{macro}+Recall_{macro}}$$</p>
+<h3 id="Micro-f1-score"><a href="#Micro-f1-score" class="headerlink" title="Micro-f1-score"></a>Micro-f1-score</h3><p>(微观角度)先将每个confusion matrix中各个对应位置上的元素平均，得到TP、FP、TN、FN的平均值，然后计算precision、recall和F1<br>$$Recall_{micro}=\frac{\overline{TP}}{\overline{TP}+\overline{FN}}$$<br>$$Precision_{micro}=\frac{\overline{TP}}{\overline{TP}+\overline{FP}}$$<br>$$F1_{micro}=(2)\frac{Precision_{micro}*Recall_{micro}}{Precision_{micro}+Recall_{micro}}$$</p>
+<h3 id="ROC和AUC-Area-under-curve"><a href="#ROC和AUC-Area-under-curve" class="headerlink" title="ROC和AUC(Area under curve)"></a>ROC和AUC(Area under curve)</h3><p>每次预测一个样本后计算当下的两个值，最后用这两个值作为坐标画曲线。这两个值分别是真正例率（True Positive Rate）和假正例率（False Positive Rate），定义如下：<br>$$ TPR = \frac{TP}{TP+FN}$$<br>$$ FPR = \frac{FP}{TN+FP}$$</p>
+<p>AUC越大越好，考虑了所有阈值。</p>
+<p>ROC曲线的横坐标为false positive rate（FPR）即负类样本中被判定为正类的比例，也就是传说中的误纳率</p>
+<p>纵坐标为true positive rate（TPR）即正类样本中被判定为正类的样本，1-TPR也就是传说中的误拒率</p>
+<p>接下来我们考虑ROC曲线图中的四个点和一条线。</p>
+<p>第一个点，(0,1)，即左上角的点，在这个点意味着FPR=0，TPR=1，稍微翻译一下就是误纳率为0，误拒率为0，再翻译成人话就是负类样本中被判断为正类的比例为0，说明负类样本都被判断为负类，判断正确，正类样本中被判断为正类的比例为1，说明正类样本都被判断正确，所以这是一个完美的分类器，它将所有的样本都正确分类。</p>
+<p>第二个点，(1,0)，即右下角的点，在这个点意味着FPR=1，TPR=0，类似地分析可以发现这是一个最糟糕的分类器，因为它成功避开了所有的正确分类。把该判断为正类的判断为负类，把该判断为负类的判断为正类</p>
+<p>第三个点，(0,0)，即左下角的点，在这个点意味着FPR=TPR=0，可以发现该分类器预测所有的样本都为负样本（negative），在后面我们可以看到这种情况说明阈值选得过高。</p>
+<p>第四个点（1,1），即右下角的点，分类器实际上预测所有的样本都为正样本，在后面我们可以看到这种情况说明阈值选得过低。</p>
+<p>对角线： </p>
+<p>如果是随机分类，则有$Tp=Fp$，$Tn=Fn$，$\Rightarrow$ $FPR=TPR$</p>
+<p>好的分类器：$Tp&gt;Fp$，$Tn&gt;Fn$,，$\Rightarrow$ $TPR=\frac{TP\uparrow}{TP\uparrow+FN\downarrow}&gt;TPR=\frac{FP\downarrow}{FP\downarrow+TN\uparrow}$，位于对角线右侧</p>
+<p>差的分类器：$Tp&lt;Fp$，$Tn&lt;Fn$,，$\Rightarrow$ $TPR=\frac{TP\downarrow}{TP\downarrow+FN\uparrow}&gt;TPR=\frac{FP\uparrow}{FP\uparrow+TN\downarrow}$，位于对角线右侧</p>
+<p>如何画ROC曲线</p>
+<p>由于每次从分类模型中只能得到一个用于判定分类结果的分数，要将这个分数与一个阈值进行比较，判定这个样本属于哪个类，所以我们可以更改阈值，得到不同的分类结果，也就是不同的TPR和FPR</p>
+<p>之前说到当我们将threshold设置为1和0时，分别可以得到ROC曲线上的(0,0)和(1,1)两个点</p>
+<p>将这些(FPR,TPR)对连接起来，就得到了ROC曲线。当threshold取值越多，ROC曲线越平滑。</p>
+<p>既然有了ACC为什么要有ROC呢(既生瑜何生亮呢)</p>
+<p>我们知道，我们常用ACC准确率来判断分类器分类结果的好坏，既然有了ACC为什么还需要ROC呢，很重要的一个因素是实际的样本数据集中经常会出现数据偏斜的情况，要么负类样本数大于正类样本数，要么正类样本数大于负类样本数。</p>
+<p>比如说我负类样本数有9,000个，正类样本数有100个，如果阈值选得过高，正类样本都判断为负类，同样负类样本都判定为负类，那么准确率90%，看起来还不错，但是如果考虑ROC中的TPR和FPR的话就会知道，此时的TPR=0，FPR=0，也就是误纳率是0，但是误拒率是100%，是左下角的点，并不是很好的一个点，而原来的ACC就不具有代表性</p>
+<p>既然有了ROC为什么要有AUC呢(既生瑜何生亮呢)</p>
+<p>使用AUC值作为评价标准是因为很多时候ROC曲线并不能清晰的说明哪个分类器的效果更好，而相对于AUC是个数值而言，对应AUC更大的分类器效果更好，数值更好判断一些。</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p><a href="https://zhuanlan.zhihu.com/p/39957290" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/39957290</a></p>
+<p><a href="http://www.cnblogs.com/zle1992/p/6689136.html" target="_blank" rel="noopener">http://www.cnblogs.com/zle1992/p/6689136.html</a></p>
+<p><a href="https://www.zhihu.com/question/39840928" target="_blank" rel="noopener">https://www.zhihu.com/question/39840928</a></p>
+<p><a href="http://www.cnblogs.com/keedor/p/4463988.html" target="_blank" rel="noopener">http://www.cnblogs.com/keedor/p/4463988.html</a></p>
+<p><a href="https://www.cnblogs.com/keedor/category/669162.html" target="_blank" rel="noopener">https://www.cnblogs.com/keedor/category/669162.html</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-02-17T07:18:54.706Z" itemprop="dateUpdated">2019-02-17 15:18:54</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/SunshineJunFu/JunFu.github.io">
+            <img src="/JunFu.github.io/images/avatar.jpg" alt="Jun Fu">
+            Jun Fu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/JunFu.github.io/tags/tensorflow/">tensorflow</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-7/&title=《tensorflow_tutorial_7》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-7/&title=《tensorflow_tutorial_7》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-7/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tensorflow_tutorial_7》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-7/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-7/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/JunFu.github.io/2019/02/03/tensorflow-tutorial-8/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">tensorflow_tutorial_8</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JunFu.github.io/2019/02/02/tensorflow-tutorial-6/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">tensorflow_tutorial_6</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "jeA0VlYdrPRbE0nMW3DV5gow-gzGzoHsz",
+            appKey: "QvgEiq6wSQKvTmKUUM5pcMJh",
+            avatar: "mm",
+            placeholder: "share your ideas",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        UV：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        PV：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/JunFu.github.io/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Jun Fu &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-7/&title=《tensorflow_tutorial_7》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-7/&title=《tensorflow_tutorial_7》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-7/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tensorflow_tutorial_7》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-7/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/02/03/tensorflow-tutorial-7/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtElEQVR42u3aQU7EMAwF0N7/0iCxAg0z/bZjmMXralS1aV6QEmP7uuLr4+vq3X/8/f16vP/6zrVx4eHh4bWm/uxKhn58vvrWZDmePYOHh4e3zatu7s/ezaebjJbM58aCh4eH96+8fNLVZ3rLhIeHh/f+vOpWnoS/eSiPh4eH92685DO9I2TyZJ6kOJBrwcPDw4t51QLYO/xerO/h4eHhLQe71RJXvqG/Tk9Eo+Hh4eEt8PKJ5k0Dk7aq14xmMxYeHh7eUV7++fwYyNsLoiRsMUnx4w4eHh7eAm8+RBXfW6xRAQwPDw/vKG+yEZ9KLuQHSbnohYeHh7fAS9IH1ZL/JK2Qz6cwKzw8PLyjvLNp1rzRqvoXyA+eX+p7eHh4eAu8aumrmsx9zT61TMcqe3h4eHjxRJMNt/pWL5VQDdnx8PDw/pKXpACq7+ab/iSxmxfq8PDw8M7yqsdAkmathsinmg9uci14eHh4h3h5WHzqkMhTDL3nb+p7eHh4eGu8SZNT3m41D6mjFAYeHh7eUV7vw73tvvrkJCFS+I8BDw8Pr1UCmpf25+nXXjktOorw8PDwjvLyLbuaejj7ZDMZgYeHh7fG6wXTyTHQK2j1kiBXL67Hw8PD61SsyknVyXIkh0SvfeGm9QoPDw9vmZcUwyYfrpb/q6kQPDw8vG1elZG3iuYBdzV0rjYW4OHh4Z3lzTfx+ULk8yk3NODh4eGt8U4lC/JUbK8A1kzj4uHh4R3iTYpP+aIk46wcGHh4eHi7sWj58KgOndyvHj+9RAYeHh7enDcJf+eR7aRdAA8PD+9/edUiUxIiJ2PmIXWyfNf8RMLDw8Nb4FWPjWqrQS/Vi4eHh/eevGTj3i5rVVu78PDw8PZ4vWRBXiTLR6gWyW6WDA8PD2+BVy2AzZsMJuPkgT4eHh7eAu8T6gMr8LB9e3EAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/JunFu.github.io/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/JunFu.github.io/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/JunFu.github.io/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'Where are you!';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Hi! Welcome Back!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+<script src="/JunFu.github.io/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/JunFu.github.io/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

@@ -68,6 +68,8 @@ Args:
 	+ params: Optional dict of hyperparameters. Will receive what is passed to Estimator in params parameter. This allows to configure Estimators from hyper parameter tuning
 	+ config: Optional estimator.RunConfig object. Will receive what is passed to Estimator as its config parameter, or a default value. Allows setting up things in your model_fn based on configuration such as num_ps_replicas, or model_dir
 
+	return: tf.estimator.EstimatorSpec()
+
 + model_dir: 保存模型的路径
 
 + config： estimator.RunConfig configuration object.
@@ -77,6 +79,29 @@ Args:
 Returns:
 
 an Estimator instance
+
+# tf.estimator.EstimatorSpec()
+__new__(
+    cls,
+    mode,
+    predictions=None,
+    loss=None,
+    train_op=None,
+    eval_metric_ops=None,
+    export_outputs=None,
+    training_chief_hooks=None,
+    training_hooks=None,
+    scaffold=None,
+    evaluation_hooks=None,
+    prediction_hooks=None
+)
+
+
+Depending on the value of mode, different arguments are required. Namely
+
++ For mode == ModeKeys.TRAIN: required fields are loss and train_op.
++ For mode == ModeKeys.EVAL: required field is loss.
++ For mode == ModeKeys.PREDICT: required fields are predictions.
 
 # tf.estimator.TrainSpec
 
@@ -151,3 +176,4 @@ Args:
 
 + eval_spec： eval_spec实例
 
+#  tf.nn.embedding_lookup

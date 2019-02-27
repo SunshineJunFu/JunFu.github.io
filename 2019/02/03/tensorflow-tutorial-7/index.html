@@ -40,7 +40,7 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="分类任务里的衡量指标二分类混淆矩阵    predicted 1 predicted 0     label 1 TP FN   label 0 FP TN     TP：label为正例，预测为正例 FP：label为负例，预测为正例 TN：label为正例，预测为正例 FN：label为正例，预测为负例  精度(Accuracy):\begin{align}Accuracy &amp;amp;=\fr">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-02-17T07:18:54.706Z">
+<meta property="og:updated_time" content="2019-02-23T02:07:05.738Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tensorflow_tutorial_7">
 <meta name="twitter:description" content="分类任务里的衡量指标二分类混淆矩阵    predicted 1 predicted 0     label 1 TP FN   label 0 FP TN     TP：label为正例，预测为正例 FP：label为负例，预测为正例 TN：label为正例，预测为正例 FN：label为正例，预测为负例  精度(Accuracy):\begin{align}Accuracy &amp;amp;=\fr">
@@ -169,7 +169,7 @@ ga('send', 'pageview');
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#分类任务里的衡量指标"><span class="post-toc-number">1.</span> <span class="post-toc-text">分类任务里的衡量指标</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#二分类"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">二分类</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#混淆矩阵"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">混淆矩阵</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#多label二分类"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">多label二分类</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Macro-f1-score"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">Macro-f1-score</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Micro-f1-score"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">Micro-f1-score</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ROC和AUC-Area-under-curve"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">ROC和AUC(Area under curve)</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#References"><span class="post-toc-number">2.</span> <span class="post-toc-text">References</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#分类任务里的衡量指标"><span class="post-toc-number">1.</span> <span class="post-toc-text">分类任务里的衡量指标</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#二分类"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">二分类</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#混淆矩阵"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">混淆矩阵</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#多label二分类"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">多label二分类</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Macro-f1-score"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">Macro-f1-score</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Micro-f1-score"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">Micro-f1-score</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ROC和AUC-Area-under-curve"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">ROC和AUC(Area under curve)</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#AUC-0"><span class="post-toc-number">2.</span> <span class="post-toc-text">AUC = 0</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#如何画ROC曲线"><span class="post-toc-number">3.</span> <span class="post-toc-text">如何画ROC曲线</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#References"><span class="post-toc-number">4.</span> <span class="post-toc-text">References</span></a></li></ol>
         </nav>
     </aside>
 
@@ -255,8 +255,8 @@ ga('send', 'pageview');
 <p>如果是随机分类，则有$Tp=Fp$，$Tn=Fn$，$\Rightarrow$ $FPR=TPR$</p>
 <p>好的分类器：$Tp&gt;Fp$，$Tn&gt;Fn$,，$\Rightarrow$ $TPR=\frac{TP\uparrow}{TP\uparrow+FN\downarrow}&gt;TPR=\frac{FP\downarrow}{FP\downarrow+TN\uparrow}$，位于对角线右侧</p>
 <p>差的分类器：$Tp&lt;Fp$，$Tn&lt;Fn$,，$\Rightarrow$ $TPR=\frac{TP\downarrow}{TP\downarrow+FN\uparrow}&gt;TPR=\frac{FP\uparrow}{FP\uparrow+TN\downarrow}$，位于对角线右侧</p>
-<p>如何画ROC曲线</p>
-<p>由于每次从分类模型中只能得到一个用于判定分类结果的分数，要将这个分数与一个阈值进行比较，判定这个样本属于哪个类，所以我们可以更改阈值，得到不同的分类结果，也就是不同的TPR和FPR</p>
+<h1 id="AUC-0"><a href="#AUC-0" class="headerlink" title="AUC = 0"></a>AUC = 0</h1><p>说明样本中没有正例</p>
+<h1 id="如何画ROC曲线"><a href="#如何画ROC曲线" class="headerlink" title="如何画ROC曲线"></a>如何画ROC曲线</h1><p>由于每次从分类模型中只能得到一个用于判定分类结果的分数，要将这个分数与一个阈值进行比较，判定这个样本属于哪个类，所以我们可以更改阈值，得到不同的分类结果，也就是不同的TPR和FPR</p>
 <p>之前说到当我们将threshold设置为1和0时，分别可以得到ROC曲线上的(0,0)和(1,1)两个点</p>
 <p>将这些(FPR,TPR)对连接起来，就得到了ROC曲线。当threshold取值越多，ROC曲线越平滑。</p>
 <p>既然有了ACC为什么要有ROC呢(既生瑜何生亮呢)</p>
@@ -277,7 +277,7 @@ ga('send', 'pageview');
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-02-17T07:18:54.706Z" itemprop="dateUpdated">2019-02-17 15:18:54</time>
+    Last updated: <time datetime="2019-02-23T02:07:05.738Z" itemprop="dateUpdated">2019-02-23 10:07:05</time>
 </span><br>
 
 

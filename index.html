@@ -162,6 +162,59 @@ ga('send', 'pageview');
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-tensorboard-install" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2019-02-27 11:19:31" datetime="2019-02-27T03:19:31.000Z" itemprop="datePublished">2019-02-27</time>
+
+        
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/JunFu.github.io/2019/02/27/tensorboard-install/">tensorboard_install</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        安装Tensorflow-gpu
+查看cuda版本: cat /usr/local/cuda/version.txt
+
+查看cudnn版本: cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2
+
+在该网站上，根据cuda和cudnn版本选择合适的tensorflow-gpu版本
+
+在该网站上下载对应版本的whl文件
+
+执行p...
+    
+
+        <a href="/JunFu.github.io/2019/02/27/tensorboard-install/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/JunFu.github.io/tags/tensorflow/">tensorflow</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-tensorflowtutorial11" class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -791,50 +844,6 @@ $$\theta=\t...
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/JunFu.github.io/tags/tensorflow/">tensorflow</a></li></ul>
 
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-tensorflow-tutorial-9" class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-02-03 01:02:40" datetime="2019-02-02T17:02:40.000Z" itemprop="datePublished">2019-02-03</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/JunFu.github.io/2019/02/03/tensorflow-tutorial-9/">tensorflow_tutorial_9</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        batch Normalization定义将均值为$\mu$, 标准差$\sigma$的数据集合$x$，转化为均值为$\beta$, 标准差$\gamma$的数据集合$x^{’}$：
-$$x^{’}=\gamma\frac{(x-\mu)}{\sigma}+\beta$$
-作用解决梯度弥散的问题
-padding的方式
-实现步骤
-计算数据集合$x$的均值为$\mu$, 标准差$\sigma$
-...
-    
-
-        <a href="/JunFu.github.io/2019/02/03/tensorflow-tutorial-9/" class="post-more waves-effect waves-button">
-            Continue reading...
-        </a>
     </div>
     
 </article>

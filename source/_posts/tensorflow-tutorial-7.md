@@ -120,8 +120,13 @@ ROC曲线的横坐标为false positive rate（FPR）即负类样本中被判定�
 差的分类器：$Tp<Fp$，$Tn<Fn$,，$\Rightarrow$ $TPR=\frac{TP\downarrow}{TP\downarrow+FN\uparrow}>TPR=\frac{FP\uparrow}{FP\uparrow+TN\downarrow}$，位于对角线右侧
 
 
+# AUC = 0 
 
-如何画ROC曲线
+说明样本中没有正例
+
+
+
+# 如何画ROC曲线
 
    
 

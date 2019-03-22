@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    
+    <title>paper1 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Spatial Temporal Graph Convolutional Networks for Skeleton-Based Action Recognition">
+    <meta name="description" content="Spatial Temporal Graph Convolutional Networks for Skeleton-Based Action RecognitionAbstract人体骨骼点的变化对人体动作的识别提供了重要的信息。传统骨骼建模的方法通常依赖于手工或者遍历的方法，导致表达能力受限以及很难泛化。本文提出了一种对动态骨骼建模的新方法，该方法叫做时空域图卷积网络。该方法通过自动地从数据中">
+<meta name="keywords" content="Spatial Temporal Graph Convolutional Networks for Skeleton-Based Action Recognition">
+<meta property="og:type" content="article">
+<meta property="og:title" content="paper1">
+<meta property="og:url" content="https://github.com/SunshineJunFu/JunFu.github.io/2019/03/22/paper1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Spatial Temporal Graph Convolutional Networks for Skeleton-Based Action RecognitionAbstract人体骨骼点的变化对人体动作的识别提供了重要的信息。传统骨骼建模的方法通常依赖于手工或者遍历的方法，导致表达能力受限以及很难泛化。本文提出了一种对动态骨骼建模的新方法，该方法叫做时空域图卷积网络。该方法通过自动地从数据中">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-03-22T04:39:23.787Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="paper1">
+<meta name="twitter:description" content="Spatial Temporal Graph Convolutional Networks for Skeleton-Based Action RecognitionAbstract人体骨骼点的变化对人体动作的识别提供了重要的信息。传统骨骼建模的方法通常依赖于手工或者遍历的方法，导致表达能力受限以及很难泛化。本文提出了一种对动态骨骼建模的新方法，该方法叫做时空域图卷积网络。该方法通过自动地从数据中">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/JunFu.github.io/atom.xml">
+    
+    <link rel="shortcut icon" href="/JunFu.github.io/favicon.ico">
+    <link rel="stylesheet" href="/JunFu.github.io/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/JunFu.github.io/img/brand.jpg)">
+      <div class="brand">
+        <a href="/JunFu.github.io/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/JunFu.github.io/images/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Jun Fu</h5>
+          <a href="mailto:fujun@mail.ustc.edu.cn" title="fujun@mail.ustc.edu.cn" class="mail">fujun@mail.ustc.edu.cn</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/">
+                <i class="icon icon-lg icon-home"></i>
+                Homepage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/JunFu.github.io/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/SunshineJunFu" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">paper1</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">paper1</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-03-22T04:38:25.000Z" itemprop="datePublished" class="page-time">
+  2019-03-22
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Spatial-Temporal-Graph-Convolutional-Networks-for-Skeleton-Based-Action-Recognition"><span class="post-toc-number">1.</span> <span class="post-toc-text">Spatial Temporal Graph Convolutional Networks for Skeleton-Based Action Recognition</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Abstract"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Abstract</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Current-Research-State"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Current Research State</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Pipeline-OVerview"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Pipeline OVerview</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Skeleton-Graph-Construction"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Skeleton Graph Construction</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Spatial-Graph-Convoluional-Neural-Network"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">Spatial Graph Convoluional Neural Network</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Spatial-Graph-Convolution"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">Spatial Graph Convolution</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Spatial-Temporal-Modeling"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">Spatial Temporal Modeling</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Partition-Strategies"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">Partition Strategies</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#单一labeling"><span class="post-toc-number">1.8.1.</span> <span class="post-toc-text">单一labeling</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#距离划分"><span class="post-toc-number">1.8.2.</span> <span class="post-toc-text">距离划分</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#空域配置划分"><span class="post-toc-number">1.8.3.</span> <span class="post-toc-text">空域配置划分</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#可学习的边重要性"><span class="post-toc-number">1.9.</span> <span class="post-toc-text">可学习的边重要性</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现ST-GCN"><span class="post-toc-number">1.10.</span> <span class="post-toc-text">实现ST-GCN</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-paper1" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">paper1</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-03-22 12:38:25" datetime="2019-03-22T04:38:25.000Z" itemprop="datePublished">2019-03-22</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Spatial-Temporal-Graph-Convolutional-Networks-for-Skeleton-Based-Action-Recognition"><a href="#Spatial-Temporal-Graph-Convolutional-Networks-for-Skeleton-Based-Action-Recognition" class="headerlink" title="Spatial Temporal Graph Convolutional Networks for Skeleton-Based Action Recognition"></a>Spatial Temporal Graph Convolutional Networks for Skeleton-Based Action Recognition</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>人体骨骼点的变化对人体动作的识别提供了重要的信息。传统骨骼建模的方法通常依赖于手工或者遍历的方法，导致表达能力受限以及很难泛化。本文提出了一种对动态骨骼建模的新方法，该方法叫做时空域图卷积网络。该方法通过自动地从数据中学习时空域的模式，避免了前面方法的局限性。该方法不仅得到了更好的表达能力，而且具有更好的泛化性。在Kinetics和NTU-RGBD两个大数据集上，该方法相比于主流方法，在性能方面实现了大幅度的提升。</p>
+<h2 id="Current-Research-State"><a href="#Current-Research-State" class="headerlink" title="Current Research State"></a>Current Research State</h2><h2 id="Pipeline-OVerview"><a href="#Pipeline-OVerview" class="headerlink" title="Pipeline OVerview"></a>Pipeline OVerview</h2><h2 id="Skeleton-Graph-Construction"><a href="#Skeleton-Graph-Construction" class="headerlink" title="Skeleton Graph Construction"></a>Skeleton Graph Construction</h2><p>T帧骨骼序列，每帧包含N个连接点，其可以构成一个无向时空图G = (V, E)，图中的节点集为 $V={v_{ti}|t=1,…,T, i=1,…,N}$, 每个节点的特征向量用$F(v_{ti})$来表示，$F(v_{ti})$ 表示第t帧第i个节点的特征向量，其由该点的坐标向量以及坐标向量的置信度组成。</p>
+<p>时空域图的构成分成两部分：</p>
+<ol>
+<li>帧内(intra): 由人体的结构来确定节点间是否相连</li>
+<li>帧间(inter): 时序上，相同的节点相连</li>
+</ol>
+<p>时空域图上的边：</p>
+<ol>
+<li>帧内边， 记为 $E_{S} = {v_{ti}v_{tj}|(i,j) \in H}$, H代表自然连接的人体节点。</li>
+<li>帧间边， 记为 $E_{F} = {v_{ti}v_{(t+1)i}$， 代表了它随时间变化的轨迹。</li>
+</ol>
+<h2 id="Spatial-Graph-Convoluional-Neural-Network"><a href="#Spatial-Graph-Convoluional-Neural-Network" class="headerlink" title="Spatial Graph Convoluional Neural Network"></a>Spatial Graph Convoluional Neural Network</h2><p>先介绍下二维图像的卷积。给定卷积核大小为 $K x K$, 操作对象为 宽为W, 高为H, 通道数为c的特征图。对于空间上的某点x， 其卷积后的值可以通过下式计算得到：</p>
+<p>$ f_{out} = \sum_{h=1}^{K}\sum_{w=1}^{K} f_in(p(x,h,w)) \dot w(h,w) $</p>
+<p>其中，p(x,h,w)为采样函数：$$Z^{2} x Z^{2} \rightarrow Z^{2} $$ 枚举了点x的邻域，在图像里，也可以简化为$$p(x,h,w)= x + p^{‘}(h,w) $$, $$f_in(p(x,h,w)) \in R^{1x1xc} w(h,w) \in R^{1x1xc} $$,  $$w(h,w)$$与位置无关。</p>
+<p>接着，基于二维图像卷积的认识，我们推导在图上的卷积。从上面可以发现，卷积的核心部分在于采样函数p，权重函数w以及特征图$$f_in$$的定义。</p>
+<p>1： 对于t时刻的空域图$$V_{t}$$, 特征图为$$f_in^{t}: V_{t} \rightarrow R^{Nxc}$$, 是N节点的c维特征集合。<br>2： 采样函数p(x,h,w), 在图像中，采样函数p(h,w)定义为x的邻域， 数学上可以表达为: $$D_{8}(x) \leq k $$, $$ k $$为街区距离。因此，类似地，我们定义采样函数为节点的邻域，例如，对于节点$$v_{ti}$$, 采样函数表示为$$B(v_{ti} = {v_{tj}|d(v_{tj}, v_{ti}) \leq D}$$, D代表$$v_{ti}$$与$$v_{tj}$$的路径长度。论文中给出的D，取值为1。<br>3: 权重函数w， 相比于图像而言，图的邻域没有明确空间的顺序。解决该问题的一种方式是对邻域进行标号。本文也采用的该思路，不同于对每一个邻域节点进行标号，文中将$$B(v_{ti})$$分成固定的$$K$$个子集，也就是有一个映射函数 $$l_{ti}: B(v_{ti}) \rightarrow {0,…,K-1} $$。 那么基于此，权重函数$$w(v_{ti},v_{tj})：B(v_{ti}) \rightarrow R^{c} $$，c是单个节点特征的维度，这个可以通过预先定义一个cxK维的张量，然后通过子集序号来索引，即：<br>$$w(v_{ti},v_{tj})=w^{‘}(l_{ti}(v_{tj}))$$.</p>
+<p>总结而言，图卷积仍然是在邻域内进行加权(特征图和权重内积），改变了采样函数p，权重函数w以及特征图$$f_in$$的定义方式。</p>
+<h2 id="Spatial-Graph-Convolution"><a href="#Spatial-Graph-Convolution" class="headerlink" title="Spatial Graph Convolution"></a>Spatial Graph Convolution</h2><p>通过重定义采样函数p，权重函数w以及特征图$$f_in$$，则可以推出下式：</p>
+<p>$f_{out}(v_{ti}= \sum\limits_{v_{tj} \in B(v_{ti})} \frac{1}{Z_{ti}(v_{tj})}f_{in}(p(v_{ti},v_{tj}))w(v_{ti},v_{tj})$</p>
+<p>其中，$$Z_{ti}(v_{tj})} = |{v_{tk}|l_{ti}(v_{tk})= l_{ti}(v_{tj})|$$, 代表了对应子集的基数，这个是用于平衡不同自己对输出的贡献。最终的出下式：</p>
+<p>$f_{out}(v_{ti}= \sum\limits_{v_{tj} \in B(v_{ti})} \frac{1}{Z_{ti}(v_{tj})}f_{in}(v_{tj})w(v_{ti},v_{tj})$。</p>
+<p>值得注意的是， 如果把图像当作一个规则的2D网格，上式类似于标准的2D卷积。以3x3的卷积操作为例，我们有9个pixels，邻域被分成9个子集，每个子集含有1个像素点。</p>
+<h2 id="Spatial-Temporal-Modeling"><a href="#Spatial-Temporal-Modeling" class="headerlink" title="Spatial Temporal Modeling"></a>Spatial Temporal Modeling</h2><p>了解完空域的图卷积，那么接下来将它扩展至时域图卷积。</p>
+<ol>
+<li>定义邻域： $$ B(v_{ti}) = {v_{qj}|d(v_{tj},v_{ti}) \leq K, |q-t| \leq \lfloor \Gamma/2 \rfloor}, 其中$$\Gamma$$控制者考虑时域的范围，可以理解为时域的核大小。</li>
+<li>定义权重函数：与空域类似，仍然采用标号的方式（类似于embedding），由于时域上顺序是确定的，因此，对于节点$v_{ti}$, 其$l_{ST}$用下式确定：<br>$l_{ST}(v_{qj}) = l_{ti}(v_{tj}) + (q-t+ \lfloor \Gamma/2 \rfloor) x K $<br>其中$l_{ti}(v_{tj})$是t时刻， i节点的空域标号。<br>理解： 参照图1， 就是时域的邻域为前后 $$\lfloor \Gamma/2 \rfloor)$$ 帧， 每帧考虑K个节点(图1很好的解释了该公式)。<br>Ps:之所以如此编号，是为了确定邻接矩阵的index</li>
+</ol>
+<h2 id="Partition-Strategies"><a href="#Partition-Strategies" class="headerlink" title="Partition Strategies"></a>Partition Strategies</h2><h3 id="单一labeling"><a href="#单一labeling" class="headerlink" title="单一labeling"></a>单一labeling</h3><p>邻域内所有节点有着相同的贡献。</p>
+<p>缺点： 丢失局部信息。</p>
+<h3 id="距离划分"><a href="#距离划分" class="headerlink" title="距离划分"></a>距离划分</h3><p>根据距离中心节点的距离进行划分</p>
+<h3 id="空域配置划分"><a href="#空域配置划分" class="headerlink" title="空域配置划分"></a>空域配置划分</h3><p>自定义一些划分方式</p>
+<h2 id="可学习的边重要性"><a href="#可学习的边重要性" class="headerlink" title="可学习的边重要性"></a>可学习的边重要性</h2><p>尽管当人在执行动作时，骨骼点一起运动，但是一个骨骼点可能出现在多个身体部位。 但是，每个节点应该在不同的部分有不同的重要性。因此，我们在每一时空图卷积加了一个可学习的掩模（mask）。</p>
+<h2 id="实现ST-GCN"><a href="#实现ST-GCN" class="headerlink" title="实现ST-GCN"></a>实现ST-GCN</h2><p>输入Tensor: shape ( C, V, T)</p>
+<p>C : 单个节点上的feature维度<br>V :  空域节点<br>T ： 时间帧数</p>
+<p>该文章实现思路可以分为两步走：</p>
+<ol>
+<li>对每个时间点t，进行空域图卷积，此时邻接矩阵是已知的</li>
+<li>然后对不同时刻的相同节点进行2-D卷积，核大小为 $1x \Gamma$, 即进行时域聚合，此时，邻接矩阵是用卷积核来替代的。</li>
+</ol>
+<p>理解： </p>
+<ol>
+<li>第一步，相当于把空域的邻接节点的信息考虑了进来</li>
+<li>第二步，相当于把 时域上的相同节点的邻接节点考虑了进来</li>
+</ol>
+<p>实现过程中，论文中采用了批归一化，主要类似于kipf的归一化邻接矩阵，起到防止梯度爆炸的作用。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-03-22T04:39:23.787Z" itemprop="dateUpdated">2019-03-22 12:39:23</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://github.com/SunshineJunFu/JunFu.github.io">
+            <img src="/JunFu.github.io/images/avatar.jpg" alt="Jun Fu">
+            Jun Fu
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/JunFu.github.io/tags/Spatial-Temporal-Graph-Convolutional-Networks-for-Skeleton-Based-Action-Recognition/">Spatial Temporal Graph Convolutional Networks for Skeleton-Based Action Recognition</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/03/22/paper1/&title=《paper1》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/03/22/paper1/&title=《paper1》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/03/22/paper1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《paper1》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/03/22/paper1/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/03/22/paper1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/JunFu.github.io/2019/02/27/tensorboard-install/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">tensorboard_install</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "jeA0VlYdrPRbE0nMW3DV5gow-gzGzoHsz",
+            appKey: "QvgEiq6wSQKvTmKUUM5pcMJh",
+            avatar: "mm",
+            placeholder: "share your ideas",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        UV：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        PV：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/JunFu.github.io/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Jun Fu &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/03/22/paper1/&title=《paper1》 — Hexo&pic=https://github.com/SunshineJunFu/JunFu.github.io/images/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/03/22/paper1/&title=《paper1》 — Hexo&source=keep hungry and practice more" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/SunshineJunFu/JunFu.github.io/2019/03/22/paper1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《paper1》 — Hexo&url=https://github.com/SunshineJunFu/JunFu.github.io/2019/03/22/paper1/&via=https://github.com/SunshineJunFu/JunFu.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://github.com/SunshineJunFu/JunFu.github.io/2019/03/22/paper1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuElEQVR42u3aS27DMAwFwNz/0u02QBv3PVFyUmC8CvKxOSogshQfj/j6erp+vvP8/qvvP79/fYf8KdsuPDw8vEHo14/MQ/n56S5kHjMeHh7eaV4SRMLIkZP0k8SMh4eH92m8JKAkGUzYeHh4eP+Fdx1EWzQnhXIeDx4eHt6dvPbWbaMhTzZv67Xg4eHhxby8qP2c10fO9/Dw8PDGp+rJcEBeNF+PF6zd7Y9o8fDw8A7w2kZD0k7dVeauHaTh4eHhneatjVu1jYBdv2qHtPDw8PDu4V0fJu1aiBPDBEU2w8PDwxvwJjdqj/zbAYJ8iUdgPDw8vJKXB5EkjHlSWVvc4tQODw8PbxNvbyZJfpUPCkyKeDw8PLwTvF0PWzx5Cxoia0u2eS3x8PDwlirPvOxOWglrhf5iKsLDw8M7zEvCWkO2owA5oDjlw8PDwxvz2s198rpovwZLHy0uHh4e3i28fINuGxNt4kmePlobPDw8vCVe8rNJ6JMjtLb5+/JZeHh4eId5k901aUOsNUTy0vzl6AAeHh7eJt7acVT+mHal80ZDtBx4eHh4h3l5Ibu26bfBXcOiYzA8PDy8A7zkUKptQ+St4bUxgrq9i4eHh7eVl2zT+U6bA9o7t+X7L6MDeHh4eJt4axt6G3o+apA0JvJWBR4eHt49vGSDzkvb68VaG9hqi348PDy8c7w80ByTlLyL233+58HDw8O7hdf+w982c9sRqzY5FVkFDw8Pr+R9ldfelm67xdfDWHh4eHgHePNGQ/LItYTRlumPyYWHh4dX8ia3bhuy7eDUWmLAw8PDu4eXNCAmy5F/uqG/goeHh/eRvHa7nwwBJMV63aXGw8PDexMvAeTfyRvBRfmOh4eHd4yXlMiTYjpJCW3jY3OvBQ8PD2/l7L5IHtdLkKScvCWxt3mBh4eHN+B9AwwSkpeivphUAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/JunFu.github.io/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/JunFu.github.io/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/JunFu.github.io/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'Where are you!';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Hi! Welcome Back!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+<script src="/JunFu.github.io/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/JunFu.github.io/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

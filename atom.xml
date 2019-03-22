@@ -6,7 +6,7 @@
   <link href="/JunFu.github.io/atom.xml" rel="self"/>
   
   <link href="https://github.com/SunshineJunFu/JunFu.github.io/"/>
-  <updated>2019-02-27T03:29:04.924Z</updated>
+  <updated>2019-03-22T04:39:23.787Z</updated>
   <id>https://github.com/SunshineJunFu/JunFu.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>paper1</title>
+    <link href="https://github.com/SunshineJunFu/JunFu.github.io/2019/03/22/paper1/"/>
+    <id>https://github.com/SunshineJunFu/JunFu.github.io/2019/03/22/paper1/</id>
+    <published>2019-03-22T04:38:25.000Z</published>
+    <updated>2019-03-22T04:39:23.787Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Spatial-Temporal-Graph-Convolutional-Networks-for-Skeleton-Based-Action-Recognition"><a href="#Spatial-Temporal-Graph-Convolutional-Networks-for-Skeleton-Based-Action-Recognition" class="headerlink" title="Spatial Temporal Graph Convolutional Networks for Skeleton-Based Action Recognition"></a>Spatial Temporal Graph Convolutional Networks for Skeleton-Based Action Recognition</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>人体骨骼点的变化对人体动作的识别提供了重要的信息。传统骨骼建模的方法通常依赖于手工或者遍历的方法，导致表达能力受限以及很难泛化。本文提出了一种对动态骨骼建模的新方法，该方法叫做时空域图卷积网络。该方法通过自动地从数据中学习时空域的模式，避免了前面方法的局限性。该方法不仅得到了更好的表达能力，而且具有更好的泛化性。在Kinetics和NTU-RGBD两个大数据集上，该方法相比于主流方法，在性能方面实现了大幅度的提升。</p><h2 id="Current-Research-State"><a href="#Current-Research-State" class="headerlink" title="Current Research State"></a>Current Research State</h2><h2 id="Pipeline-OVerview"><a href="#Pipeline-OVerview" class="headerlink" title="Pipeline OVerview"></a>Pipeline OVerview</h2><h2 id="Skeleton-Graph-Construction"><a href="#Skeleton-Graph-Construction" class="headerlink" title="Skeleton Graph Construction"></a>Skeleton Graph Construction</h2><p>T帧骨骼序列，每帧包含N个连接点，其可以构成一个无向时空图G = (V, E)，图中的节点集为 $V={v_{ti}|t=1,…,T, i=1,…,N}$, 每个节点的特征向量用$F(v_{ti})$来表示，$F(v_{ti})$ 表示第t帧第i个节点的特征向量，其由该点的坐标向量以及坐标向量的置信度组成。</p><p>时空域图的构成分成两部分：</p><ol><li>帧内(intra): 由人体的结构来确定节点间是否相连</li><li>帧间(inter): 时序上，相同的节点相连</li></ol><p>时空域图上的边：</p><ol><li>帧内边， 记为 $E_{S} = {v_{ti}v_{tj}|(i,j) \in H}$, H代表自然连接的人体节点。</li><li>帧间边， 记为 $E_{F} = {v_{ti}v_{(t+1)i}$， 代表了它随时间变化的轨迹。</li></ol><h2 id="Spatial-Graph-Convoluional-Neural-Network"><a href="#Spatial-Graph-Convoluional-Neural-Network" class="headerlink" title="Spatial Graph Convoluional Neural Network"></a>Spatial Graph Convoluional Neural Network</h2><p>先介绍下二维图像的卷积。给定卷积核大小为 $K x K$, 操作对象为 宽为W, 高为H, 通道数为c的特征图。对于空间上的某点x， 其卷积后的值可以通过下式计算得到：</p><p>$ f_{out} = \sum_{h=1}^{K}\sum_{w=1}^{K} f_in(p(x,h,w)) \dot w(h,w) $</p><p>其中，p(x,h,w)为采样函数：$$Z^{2} x Z^{2} \rightarrow Z^{2} $$ 枚举了点x的邻域，在图像里，也可以简化为$$p(x,h,w)= x + p^{‘}(h,w) $$, $$f_in(p(x,h,w)) \in R^{1x1xc} w(h,w) \in R^{1x1xc} $$,  $$w(h,w)$$与位置无关。</p><p>接着，基于二维图像卷积的认识，我们推导在图上的卷积。从上面可以发现，卷积的核心部分在于采样函数p，权重函数w以及特征图$$f_in$$的定义。</p><p>1： 对于t时刻的空域图$$V_{t}$$, 特征图为$$f_in^{t}: V_{t} \rightarrow R^{Nxc}$$, 是N节点的c维特征集合。<br>2： 采样函数p(x,h,w), 在图像中，采样函数p(h,w)定义为x的邻域， 数学上可以表达为: $$D_{8}(x) \leq k $$, $$ k $$为街区距离。因此，类似地，我们定义采样函数为节点的邻域，例如，对于节点$$v_{ti}$$, 采样函数表示为$$B(v_{ti} = {v_{tj}|d(v_{tj}, v_{ti}) \leq D}$$, D代表$$v_{ti}$$与$$v_{tj}$$的路径长度。论文中给出的D，取值为1。<br>3: 权重函数w， 相比于图像而言，图的邻域没有明确空间的顺序。解决该问题的一种方式是对邻域进行标号。本文也采用的该思路，不同于对每一个邻域节点进行标号，文中将$$B(v_{ti})$$分成固定的$$K$$个子集，也就是有一个映射函数 $$l_{ti}: B(v_{ti}) \rightarrow {0,…,K-1} $$。 那么基于此，权重函数$$w(v_{ti},v_{tj})：B(v_{ti}) \rightarrow R^{c} $$，c是单个节点特征的维度，这个可以通过预先定义一个cxK维的张量，然后通过子集序号来索引，即：<br>$$w(v_{ti},v_{tj})=w^{‘}(l_{ti}(v_{tj}))$$.</p><p>总结而言，图卷积仍然是在邻域内进行加权(特征图和权重内积），改变了采样函数p，权重函数w以及特征图$$f_in$$的定义方式。</p><h2 id="Spatial-Graph-Convolution"><a href="#Spatial-Graph-Convolution" class="headerlink" title="Spatial Graph Convolution"></a>Spatial Graph Convolution</h2><p>通过重定义采样函数p，权重函数w以及特征图$$f_in$$，则可以推出下式：</p><p>$f_{out}(v_{ti}= \sum\limits_{v_{tj} \in B(v_{ti})} \frac{1}{Z_{ti}(v_{tj})}f_{in}(p(v_{ti},v_{tj}))w(v_{ti},v_{tj})$</p><p>其中，$$Z_{ti}(v_{tj})} = |{v_{tk}|l_{ti}(v_{tk})= l_{ti}(v_{tj})|$$, 代表了对应子集的基数，这个是用于平衡不同自己对输出的贡献。最终的出下式：</p><p>$f_{out}(v_{ti}= \sum\limits_{v_{tj} \in B(v_{ti})} \frac{1}{Z_{ti}(v_{tj})}f_{in}(v_{tj})w(v_{ti},v_{tj})$。</p><p>值得注意的是， 如果把图像当作一个规则的2D网格，上式类似于标准的2D卷积。以3x3的卷积操作为例，我们有9个pixels，邻域被分成9个子集，每个子集含有1个像素点。</p><h2 id="Spatial-Temporal-Modeling"><a href="#Spatial-Temporal-Modeling" class="headerlink" title="Spatial Temporal Modeling"></a>Spatial Temporal Modeling</h2><p>了解完空域的图卷积，那么接下来将它扩展至时域图卷积。</p><ol><li>定义邻域： $$ B(v_{ti}) = {v_{qj}|d(v_{tj},v_{ti}) \leq K, |q-t| \leq \lfloor \Gamma/2 \rfloor}, 其中$$\Gamma$$控制者考虑时域的范围，可以理解为时域的核大小。</li><li>定义权重函数：与空域类似，仍然采用标号的方式（类似于embedding），由于时域上顺序是确定的，因此，对于节点$v_{ti}$, 其$l_{ST}$用下式确定：<br>$l_{ST}(v_{qj}) = l_{ti}(v_{tj}) + (q-t+ \lfloor \Gamma/2 \rfloor) x K $<br>其中$l_{ti}(v_{tj})$是t时刻， i节点的空域标号。<br>理解： 参照图1， 就是时域的邻域为前后 $$\lfloor \Gamma/2 \rfloor)$$ 帧， 每帧考虑K个节点(图1很好的解释了该公式)。<br>Ps:之所以如此编号，是为了确定邻接矩阵的index</li></ol><h2 id="Partition-Strategies"><a href="#Partition-Strategies" class="headerlink" title="Partition Strategies"></a>Partition Strategies</h2><h3 id="单一labeling"><a href="#单一labeling" class="headerlink" title="单一labeling"></a>单一labeling</h3><p>邻域内所有节点有着相同的贡献。</p><p>缺点： 丢失局部信息。</p><h3 id="距离划分"><a href="#距离划分" class="headerlink" title="距离划分"></a>距离划分</h3><p>根据距离中心节点的距离进行划分</p><h3 id="空域配置划分"><a href="#空域配置划分" class="headerlink" title="空域配置划分"></a>空域配置划分</h3><p>自定义一些划分方式</p><h2 id="可学习的边重要性"><a href="#可学习的边重要性" class="headerlink" title="可学习的边重要性"></a>可学习的边重要性</h2><p>尽管当人在执行动作时，骨骼点一起运动，但是一个骨骼点可能出现在多个身体部位。 但是，每个节点应该在不同的部分有不同的重要性。因此，我们在每一时空图卷积加了一个可学习的掩模（mask）。</p><h2 id="实现ST-GCN"><a href="#实现ST-GCN" class="headerlink" title="实现ST-GCN"></a>实现ST-GCN</h2><p>输入Tensor: shape ( C, V, T)</p><p>C : 单个节点上的feature维度<br>V :  空域节点<br>T ： 时间帧数</p><p>该文章实现思路可以分为两步走：</p><ol><li>对每个时间点t，进行空域图卷积，此时邻接矩阵是已知的</li><li>然后对不同时刻的相同节点进行2-D卷积，核大小为 $1x \Gamma$, 即进行时域聚合，此时，邻接矩阵是用卷积核来替代的。</li></ol><p>理解： </p><ol><li>第一步，相当于把空域的邻接节点的信息考虑了进来</li><li>第二步，相当于把 时域上的相同节点的邻接节点考虑了进来</li></ol><p>实现过程中，论文中采用了批归一化，主要类似于kipf的归一化邻接矩阵，起到防止梯度爆炸的作用。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Spatial-Temporal-Graph-Convolutional-Networks-for-Skeleton-Based-Action-Recognition&quot;&gt;&lt;a href=&quot;#Spatial-Temporal-Graph-Convolutional-
+      
+    
+    </summary>
+    
+    
+      <category term="Spatial Temporal Graph Convolutional Networks for Skeleton-Based Action Recognition" scheme="https://github.com/SunshineJunFu/JunFu.github.io/tags/Spatial-Temporal-Graph-Convolutional-Networks-for-Skeleton-Based-Action-Recognition/"/>
+    
+  </entry>
   
   <entry>
     <title>tensorboard_install</title>
@@ -458,29 +481,6 @@
     
     
       <category term="linux" scheme="https://github.com/SunshineJunFu/JunFu.github.io/tags/linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hexo迁移和复用</title>
-    <link href="https://github.com/SunshineJunFu/JunFu.github.io/2019/01/09/setupBlog3/"/>
-    <id>https://github.com/SunshineJunFu/JunFu.github.io/2019/01/09/setupBlog3/</id>
-    <published>2019-01-09T04:31:06.000Z</published>
-    <updated>2019-02-17T07:18:54.658Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="如何方便的迁移hexo博客"><a href="#如何方便的迁移hexo博客" class="headerlink" title="如何方便的迁移hexo博客"></a>如何方便的迁移hexo博客</h1><p>解决方案是：在同一个Repositories，创建两个branch，master用于存放静态网页文件，hexo用于存放hexo代码。</p><h2 id="创建远程分支hexo"><a href="#创建远程分支hexo" class="headerlink" title="创建远程分支hexo"></a>创建远程分支hexo</h2><ol><li><code>git clone url</code> </li><li><code>git brand -r</code>, 若存在hexo分支且想重新创建，可 <code>git branch -r -d origin/hexo</code> <code>git push origin :hexo</code></li><li><code>git checkout -b hexo</code>, 创建新hexo分支</li><li>将上层目录的hexo文件全部拷贝至 xxx.io 文件下</li><li><code>git add .</code></li><li><code>git commit -m &quot;add hexo branch&quot;</code></li><li><code>git push --set-upstream origin hexo</code> 在远端创建hexo分支并上传文件, 如果有hexo的话，<code>git push origin</code></li><li>Repositories 已经存在两个branch了</li></ol><h2 id="从新的环境中开始"><a href="#从新的环境中开始" class="headerlink" title="从新的环境中开始"></a>从新的环境中开始</h2><h3 id="从远端复原"><a href="#从远端复原" class="headerlink" title="从远端复原"></a>从远端复原</h3><ol><li><code>git clone -b hexo https://github.com/SunshineJunFu/JunFu.github.io.git</code></li><li><code>cd xx.io</code></li><li><code>npm install hexo --save</code></li><li><code>npm install</code></li><li><code>npm install hexo-deployer-git</code></li><li><code>hexo s</code>， 检查复原效果</li></ol><h2 id="书写博客"><a href="#书写博客" class="headerlink" title="书写博客"></a>书写博客</h2><ol><li><code>hexo new name</code></li><li><code>编辑 xx.md 文件</code></li><li><code>git add .</code></li><li><code>git commit -m something</code></li><li><code>git push origin</code>, 更新远端hexo文件，对应hexo branch</li><li><code>hexo g -d</code>， 更新远端静态网页文件，对应master branch</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;如何方便的迁移hexo博客&quot;&gt;&lt;a href=&quot;#如何方便的迁移hexo博客&quot; class=&quot;headerlink&quot; title=&quot;如何方便的迁移hexo博客&quot;&gt;&lt;/a&gt;如何方便的迁移hexo博客&lt;/h1&gt;&lt;p&gt;解决方案是：在同一个Repositories，创建两
-      
-    
-    </summary>
-    
-    
-      <category term="hexo" scheme="https://github.com/SunshineJunFu/JunFu.github.io/tags/hexo/"/>
     
   </entry>
   
